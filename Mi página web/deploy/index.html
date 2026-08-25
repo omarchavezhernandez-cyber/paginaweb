@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Door Windows Center — Ventanas y puertas de PVC</title>
+<meta name="description" content="Fabricantes de ventanas y puertas de PVC a medida en Ciudad Juárez. Perfilería europea, vidrio doble, fabricación e instalación propia.">
+<link rel="stylesheet" href="ds/styles.css">
+<script src="ds/_ds_bundle.js"></script>
+<style>
+  body { margin: 0; background: var(--color-bg); }
+  * { box-sizing: border-box; }
+  p { text-wrap: pretty; }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent-2-700); }
+</style>
+</helmet>
+
+<section style="display: flex; flex-direction: column; font-family: var(--font-body); color: var(--color-text);">
+  <div id="2a" style="display: flex; flex-direction: column;">
+    <div style="max-width: 1280px; margin: 0 auto; width: 100%; background: var(--color-bg);">
+      <header style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: var(--space-4) var(--space-8) var(--space-3);">
+        <nav style="display: flex; gap: var(--space-4); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;">
+          <a href="#2a" style="color: var(--color-text);" style-hover="color: var(--color-accent-700);">{{ t.nav1 }}</a>
+          <a href="#2a" style="color: var(--color-text);" style-hover="color: var(--color-accent-700);">{{ t.nav2 }}</a>
+        </nav>
+        <img src="assets/logo-dwc.png" alt="Door Windows Center" style="width: 230px; height: 132px; object-fit: cover; mix-blend-mode: multiply;">
+        <div style="display: flex; gap: var(--space-4); align-items: center; justify-content: flex-end; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;">
+          <a href="#2a" style="color: var(--color-text);" style-hover="color: var(--color-accent-700);">{{ t.nav3 }}</a>
+          <a href="#2a" style="color: var(--color-text);" style-hover="color: var(--color-accent-700);">{{ t.nav4 }}</a>
+          <span style="display: flex; gap: var(--space-1); align-items: center; font-family: ui-monospace, Menlo, monospace; font-size: 11px; letter-spacing: 0.1em;">
+            <button onClick="{{ setEs }}" style="background: none; border: none; padding: 2px 3px; cursor: pointer; font: inherit; letter-spacing: inherit; color: {{ esColor }};">ES</button>
+            <span style="color: var(--color-neutral-400);">/</span>
+            <button onClick="{{ setEn }}" style="background: none; border: none; padding: 2px 3px; cursor: pointer; font: inherit; letter-spacing: inherit; color: {{ enColor }};">EN</button>
+          </span>
+        </div>
+      </header>
+
+      <figure style="margin: 0; position: relative;">
+        <video src="assets/taller.mp4" poster="assets/portada-casa.jpg" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display: block; width: 100%; height: 860px; object-fit: cover; background: var(--color-neutral-300);"></video>
+        <figcaption style="position: absolute; left: var(--space-8); bottom: var(--space-8); right: var(--space-8); display: flex; flex-direction: column; gap: var(--space-3); max-width: 660px; background: var(--color-bg); padding: var(--space-6);">
+          <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-accent-700);">{{ t.tagline }}</span>
+          <h1 style="margin: 0; font-size: 62px; font-weight: 400; line-height: 1.0; letter-spacing: -0.02em;">{{ t.siteTagline }}</h1>
+          <a href="#2a" class="btn btn-primary" style="align-self: flex-start; margin-top: var(--space-2);">{{ t.cta }}</a>
+        </figcaption>
+      </figure>
+
+      <div style="display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-8); padding: 88px var(--space-8) 0;">
+        <h2 style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-neutral-700);">{{ t.aboutKicker }}</h2>
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <p style="margin: 0; font-size: 28px; line-height: 1.4;">{{ t.about1 }}</p>
+          <p style="margin: 0; font-size: 17px; line-height: 1.65; color: var(--color-neutral-800); max-width: 34em;">{{ t.about2 }}</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-6); padding: 80px var(--space-8) 0;">
+        <sc-for list="{{ points }}" as="p" hint-placeholder-count="5">
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-accent-700);">{{ p.n }}</span>
+            <h3 style="margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3;">{{ p.t }}</h3>
+            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--color-neutral-700);">{{ p.d }}</p>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding: 96px 0 0;">
+        <h2 style="margin: 0 var(--space-8) var(--space-6); font-size: 46px; font-weight: 400; letter-spacing: -0.01em;">{{ t.workTitle }}</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;">
+          <sc-for list="{{ products }}" as="w" hint-placeholder-count="4">
+            <figure style="margin: 0; position: relative; aspect-ratio: 4 / 3; background: repeating-linear-gradient(135deg, var(--color-neutral-300) 0 9px, var(--color-neutral-200) 9px 18px); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+              {{ w.img }}
+              <sc-if value="{{ w.noSrc }}" hint-placeholder-val="{{ true }}">
+                <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-neutral-700);">{{ w.ph }}</span>
+              </sc-if>
+              <figcaption style="position: absolute; left: var(--space-4); bottom: var(--space-4); right: var(--space-4); display: flex; flex-direction: column; gap: 3px; background: var(--color-bg); padding: var(--space-3) var(--space-4);">
+                <span style="font-size: 20px;">{{ w.t }}</span>
+                <span style="font-size: 14px; color: var(--color-neutral-800);">{{ w.d }}</span>
+              </figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </div>
+
+      <figure style="margin: 96px 0 0; position: relative;">
+        <img src="assets/portada-casa.jpg" alt="Vivienda con ventanales y puerta de entrada acristalada" style="display: block; width: 100%; height: 720px; object-fit: cover; object-position: center 42%;">
+        <figcaption style="position: absolute; left: var(--space-8); bottom: var(--space-8); background: var(--color-bg); padding: var(--space-4) var(--space-6); display: flex; flex-direction: column; gap: 4px; max-width: 420px;">
+          <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent-700);">{{ t.videoKicker }}</span>
+          <span style="font-size: 20px; line-height: 1.35;">{{ t.videoTitle }}</span>
+        </figcaption>
+      </figure>
+
+      <div style="padding: 96px var(--space-8) 0;">
+        <h2 style="margin: 0 0 var(--space-6); font-size: 46px; font-weight: 400;">{{ t.faqTitle }}</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-8) 56px;">
+          <sc-for list="{{ faq }}" as="f" hint-placeholder-count="4">
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <h3 style="margin: 0; font-size: 20px; font-weight: 600; line-height: 1.35;">{{ f.q }}</h3>
+              <p style="margin: 0; font-size: 16px; line-height: 1.65; color: var(--color-neutral-800);">{{ f.a }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 7fr 5fr; gap: var(--space-8); padding: 110px var(--space-8) var(--space-8); align-items: end;">
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <h2 style="margin: 0; font-size: 60px; font-weight: 400; line-height: 1.02; letter-spacing: -0.015em;">{{ t.contactTitle }}</h2>
+          <p style="margin: 0; font-size: 18px; line-height: 1.55; color: var(--color-neutral-800); max-width: 26em;">{{ t.contactSub }}</p>
+          <a href="https://wa.me/526562075567" class="btn btn-primary" style="align-self: flex-start;">{{ t.whatsapp }}</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-3); font-family: ui-monospace, Menlo, monospace; font-size: 12px; line-height: 1.7; letter-spacing: 0.05em; color: var(--color-neutral-800);">
+          <div><span style="color: var(--color-neutral-600);">{{ t.lblPhone }}</span><br>+52 656 207 5567</div>
+          <div><span style="color: var(--color-neutral-600);">{{ t.lblMail }}</span><br>doorwindowscenter@gmail.com</div>
+          <div><span style="color: var(--color-neutral-600);">{{ t.lblAddr }}</span><br>Av. de la raza 6687<br>col del futuro<br>Cd Juárez, Chihuahua, MX</div>
+          <div><span style="color: var(--color-neutral-600);">{{ t.lblHours }}</span><br>{{ t.hours }}</div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; padding: var(--space-3) var(--space-8) var(--space-6); font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-neutral-700);">
+        <span>© 2026 DoorWindowsCENTER</span>
+        <span style="color: var(--color-accent-2-700);">PVC · {{ t.rail3 }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Contenido&quot;}}">
+const COPY = {
+  es: {
+    tagline: "Fabricantes de ventanas y puertas en PVC",
+    nav1: "Nosotros", nav2: "Obra", nav3: "Preguntas", nav4: "Contacto",
+    rail1: "Fabricación propia", rail2: "PVC · Medida exacta", rail3: "Diseño europeo",
+    siteTagline: "Calidad y estilo en cada ventana.",
+    heroA: "Ventanas hechas",
+    heroB: "para durar décadas.",
+    heroSub: "Fabricamos ventanas y puertas de PVC a medida en nuestro propio taller: perfilería europea, vidrio de doble cámara e instalación por nuestro equipo. Sin intermediarios, sin medidas aproximadas.",
+    cta: "Pedir presupuesto",
+    cta2: "Ver la obra",
+    ph1: "Foto vertical — ventana instalada, luz natural",
+    phHero: "Foto principal a sangre — ventanal instalado, 1280 × 720",
+    phBleed: "Foto a sangre — fachada o interior con ventanal, 1280 × 780",
+    whyTitle: "Por qué DWC",
+    workTitle: "Obra y producto",
+    workMeta: "PVC · Cuatro líneas",
+    aboutKicker: "Sobre nosotros",
+    about1: "Lo que entra al taller como perfil sale como una ventana con nuestro nombre.",
+    about2: "Cada pedido se mide en obra, se fabrica en nuestras instalaciones y se instala por nuestro equipo. Ese control completo es lo que nos permite trabajar con perfilería europea, herrajes de gama alta y tolerancias exactas, y responder por el resultado durante toda la vida de la ventana.",
+    videoKicker: "Obra terminada",
+    videoTitle: "Vivienda completa: ventanales, entrada y balcones.",
+    faqTitle: "Preguntas frecuentes",
+    contactTitle: "Cuéntenos su proyecto.",
+    contactSub: "Envíe las medidas o una foto del vano por WhatsApp y le respondemos con un presupuesto detallado.",
+    whatsapp: "Escribir por WhatsApp",
+    lblPhone: "Teléfono / WhatsApp", lblMail: "Correo", lblAddr: "Taller", lblHours: "Horario",
+    hours: "Lun a Vie 8:00 – 17:00\nSáb 9:00 – 13:00",
+    points: [
+      { n: "01", t: "Fabricación propia", d: "Taller propio, sin intermediarios: el precio y el plazo dependen de nosotros." },
+      { n: "02", t: "Aislamiento térmico y acústico", d: "Perfil multicámara y vidrio doble: menos ruido de calle y menos gasto de climatización." },
+      { n: "03", t: "Medida a medida", d: "Cada hueco se mide en obra. Nada se ajusta con silicona ni con suplementos." },
+      { n: "04", t: "Garantía e instalación", d: "Instala nuestro equipo y la garantía cubre perfil, herraje y montaje." },
+      { n: "05", t: "Diseño europeo", d: "Perfilería y herrajes de fabricantes europeos, en acabados lisos y contemporáneos." }
+    ],
+    products: [
+      { t: "Ventanas correderas", d: "Grandes luces, hoja que no roba espacio interior.", ph: "Corredera — vano ancho", src: "assets/correderas.jpg" },
+      { t: "Ventanas oscilobatientes", d: "Apertura y ventilación en la misma hoja, cierre perimetral.", ph: "Oscilobatiente — detalle herraje", src: "assets/oscilobatiente.jpg" },
+      { t: "Puertas de patio", d: "Paso al jardín con umbral bajo y vidrio de suelo a techo.", ph: "Puerta de patio — jardín", src: "assets/puerta-patio.jpg" },
+      { t: "Cerramientos y terrazas", d: "Terrazas cerradas en PVC y vidrio, usables todo el año.", ph: "Cerramiento — terraza", src: "assets/cerramientos.jpg" }
+    ],
+    faq: [
+      { q: "¿Cuánto tarda un pedido?", a: "Entre cuatro y ocho semanas desde la medición en obra, según el número de huecos y el acabado. La instalación de una vivienda completa suele ocuparnos uno o dos días." },
+      { q: "¿Por qué PVC y no aluminio?", a: "El PVC aísla mejor de forma natural: no conduce el frío ni el calor como el metal. Con perfil multicámara y vidrio doble se nota en la factura y en el ruido." },
+      { q: "¿Trabajan sobre obra nueva y reforma?", a: "Ambas. En reforma podemos instalar sobre el marco existente cuando está en buen estado, o retirarlo por completo si conviene." },
+      { q: "¿Qué incluye el presupuesto?", a: "Medición, fabricación, herrajes, vidrio, instalación y retirada del material antiguo. Sin partidas abiertas ni extras al final de la obra." }
+    ]
+  },
+  en: {
+    tagline: "PVC window and door manufacturers",
+    nav1: "About", nav2: "Work", nav3: "FAQ", nav4: "Contact",
+    rail1: "Made in our own shop", rail2: "PVC · Exact measure", rail3: "European design",
+    siteTagline: "Quality and style in every window.",
+    heroA: "Windows built",
+    heroB: "to last decades.",
+    heroSub: "We manufacture custom PVC windows and doors in our own shop: European profiles, double-glazed units and installation by our own crew. No middlemen, no approximate measurements.",
+    cta: "Request a quote",
+    cta2: "See the work",
+    ph1: "Vertical photo — installed window, natural light",
+    phHero: "Lead full-bleed photo — installed picture window, 1280 × 720",
+    phBleed: "Full-bleed photo — façade or interior with large window, 1280 × 780",
+    whyTitle: "Why DWC",
+    workTitle: "Work and product",
+    workMeta: "PVC · Four lines",
+    aboutKicker: "About us",
+    about1: "What comes into the shop as profile leaves it as a window with our name on it.",
+    about2: "Every order is measured on site, built at our own facility and installed by our crew. That end-to-end control is what lets us work with European profiles, high-grade hardware and exact tolerances — and stand behind the result for the life of the window.",
+    videoKicker: "Finished project",
+    videoTitle: "A whole home: picture windows, entrance and balconies.",
+    faqTitle: "Frequently asked",
+    contactTitle: "Tell us about your project.",
+    contactSub: "Send the measurements or a photo of the opening on WhatsApp and we will come back with a detailed quote.",
+    whatsapp: "Message us on WhatsApp",
+    lblPhone: "Phone / WhatsApp", lblMail: "Email", lblAddr: "Workshop", lblHours: "Hours",
+    hours: "Mon–Fri 8:00 – 17:00\nSat 9:00 – 13:00",
+    points: [
+      { n: "01", t: "Made in our own shop", d: "Our own workshop, no middlemen: price and lead time are ours to control." },
+      { n: "02", t: "Thermal and acoustic insulation", d: "Multi-chamber profile and double glazing: less street noise, lower energy bills." },
+      { n: "03", t: "Built to measure", d: "Every opening is measured on site. Nothing is corrected with sealant or shims." },
+      { n: "04", t: "Warranty and installation", d: "Our own crew installs, and the warranty covers profile, hardware and fitting." },
+      { n: "05", t: "European design", d: "European profiles and hardware in flat, contemporary finishes." }
+    ],
+    products: [
+      { t: "Sliding windows", d: "Wide openings; the sash takes no interior space.", ph: "Slider — wide opening", src: "assets/correderas.jpg" },
+      { t: "Tilt-and-turn windows", d: "Ventilation and full opening in one sash, perimeter locking.", ph: "Tilt-and-turn — hardware detail", src: "assets/oscilobatiente.jpg" },
+      { t: "Patio doors", d: "Garden access with a low threshold and floor-to-ceiling glass.", ph: "Patio door — garden", src: "assets/puerta-patio.jpg" },
+      { t: "Enclosures and terraces", d: "PVC-and-glass terrace enclosures, usable year round.", ph: "Enclosure — terrace", src: "assets/cerramientos.jpg" }
+    ],
+    faq: [
+      { q: "How long does an order take?", a: "Four to eight weeks from the on-site measurement, depending on the number of openings and the finish. A whole home usually takes one or two days to install." },
+      { q: "Why PVC rather than aluminium?", a: "PVC insulates better by nature: it does not conduct cold or heat the way metal does. With a multi-chamber profile and double glazing you notice it in the bill and in the noise." },
+      { q: "Do you work on new build and renovation?", a: "Both. On renovations we can fit over the existing frame when it is sound, or strip it out completely when that is the better call." },
+      { q: "What does the quote include?", a: "Measuring, manufacturing, hardware, glazing, installation and removal of the old units. No open line items and no extras at the end of the job." }
+    ]
+  }
+};
+
+class Component extends DCLogic {
+  state = { lang: null };
+  renderVals() {
+    const lang = this.state.lang || (this.props.lang ?? "es");
+    const t = COPY[lang] || COPY.es;
+    const on = "var(--color-text)", off = "var(--color-neutral-500)";
+    return {
+      t, points: t.points, faq: t.faq,
+      products: t.products.map(p => ({
+        ...p,
+        noSrc: !p.src,
+        img: p.src ? React.createElement("img", { src: p.src, alt: p.t, style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" } }) : null
+      })),
+      esColor: lang === "es" ? on : off,
+      enColor: lang === "en" ? on : off,
+      setEs: () => this.setState({ lang: "es" }),
+      setEn: () => this.setState({ lang: "en" })
+    };
+  }
+}
+</script>
+</body>
+</html>
