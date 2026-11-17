@@ -278,6 +278,7 @@ body:has(#outlineBar:not([hidden])) #levelRow[hidden] ~ #hRow{bottom:var(--obh,5
   <div class="row">
     <button class="btn primary" id="btnRead" disabled>Leer plano con el agente</button>
     <button class="btn" id="btnSched">Leer tabla de puertas y ventanas</button>
+    <button class="btn" id="btnRevOpen">Lista de piezas por colocar</button>
     <button class="btn" id="btnBgOnly">Usar solo de fondo (sin agente)</button>
     <button class="btn" id="btnExample">Cargar ejemplo</button>
     <button class="btn danger" id="btnDelProj">Borrar proyecto</button>
@@ -2027,7 +2028,8 @@ function renderReview(){ const R = plan.review || [], el = $("rvList"), opts = k
   $("rvGo").textContent = `Pasar a colocar (${n} piezas)`; $("rvGo").disabled = !n;
   const needS = R.some(g => g.tag && !(g.w && g.h)); $("rvSchedRow").hidden = !needS || !sampler;
   if(needS){ let o = '<option value="0">Cédula en esta misma hoja</option>'; if(pdfDoc) for(let k = 1; k <= pdfDoc.numPages; k++) o += `<option value="${k}">Cédula en la página ${k} del PDF</option>`; if($("rvPage").innerHTML !== o) $("rvPage").innerHTML = o; } }
-function openReview(){ renderReview(); openPanel("pRev"); }
+function openReview(){ if(!plan.review) plan.review = []; renderReview(); openPanel("pRev"); }
+$("btnRevOpen").addEventListener("click", () => { setAdd(null); openReview(); });
 $("rvList").addEventListener("change", e => { const r = e.target.closest(".rvrow"), g = r && plan.review[+r.dataset.i], k = e.target.dataset.k; if(!g) return; e.stopPropagation();
   if(k === "qty") g.qty = Math.max(0, Math.min(99, Math.round(+e.target.value || 0)));
   else if(k === "type"){ g.type = e.target.value; g.guess = false; }
