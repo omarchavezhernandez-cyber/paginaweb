@@ -518,9 +518,7 @@ function addAt(i, x, y){ if(plan.walls[i] && plan.walls[i].ext === false && !pla
   const o = addMode === "door" ? {id:nextId++, type:"door", wall:i, offset:off, width:Math.min(0.9, L-0.3), height:2.1, sill:0, dmodel:"abat1", color:sw?sw.color:"negro"}
     : {id:nextId++, type:"window", wall:i, offset:off, width:Math.min(1.5, L-0.3), height:1.2, sill:0.9, opening:"corr2", line:sw?sw.line:"pvc", color:sw?sw.color:"negro", glass:sw?sw.glass:"claro"};
   const tr = trayCur && (plan.tray || []).find(t => t.key === trayCur); let po = o;
-  if(tr){ po = Object.assign({id:o.id, wall:i, offset:off, color:sw ? sw.color : "negro"}, JSON.parse(JSON.stringify(tr.tpl)), {tag:tr.label.slice(0, 14), rv:tr.key}); if(po.type === "window"){ po.line = sw ? sw.line : "pvc"; po.glass = sw ? sw.glass : "claro"; } po.offset = Math.min(Math.max(off, Math.min(po.width/2, L/2)), Math.max(L - po.width/2, L/2)); }
-  plan.openings.push(po); sel = po.id; setAdd(null);
-  if(tr && plan.hints){ const w0 = plan.walls[i], L0 = wlen(w0) || 1, px = w0.x1 + (w0.x2-w0.x1)/L0*po.offset, py = w0.y1 + (w0.y2-w0.y1)/L0*po.offset; let bi = -1, bd = 3.5; plan.hints.forEach((q, k) => { if(q.key !== tr.key || (q.level || 0) !== lv(w0)) return; const d = Math.hypot(q.x-px, q.y-py); if(d < bd){ bd = d; bi = k; } }); if(bi >= 0) plan.hints.splice(bi, 1); }
+  if(tr){ nextId--; po = placeOne(tr, i, x, y); if(!po) return; tr.left++; } else plan.openings.push(po); sel = po.id; setAdd(null);
   if(tr){ tr.left = Math.max(0, tr.left - 1); if(tr.left > 0){ trayCur = tr.key; addMode = tr.tpl.type; $("hint").textContent = `Toca el muro donde va la siguiente ${tr.label} (quedan ${tr.left}).`; } refresh(false); save();
     status(tr.left > 0 ? `${tr.label} colocada. Quedan ${tr.left}: toca el muro donde va la siguiente.` : ((plan.tray || []).some(t => t.left > 0) ? `${tr.label} completas. Elige otra pieza de la barra de arriba.` : "Todas las piezas están colocadas. Revisa en 3D.") + (po.width > L ? " Ojo: la pieza es más ancha que ese muro." : "")); return; }
   refresh(false); openSheet();
@@ -2047,8 +2045,17 @@ $("rvSched").addEventListener("click", async () => { const b = $("rvSched"); if(
 $("rvGo").addEventListener("click", () => { const R = (plan.review || []).filter(g => g.qty > 0), bad = R.filter(g => !(g.w && g.h)); if(bad.length){ status("Falta la medida de: " + bad.map(g => g.label).join(", ") + ". Escríbela o pon la cantidad en 0.", true); return; }
   plan.tray = R.map(g => { const placed = plan.openings.filter(o => o.rv === g.id).length; return {key:g.id, label:g.label, left:Math.max(0, g.qty - placed), tpl:tplOf(g)}; });
   plan.openings.forEach(o => { const g = R.find(q => q.id === o.rv); if(!g) return; const t = tplOf(g); ["type","width","height","sill","opening","dmodel"].forEach(k => { if(t[k] !== undefined) o[k] = t[k]; else delete o[k]; }); });
+  const auto = autoPlace(), rest = plan.tray.reduce((a, t) => a + t.left, 0);
   openPanel(null); save(); refresh(false); $("tab-plan").click(); const first = plan.tray.find(t => t.left > 0); if(first) pickTray(first.key);
-  status("Toca el muro donde va cada pieza. Elige la pieza en la barra de arriba; los círculos azules marcan dónde la vio el agente."); });
+  status((auto ? `${auto} piezas colocadas solas donde el agente vio su etiqueta. Si alguna quedó en el muro equivocado, arrástrala. ` : "") + (rest ? `Faltan ${rest} por colocar: elige la pieza en la barra de arriba y toca el muro.` : "Todas colocadas. Revisa en 3D.")); });
+function placeOne(tr, i, x, y){ const w = plan.walls[i], L = wlen(w); if(!w || L < 0.05) return null; const ref = windows()[0], off = Math.min(Math.max(((x-w.x1)*(w.x2-w.x1) + (y-w.y1)*(w.y2-w.y1))/L, 0), L);
+  const po = Object.assign({id:nextId++, wall:i, offset:off, color:ref ? ref.color : "negro"}, JSON.parse(JSON.stringify(tr.tpl)), {tag:tr.label.slice(0, 14), rv:tr.key}); if(po.type === "window"){ po.line = ref ? ref.line : "pvc"; po.glass = ref ? ref.glass : "claro"; }
+  po.offset = Math.min(Math.max(off, Math.min(po.width/2, L/2)), Math.max(L - po.width/2, L/2)); plan.openings.push(po); tr.left = Math.max(0, tr.left - 1);
+  if(plan.hints){ const px = w.x1 + (w.x2-w.x1)/L*po.offset, py = w.y1 + (w.y2-w.y1)/L*po.offset; let bi = -1, bd = 3.5; plan.hints.forEach((q, k) => { if(q.key !== tr.key || (q.level || 0) !== lv(w)) return; const d = Math.hypot(q.x-px, q.y-py); if(d < bd){ bd = d; bi = k; } }); if(bi >= 0) plan.hints.splice(bi, 1); }
+  return po; }
+function autoPlace(){ let n = 0; (plan.tray || []).forEach(tr => { const H = (plan.hints || []).filter(q => q.key === tr.key).slice(0, tr.left);
+    H.forEach(q => { if(tr.left <= 0) return; let best = null; plan.walls.forEach((w, i) => { if(lv(w) !== (q.level || 0) || w.ext === false) return; const dx = w.x2-w.x1, dy = w.y2-w.y1, L2 = dx*dx + dy*dy; if(L2 < 0.01) return; const t = Math.min(1, Math.max(0, ((q.x-w.x1)*dx + (q.y-w.y1)*dy)/L2)), d = Math.hypot(q.x-w.x1-t*dx, q.y-w.y1-t*dy); if(!best || d < best.d) best = {i, d, x:w.x1+t*dx, y:w.y1+t*dy}; });
+      if(best && best.d < 3 && placeOne(tr, best.i, best.x, best.y)) n++; }); }); return n; }
 function pickTray(k){ const t = (plan.tray || []).find(q => q.key === k && q.left > 0); if(!t || trayCur === k){ setAdd(null); return; } setAdd(t.tpl.type); trayCur = k;
   $("hint").textContent = `Toca el muro donde va ${t.label} (quedan ${t.left}).`; renderTray(); drawPlan(); }
 function renderTray(){ const el = $("tray"), T = (plan.tray || []).filter(t => t.left > 0); if(trayCur && !T.some(t => t.key === trayCur)) trayCur = null;
