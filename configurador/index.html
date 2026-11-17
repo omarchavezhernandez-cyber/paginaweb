@@ -162,9 +162,14 @@ body{background:var(--stage)}
 #hRow input{width:58px;border:1px solid #d5d6d3;border-radius:6px;padding:3px 5px;font:500 12px var(--mono);text-align:right;background:#fff;color:inherit}
 #levelRow:not([hidden]) ~ #hRow{bottom:56px}
 #levelRow button{background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.12)}
-#outlineBar{position:fixed;right:12px;bottom:12px;z-index:14}
+#outlineBar{position:fixed;right:12px;left:68px;bottom:12px;z-index:14;justify-content:flex-end;pointer-events:none}#outlineBar>*{pointer-events:auto}
+body:has(#outlineBar:not([hidden])) #levelRow{bottom:var(--obh,56px)}
+body:has(#outlineBar:not([hidden])) #hRow{bottom:calc(var(--obh,56px) + 44px)}
+body:has(#outlineBar:not([hidden])) #levelRow[hidden] ~ #hRow{bottom:var(--obh,56px)}
 #scaleBox{position:fixed;right:12px;bottom:58px;z-index:14;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.16);padding:10px 12px;width:min(430px,calc(100% - 96px))}
 #scaleBox p{margin:0 0 8px;font-size:12.5px;line-height:1.35}
+#upBox{position:fixed;right:12px;bottom:58px;z-index:14;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.16);padding:10px 12px;width:min(430px,calc(100% - 96px))}
+#upBox p{margin:0 0 8px;font-size:12.5px;line-height:1.35}#upBox select{flex:1;min-width:0;font-size:12.5px;padding:5px 6px}
 #scaleBox select,#scaleBox input{font-size:12.5px;padding:5px 6px;min-width:0}#scaleBox input{flex:1}
 #outlineBar button{background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.12)}
 #outlineBar{display:flex;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 84px)}
@@ -238,7 +243,11 @@ body{background:var(--stage)}
   <p id="scaleNow"></p>
   <div class="row" style="align-items:center;gap:6px"><select id="scaleDim" aria-label="Medida que conoces"><option value="w">Ancho total (horizontal)</option><option value="h">Fondo total (vertical)</option></select><input type="text" id="scaleVal" placeholder="23.6 · 77'6&quot; · 23600 mm" autocomplete="off" aria-label="Medida real"><button class="btn primary" id="scaleGo">Aplicar</button></div>
 </div>
-<div class="chips" id="outlineBar" hidden><button id="btnZoomOut" title="Alejar" aria-label="Alejar">−</button><button id="btnZoomIn" title="Acercar" aria-label="Acercar">+</button><button id="btnZoomFit" title="Ver todo el plano">Ajustar</button><button id="btnTrUndo" hidden>Deshacer punto</button><button id="btnTrDone" hidden>Cerrar contorno</button><button id="btnTrCancel" hidden>Cancelar</button><button id="btnScale" aria-pressed="false">Escala</button><button id="btnTrace">Trazar contorno</button><button id="btnTraceIn">Trazar interior</button><button id="btnInDel" hidden>Borrar interiores</button><button id="btnTrBack" hidden>Deshacer trazo</button><button id="btnVxAdd" aria-pressed="false" hidden>+ Agregar punto</button><button id="btnVxDel" hidden>Quitar punto</button><button id="btnOutline" aria-pressed="false">Editar contorno</button></div>
+<div id="upBox" hidden>
+  <p>La planta alta se traza igual que la baja: marcas las esquinas de su contorno sobre el plano. ¿Dónde está dibujada?</p>
+  <div class="row" style="align-items:center;gap:6px"><select id="upSrc" aria-label="Hoja de la planta alta"></select><button class="btn primary" id="upGo">Empezar</button><button class="btn" id="upCancel">Cancelar</button></div>
+</div>
+<div class="chips" id="outlineBar" hidden><button id="btnZoomOut" title="Alejar" aria-label="Alejar">−</button><button id="btnZoomIn" title="Acercar" aria-label="Acercar">+</button><button id="btnZoomFit" title="Ver todo el plano">Ajustar</button><button id="btnTrUndo" hidden>Deshacer punto</button><button id="btnTrDone" hidden>Cerrar contorno</button><button id="btnTrCancel" hidden>Cancelar</button><button id="btnScale" aria-pressed="false">Escala</button><button id="btnTrace">Trazar contorno</button><button id="btnTraceIn">Trazar interior</button><button id="btnUpAdd" hidden>+ Planta alta</button><button id="btnAlign" hidden>Encimar plantas</button><button id="btnUpDel" hidden>Quitar planta alta</button><button id="btnInDel" hidden>Borrar interiores</button><button id="btnTrBack" hidden>Deshacer trazo</button><button id="btnVxAdd" aria-pressed="false" hidden>+ Agregar punto</button><button id="btnVxDel" hidden>Quitar punto</button><button id="btnOutline" aria-pressed="false">Editar contorno</button></div>
 
 <section class="panel" id="pPlano" aria-label="Plano">
   <div class="ph"><h2>Plano</h2><button class="pclose" aria-label="Cerrar panel">×</button></div>
@@ -754,7 +763,7 @@ function openLabel(){ const o = selected(), b = $("btnOpen"), what = o && o.type
 
 /* ---------- Planta (SVG) ---------- */
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-let planLock = null, outlineEdit = false, selVx = null, vxAdd = false, trace = null;
+let align = null, planLock = null, outlineEdit = false, selVx = null, vxAdd = false, trace = null;
 const isSlide = o => o && o.type === "window" && /^corr\d$/.test(o.opening), isSwing = o => o && (o.type === "door" || ["abat","osci","proy","combo"].includes(o.opening));
 function flowOf(o){ const f = o.flow || (o.stack === "l" ? "lr" : o.stack === "r" ? "rl" : ""); return f === "lr" || f === "rl" ? f : (o.opening === "corr2" ? "lr" : "c"); }
 function seenFlip(o){ const w = plan.walls[o.wall]; if(!w) return false; let V = null; try{ V = loopOf(lv(w)); }catch(e){} if(!V){ const b = bbox(), Lw = wlen(w) || 1; return (-(w.y2-w.y1)/Lw)*(b.x0+b.w/2-(w.x1+w.x2)/2) + ((w.x2-w.x1)/Lw)*(b.y0+b.h/2-(w.y1+w.y2)/2) > 0; } const L = wlen(w) || 1, px = (w.x1+w.x2)/2 - (w.y2-w.y1)/L*0.3, py = (w.y1+w.y2)/2 + (w.x2-w.x1)/L*0.3; let ins = false;
@@ -772,7 +781,8 @@ function drawPlan(){
   const S = 100, b = pbox(), m = 1.4; const fs = Math.max(b.w,b.h)*S/42;
   const X = x => (x-b.x0+m)*S, Y = y => (y-b.y0+m)*S;
   let h = ""; const bg = plan.bg && plan.bg[viewLevel];
-  if(bg) h += `<rect x="${X(bg.x)}" y="${Y(bg.y)}" width="${bg.w*S}" height="${bg.h*S}" fill="#fff"/><image href="${bg.src}" x="${X(bg.x)}" y="${Y(bg.y)}" width="${bg.w*S}" height="${bg.h*S}" preserveAspectRatio="none" opacity="0.8"/>`;
+  if(bg) h += `<rect x="${X(bg.x)}" y="${Y(bg.y)}" width="${bg.w*S}" height="${bg.h*S}" fill="#fff"/><image href="${bg.src || (plan.bg[bg.ref] && plan.bg[bg.ref].src) || ""}" x="${X(bg.x)}" y="${Y(bg.y)}" width="${bg.w*S}" height="${bg.h*S}" preserveAspectRatio="none" opacity="0.8"/>`;
+  if(viewLevel > 0) plan.walls.forEach(w => { if(lv(w) !== viewLevel-1 || w.ext === false) return; h += `<line x1="${X(w.x1)}" y1="${Y(w.y1)}" x2="${X(w.x2)}" y2="${Y(w.y2)}" stroke="#2a6fdb" stroke-opacity="0.75" stroke-width="${Math.max(3, fs*0.09)}" stroke-dasharray="${fs*0.5} ${fs*0.3}" stroke-linecap="round"/>`; });
   plan.walls.forEach(w => { if(lv(w) !== viewLevel) return; h += `<line x1="${X(w.x1)}" y1="${Y(w.y1)}" x2="${X(w.x2)}" y2="${Y(w.y2)}" stroke="${w.ext === false ? "#5f9d00" : bg ? "#e0452b" : "var(--ink)"}" stroke-opacity="${trace && !(trace.inner && w.ext === false) ? (trace.inner ? 0.45 : 0.22) : bg ? (w.ext === false ? 0.85 : 0.6) : 1}" stroke-width="${wthick(w)*S*(bg ? 0.8 : 1)}" stroke-linecap="square"/>`; });
   plan.walls.forEach((w,i) => { if(lv(w) !== viewLevel) return; h += `<line data-wall="${i}" x1="${X(w.x1)}" y1="${Y(w.y1)}" x2="${X(w.x2)}" y2="${Y(w.y2)}" stroke="transparent" stroke-width="${0.6*S}"/>`; });
   plan.openings.forEach(o => {
@@ -1246,7 +1256,7 @@ function renderLevels(){ const n = plan.levels || 1, el = $("levelRow"); el.hidd
     + `<button data-slab="1" aria-pressed="${showSlab}" title="Mostrar u ocultar la losa entre niveles">Losa</button>`;
   const u = plan.upShift || {x:0,y:0}; $("upX").value = u.x.toFixed(2); $("upY").value = u.y.toFixed(2); }
 function refresh(refit){
-  const b = bbox(); renderLevels();
+  const b = bbox(); renderLevels(); try{ outlineUI(); }catch(e){}
   $("planChip").textContent = plan.name; $("planChip").className = plan.example ? "chip" : "chip ok";
   $("planW").value = b.w.toFixed(2); $("wallH").value = plan.wallH.toFixed(2); $("wallH2").value = plan.wallH.toFixed(2);
   build3D(); if(refit) fitCamera(); drawPlan(); try{ drawElev(); }catch(e){} renderChips(); fillEditor(); renderQuote(); renderInfo(); drawPhoto(); save();
@@ -1306,7 +1316,7 @@ document.querySelectorAll(".panel .pclose").forEach(b => { if(b.id !== "btnClose
 document.querySelectorAll('[role="tab"]').forEach(bt => bt.addEventListener("click", () => {
   document.querySelectorAll('[role="tab"]').forEach(x => x.setAttribute("aria-selected", x === bt));
   ["v3d","vplan","velev","vphoto"].forEach(v => $(v).toggleAttribute("hidden", v !== bt.dataset.view));
-  $("outlineBar").hidden = bt.dataset.view !== "vplan"; if(bt.dataset.view !== "vplan"){ $("scaleBox").hidden = true; $("btnScale").setAttribute("aria-pressed", false); } $("hRow").hidden = bt.dataset.view === "vphoto"; if(bt.dataset.view !== "vplan" && (outlineEdit || trace)){ outlineEdit = false; selVx = null; vxAdd = false; trace = null; planLock = null; outlineUI(); }
+  $("outlineBar").hidden = bt.dataset.view !== "vplan"; setTimeout(obh, 0); if(bt.dataset.view !== "vplan"){ $("upBox").hidden = true; if(align){ align = null; outlineUI(); } $("scaleBox").hidden = true; $("btnScale").setAttribute("aria-pressed", false); } $("hRow").hidden = bt.dataset.view === "vphoto"; if(bt.dataset.view !== "vplan" && (outlineEdit || trace)){ outlineEdit = false; selVx = null; vxAdd = false; trace = null; planLock = null; outlineUI(); }
   const ph = bt.dataset.view === "vphoto"; $("railFoto").hidden = !ph; if(ph) openPanel("photoTools"); else if($("photoTools").classList.contains("on")) openPanel(null);
   if(bt.dataset.view === "v3d") size3D(); else if(bt.dataset.view === "vphoto") drawPhoto();
 }));
@@ -1378,9 +1388,30 @@ $("btnInDel").addEventListener("click", () => { const b = $("btnInDel"); if(!b.c
 $("btnTrUndo").addEventListener("click", () => { if(trace){ trace.pts.pop(); outlineUI(); drawPlan(); } });
 $("btnTrDone").addEventListener("click", traceDone);
 $("btnTrCancel").addEventListener("click", () => { traceEnd(false); status("Trazo cancelado; se conserva el contorno anterior."); });
-function outlineUI(){ const tr = !!trace; $("btnTrUndo").hidden = !tr; $("btnTrDone").hidden = !tr; $("btnTrCancel").hidden = !tr; $("btnTrace").hidden = tr; $("btnOutline").hidden = tr; if(tr){ const j = traceJoin(); $("btnTrUndo").disabled = !trace.pts.length; $("btnTrDone").disabled = !j && trace.pts.length < 3; $("btnTrDone").textContent = j ? "Unir al contorno" : trace.loop ? "Reemplazar todo el contorno" : "Cerrar contorno"; if(trace.inner){ $("btnTrDone").disabled = trace.pts.length < 2; $("btnTrDone").textContent = "Terminar interior"; } }
+function obh(){ try{ const b = $("outlineBar"); if(!b.hidden) document.body.style.setProperty("--obh", (b.getBoundingClientRect().height + 20) + "px"); }catch(e){} }
+window.addEventListener("resize", obh);
+function outlineUI(){ setTimeout(obh, 0); const tr = !!trace; $("btnTrUndo").hidden = !tr; $("btnTrDone").hidden = !tr; $("btnTrCancel").hidden = !tr; $("btnTrace").hidden = tr; $("btnOutline").hidden = tr; if(tr){ const j = traceJoin(); $("btnTrUndo").disabled = !trace.pts.length; $("btnTrDone").disabled = !j && trace.pts.length < 3; $("btnTrDone").textContent = j ? "Unir al contorno" : trace.loop ? "Reemplazar todo el contorno" : "Cerrar contorno"; if(trace.inner){ $("btnTrDone").disabled = trace.pts.length < 2; $("btnTrDone").textContent = "Terminar interior"; } }
   $("btnTraceIn").hidden = tr; { const hasIn = plan.walls.some(w => lv(w) === viewLevel && w.ext === false); $("btnInDel").hidden = tr || !outlineEdit || !hasIn; }
-  $("btnOutline").setAttribute("aria-pressed", outlineEdit); $("btnOutline").textContent = outlineEdit ? "Terminar contorno" : "Editar contorno"; $("btnVxDel").hidden = tr || !(outlineEdit && selVx); $("btnVxAdd").hidden = tr || !outlineEdit; $("btnVxAdd").setAttribute("aria-pressed", vxAdd); if(!outlineEdit && !tr) traceBack = null; $("btnTrBack").hidden = tr || !outlineEdit || !traceBack; }
+  $("btnOutline").setAttribute("aria-pressed", outlineEdit); $("btnOutline").textContent = outlineEdit ? "Terminar contorno" : "Editar contorno"; $("btnVxDel").hidden = tr || !(outlineEdit && selVx); $("btnVxAdd").hidden = tr || !outlineEdit; $("btnVxAdd").setAttribute("aria-pressed", vxAdd); if(!outlineEdit && !tr) traceBack = null; $("btnTrBack").hidden = tr || !outlineEdit || !traceBack;
+  const nl = plan.levels || 1, busy = tr || !!align; $("btnUpAdd").hidden = busy || nl > 1 || plan.example || isPlaceholder(0); $("btnAlign").hidden = busy || nl < 2 || viewLevel < 1 || isPlaceholder(viewLevel); $("btnUpDel").hidden = busy || nl < 2 || viewLevel < 1; if(busy) $("upBox").hidden = true; }
+$("btnUpAdd").addEventListener("click", () => { const sel = $("upSrc"); let o = '<option value="same">En la misma hoja que la planta baja</option>';
+  if(pdfDoc && pdfDoc.numPages > 1) for(let i = 2; i <= pdfDoc.numPages; i++) o += `<option value="p${i}">En la página ${i} del PDF</option>`;
+  if(src && src.full && !(plan.bg && plan.bg[0] && plan.bg[0].px)) o += '<option value="cur">En el plano que tengo cargado ahora</option>'; sel.innerHTML = o; $("scaleBox").hidden = true; $("upBox").hidden = false; });
+$("upCancel").addEventListener("click", () => { $("upBox").hidden = true; });
+$("upGo").addEventListener("click", async () => { const v = $("upSrc").value, b0 = plan.bg && plan.bg[0]; let g = null; $("upGo").disabled = true;
+  try{ if(b0){ if(v === "same") g = {ref:0, x:b0.x, y:b0.y, w:b0.w, h:b0.h};
+      else { const c = v === "cur" ? src.full : await pageCanvas(+v.slice(1), 3000), url = scaled(c, 3200).toDataURL("image/jpeg", 0.85), k = b0.px ? b0.w/b0.px : b0.w/c.width; g = {src:url, x:b0.x, y:b0.y, w:c.width*k, h:c.height*k, px:c.width}; } } }
+  catch(e){ status("No se pudo abrir esa página del plano.", true); $("upGo").disabled = false; return; }
+  $("upGo").disabled = false; $("upBox").hidden = true; plan.levels = 2; plan.levelNames = ["Planta baja", "Planta alta"]; plan.upShift = {x:0, y:0}; if(!plan.bg) plan.bg = []; if(g) plan.bg[1] = g;
+  viewLevel = 1; view3d = 1; outlineEdit = false; selVx = null; pz.z = 1; pz.cx = null; refresh(false); save(); $("btnTrace").click();
+  status("Planta alta: marca las esquinas de su contorno donde está dibujada y cierra. Después toca «Encimar plantas» para ponerla sobre la planta baja (la línea azul punteada)."); });
+$("btnAlign").addEventListener("click", () => { outlineEdit = false; selVx = null; setAdd(null); closeSheet(); align = {step:1, L:viewLevel}; outlineUI(); drawPlan(); status("Encimar 1 de 2: toca en la planta alta un punto que también exista en la baja, por ejemplo una esquina de la fachada o la escalera."); });
+function alignPoint(p){ if(align.step === 1){ align.p1 = p; align.step = 2; viewLevel = align.L - 1; pz.z = 1; pz.cx = null; renderLevels(); drawPlan(); status("Encimar 2 de 2: ahora toca ese mismo punto en la planta baja."); return; }
+  const d = [p[0]-align.p1[0], p[1]-align.p1[1]], L = align.L; plan.walls.forEach(w => { if(lv(w) >= L){ w.x1 += d[0]; w.x2 += d[0]; w.y1 += d[1]; w.y2 += d[1]; } }); (plan.bg || []).forEach((g, i) => { if(g && i >= L){ g.x += d[0]; g.y += d[1]; } });
+  const u = plan.upShift || (plan.upShift = {x:0, y:0}); u.x += d[0]; u.y += d[1]; align = null; viewLevel = L; view3d = "all"; pz.z = 1; pz.cx = null; outlineUI(); refresh(false); save(); status("Plantas encimadas. La línea azul punteada es la planta baja; si no coincide, vuelve a «Encimar plantas». Revisa en 3D."); }
+$("btnUpDel").addEventListener("click", () => { const b = $("btnUpDel"); if(!b.classList.contains("sure")){ b.classList.add("sure"); b.textContent = "¿Quitar planta alta y sus piezas?"; setTimeout(() => { b.classList.remove("sure"); b.textContent = "Quitar planta alta"; }, 4000); return; }
+  b.classList.remove("sure"); b.textContent = "Quitar planta alta"; const ids = []; plan.walls.forEach((w, i) => { if(lv(w) >= 1) ids.push(i); }); dropWalls(ids); plan.openings.forEach(o => { if(o.span){ delete o.span; o.height = Math.min(o.height, plan.wallH); } });
+  if(plan.bg) plan.bg.length = 1; delete plan.levels; delete plan.levelNames; plan.upShift = {x:0, y:0}; viewLevel = 0; view3d = "all"; outlineEdit = false; selVx = null; outlineUI(); refresh(true); save(); status("Planta alta quitada."); });
 $("btnTrBack").addEventListener("click", () => { if(!traceBack) return; try{ const q = JSON.parse(traceBack); plan.walls = q.walls; plan.openings = q.openings; }catch(e){} traceBack = null; selVx = null; outlineEdit = false; outlineUI(); refresh(false); save(); status("Trazo deshecho. El contorno quedó como estaba antes."); });
 $("btnVxAdd").addEventListener("click", () => { vxAdd = !vxAdd; outlineUI(); status(vxAdd ? "Toca el tramo del contorno donde quieres el punto nuevo." : "Arrastra los puntos rojos para corregir el contorno."); });
 $("btnOutline").addEventListener("click", () => { outlineEdit = !outlineEdit; selVx = null; vxAdd = false; setAdd(null); closeSheet(); outlineUI(); drawPlan();
@@ -1411,6 +1442,7 @@ const planDragEnd = () => { if(wallDrag){ const mv = wallDrag.moved; wallDrag = 
 $("vplan").addEventListener("pointerup", planDragEnd); $("vplan").addEventListener("pointercancel", planDragEnd);
 $("vplan").addEventListener("click", e => {
   if(planDragged){ planDragged = false; return; }
+  if(align){ alignPoint(planPt(e)); return; }
   if(trace){ tracePoint(planPt(e)); return; }
   if(outlineEdit && !addMode){ const tw = e.target.closest("[data-wall]"); if(tw && vxAdd){ splitWall(+tw.dataset.wall, planPt(e)); vxAdd = false; outlineUI(); refresh(false); status("Punto agregado. Arrástralo a su lugar."); } else if(tw) status("Arrastra el muro para moverlo completo. Para una esquina nueva, toca «+ Agregar punto»."); return; }
   if(!addMode) return pickFrom(e);
@@ -1471,7 +1503,7 @@ $("priceFields").addEventListener("change", e => {
   renderQuote(); save();
 });
 $("btnCopy").addEventListener("click", async () => { try{ await navigator.clipboard.writeText(quoteText()); $("copyMsg").textContent = "Copiada al portapapeles."; }catch(e){ $("copyMsg").textContent = "No se pudo copiar aquí."; } });
-$("levelRow").addEventListener("click", e => { const t = e.target.closest("button"); if(!t) return;
+$("levelRow").addEventListener("click", e => { const t = e.target.closest("button"); if(!t) return; if(align){ align = null; outlineUI(); status("Encimar cancelado."); }
   if(t.dataset.all){ view3d = "all"; } else if(t.dataset.slab){ showSlab = !showSlab; } else { viewLevel = +t.dataset.level; view3d = viewLevel; }
   renderLevels(); drawPlan(); build3D(); });
 ["upX","upY"].forEach(id => $(id).addEventListener("change", e => { const u = plan.upShift || (plan.upShift = {x:0,y:0}), k = id === "upX" ? "x" : "y", v = num(e.target, -200, 200, u[k]), d = v - u[k]; u[k] = v;
@@ -1489,7 +1521,7 @@ $("btnBgOnly").addEventListener("click", () => { if(!src || !(src.full || src.cv
   if(!plan.example && plan.bg && plan.bg[0] && plan.name === (planName || "Plano subido") && !isPlaceholder(0)){ openPanel(null); const tb = document.querySelector('[data-view="vplan"]'); if(tb) tb.click(); status("Este plano ya tiene tu contorno guardado: sigues desde tu último trazo. Usa «Editar contorno» o «Trazar contorno» para corregirlo."); return; }
   let url = ""; try{ url = scaled(src.full || src.cv, 3200).toDataURL("image/jpeg", 0.85); }catch(e){} if(!url){ status("No se pudo preparar la imagen del plano."); return; }
   const c = src.full || src.cv, W = 30, H = W*(c.height/c.width), q = (a, b, cc, d) => ({x1:a, y1:b, x2:cc, y2:d, ext:true, ph:true});
-  setPlan({name:planName || "Plano subido", example:false, wallH:2.6, walls:[q(W*0.3,H*0.3,W*0.7,H*0.3), q(W*0.7,H*0.3,W*0.7,H*0.7), q(W*0.7,H*0.7,W*0.3,H*0.7), q(W*0.3,H*0.7,W*0.3,H*0.3)], openings:[], upShift:{x:0,y:0}, bg:[{src:url, x:0, y:0, w:W, h:H}]});
+  setPlan({name:planName || "Plano subido", example:false, wallH:2.6, walls:[q(W*0.3,H*0.3,W*0.7,H*0.3), q(W*0.7,H*0.3,W*0.7,H*0.7), q(W*0.7,H*0.7,W*0.3,H*0.7), q(W*0.3,H*0.7,W*0.3,H*0.3)], openings:[], upShift:{x:0,y:0}, bg:[{src:url, x:0, y:0, w:W, h:H, px:c.width}]});
   refresh(true); save(); openPanel(null); const tab = document.querySelector('[data-view="vplan"]'); if(tab) tab.click();
   status("Plano de fondo listo, sin agente. 1) «Trazar contorno» y marca las esquinas de la casa. 2) «Escala» y escribe el ancho real. 3) Agrega puertas y ventanas tocando el muro."); });
 $("planChip").addEventListener("click", () => { openPanel("pProj"); renderProj(); });
