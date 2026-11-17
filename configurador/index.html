@@ -73,6 +73,21 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .hjrow .s{grid-column:2;display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .hjrow select{width:100%;font-size:12.5px;padding:4px 6px}
 input[type=text]{font:400 14px var(--body);padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);width:100%}
+#tray{position:fixed;top:60px;left:68px;right:12px;z-index:13;display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:thin}
+#tray[hidden]{display:none}
+#tray button{flex:none;font:500 13px var(--mono);padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+#tray button b{color:var(--accent-strong)}
+#tray button[aria-pressed="true"]{border-color:#2a6fdb;box-shadow:inset 0 0 0 2px #2a6fdb;color:#1d4fa3}
+#tray .tl{flex:none;align-self:center;font:600 12px var(--body);color:var(--muted);padding:0 2px}
+body:has(#tray:not([hidden])) .toast{top:108px}
+@media (min-width:900px){ #tray{right:410px} body:has(#tray:not([hidden])) .toast{top:12px} }
+#rvList{display:grid;gap:8px;max-height:52vh;overflow:auto;padding-right:2px}
+.rvrow{border:1px solid var(--line);border-radius:8px;padding:8px 9px;background:var(--card);display:grid;gap:6px}
+.rvrow.bad{border-color:#d0442c;box-shadow:inset 3px 0 0 #d0442c}.rvrow.warn{box-shadow:inset 3px 0 0 #e0a100}
+.rvtop{display:flex;align-items:center;gap:8px}.rvlab{font:600 13px var(--mono)}.rvfrom{flex:1;font-size:11.5px;color:var(--muted);line-height:1.3}
+.rvrow .x{border:0;background:none;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;padding:0 4px}
+.rvf{display:grid;grid-template-columns:56px 1fr 1fr;gap:6px}.rvf label{display:grid;gap:2px;font-size:11px;color:var(--muted)}
+.rvf input,.rvf select{font:500 12.5px var(--body);padding:5px 6px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);min-width:0;width:100%}
 #pjList{display:grid;gap:6px;max-height:48vh;overflow:auto;padding-right:2px}
 .pjrow{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:stretch}
 .pjrow .o{display:block;text-align:left;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--card);color:var(--ink);font:500 13px var(--body);cursor:pointer;min-width:0}
@@ -156,15 +171,21 @@ body{background:var(--stage)}
 .toast.err{background:var(--warn-bg);color:var(--warn);border-color:transparent}
 #hint{position:fixed;bottom:58px;left:50%;transform:translateX(-50%);z-index:14;margin:0;background:var(--ink);color:var(--card);padding:8px 14px;border-radius:20px;font-size:13px;max-width:84%;text-align:center}
 #hint:empty{display:none}
-#levelRow{position:fixed;left:68px;bottom:12px;z-index:14}
+#levelRow{position:fixed;left:68px;right:12px;bottom:12px;z-index:14;pointer-events:none;align-items:center}#levelRow>*{pointer-events:auto}
+#levelRow .lvsep{font:600 12px var(--body);color:var(--muted);margin-left:6px;background:var(--card);padding:5px 8px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 #hRow{position:fixed;left:68px;bottom:12px;z-index:14;display:flex;align-items:center;gap:6px;background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.12);border-radius:999px;padding:5px 12px;font:500 12px var(--body);color:var(--ink)}
 #hRow[hidden]{display:none}
 #hRow input{width:58px;border:1px solid #d5d6d3;border-radius:6px;padding:3px 5px;font:500 12px var(--mono);text-align:right;background:#fff;color:inherit}
 #levelRow:not([hidden]) ~ #hRow{bottom:56px}
 #levelRow button{background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.12)}
-#outlineBar{position:fixed;right:12px;bottom:12px;z-index:14}
+#outlineBar{position:fixed;right:12px;left:68px;bottom:12px;z-index:14;justify-content:flex-end;pointer-events:none}#outlineBar>*{pointer-events:auto}
+body:has(#outlineBar:not([hidden])) #levelRow{bottom:var(--obh,56px)}
+body:has(#outlineBar:not([hidden])) #hRow{bottom:calc(var(--obh,56px) + 44px)}
+body:has(#outlineBar:not([hidden])) #levelRow[hidden] ~ #hRow{bottom:var(--obh,56px)}
 #scaleBox{position:fixed;right:12px;bottom:58px;z-index:14;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.16);padding:10px 12px;width:min(430px,calc(100% - 96px))}
 #scaleBox p{margin:0 0 8px;font-size:12.5px;line-height:1.35}
+#upBox{position:fixed;right:12px;bottom:58px;z-index:14;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.16);padding:10px 12px;width:min(430px,calc(100% - 96px))}
+#upBox p{margin:0 0 8px;font-size:12.5px;line-height:1.35}#upBox select{flex:1;min-width:0;font-size:12.5px;padding:5px 6px}
 #scaleBox select,#scaleBox input{font-size:12.5px;padding:5px 6px;min-width:0}#scaleBox input{flex:1}
 #outlineBar button{background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.12)}
 #outlineBar{display:flex;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 84px)}
@@ -231,6 +252,7 @@ body{background:var(--stage)}
 </nav>
 
 <div class="toast" id="toast" role="status" hidden></div>
+<div id="tray" hidden aria-label="Piezas por colocar"></div>
 <p id="hint" role="status"></p>
 <div class="chips" id="levelRow" hidden></div>
 <label id="hRow" for="wallH2">Alto de muros<input type="number" id="wallH2" step="0.05" min="2" max="6" inputmode="decimal">m</label>
@@ -238,7 +260,11 @@ body{background:var(--stage)}
   <p id="scaleNow"></p>
   <div class="row" style="align-items:center;gap:6px"><select id="scaleDim" aria-label="Medida que conoces"><option value="w">Ancho total (horizontal)</option><option value="h">Fondo total (vertical)</option></select><input type="text" id="scaleVal" placeholder="23.6 · 77'6&quot; · 23600 mm" autocomplete="off" aria-label="Medida real"><button class="btn primary" id="scaleGo">Aplicar</button></div>
 </div>
-<div class="chips" id="outlineBar" hidden><button id="btnZoomOut" title="Alejar" aria-label="Alejar">−</button><button id="btnZoomIn" title="Acercar" aria-label="Acercar">+</button><button id="btnZoomFit" title="Ver todo el plano">Ajustar</button><button id="btnTrUndo" hidden>Deshacer punto</button><button id="btnTrDone" hidden>Cerrar contorno</button><button id="btnTrCancel" hidden>Cancelar</button><button id="btnScale" aria-pressed="false">Escala</button><button id="btnTrace">Trazar contorno</button><button id="btnTraceIn">Trazar interior</button><button id="btnInDel" hidden>Borrar interiores</button><button id="btnTrBack" hidden>Deshacer trazo</button><button id="btnVxAdd" aria-pressed="false" hidden>+ Agregar punto</button><button id="btnVxDel" hidden>Quitar punto</button><button id="btnOutline" aria-pressed="false">Editar contorno</button></div>
+<div id="upBox" hidden>
+  <p>La planta alta se traza igual que la baja: marcas las esquinas de su contorno sobre el plano. ¿Dónde está dibujada?</p>
+  <div class="row" style="align-items:center;gap:6px"><select id="upSrc" aria-label="Hoja de la planta alta"></select><button class="btn primary" id="upGo">Empezar</button><button class="btn" id="upCancel">Cancelar</button></div>
+</div>
+<div class="chips" id="outlineBar" hidden><button id="btnZoomOut" title="Alejar" aria-label="Alejar">−</button><button id="btnZoomIn" title="Acercar" aria-label="Acercar">+</button><button id="btnZoomFit" title="Ver todo el plano">Ajustar</button><button id="btnTrUndo" hidden>Deshacer punto</button><button id="btnTrDone" hidden>Cerrar contorno</button><button id="btnTrCancel" hidden>Cancelar</button><button id="btnScale" aria-pressed="false">Escala</button><button id="btnTrace">Trazar contorno</button><button id="btnTraceIn">Trazar interior</button><button id="btnUpAdd" hidden>+ Planta alta</button><button id="btnAlign" hidden>Encimar plantas</button><button id="btnUpDel" hidden>Quitar planta alta</button><button id="btnInDel" hidden>Borrar interiores</button><button id="btnTrBack" hidden>Deshacer trazo</button><button id="btnVxAdd" aria-pressed="false" hidden>+ Agregar punto</button><button id="btnVxDel" hidden>Quitar punto</button><button id="btnOutline" aria-pressed="false">Editar contorno</button></div>
 
 <section class="panel" id="pPlano" aria-label="Plano">
   <div class="ph"><h2>Plano</h2><button class="pclose" aria-label="Cerrar panel">×</button></div>
@@ -252,6 +278,7 @@ body{background:var(--stage)}
   <div class="row">
     <button class="btn primary" id="btnRead" disabled>Leer plano con el agente</button>
     <button class="btn" id="btnSched">Leer tabla de puertas y ventanas</button>
+    <button class="btn" id="btnRevOpen">Lista de piezas por colocar</button>
     <button class="btn" id="btnBgOnly">Usar solo de fondo (sin agente)</button>
     <button class="btn" id="btnExample">Cargar ejemplo</button>
     <button class="btn danger" id="btnDelProj">Borrar proyecto</button>
@@ -316,6 +343,14 @@ body{background:var(--stage)}
   <p class="hint">3. Arrastra las líneas divisorias para cambiar el tamaño de cada sección.</p>
 </section>
 
+<section class="panel" id="pRev" aria-label="Revisar lista leída">
+  <div class="ph"><h2>Revisa lo que se leyó</h2><button class="pclose" aria-label="Cerrar panel">×</button></div>
+  <p class="status" id="rvInfo" style="margin:0 0 8px"></p>
+  <div id="rvList"></div>
+  <div class="row" style="margin-top:8px"><button class="btn" id="rvAdd">+ Agregar pieza</button></div>
+  <div class="row" id="rvSchedRow" style="margin-top:8px;align-items:center;gap:6px" hidden><select id="rvPage" aria-label="Hoja de la cédula" style="flex:1;min-width:0"></select><button class="btn" id="rvSched">Leer cédula</button></div>
+  <div class="row" style="margin-top:10px"><button class="btn primary" id="rvGo">Pasar a colocar</button></div>
+</section>
 <section class="panel" id="pProj" aria-label="Proyectos">
   <div class="ph"><h2>Proyectos</h2><button class="pclose" aria-label="Cerrar panel">×</button></div>
   <label class="f wide" for="pjName">Nombre del proyecto abierto<input type="text" id="pjName" autocomplete="off" maxlength="80"></label>
@@ -467,7 +502,7 @@ function span(o){ const L = wlen(plan.walls[o.wall]); const hw = Math.min(o.widt
 function label(o){ if(o.tag) return o.tag; return o.type === "window" ? "V" + (windows().indexOf(o)+1) : "P" + (plan.openings.filter(x => x.type === "door").indexOf(o)+1); }
 let addMode = null;
 const HINT = "";
-function setAdd(m){ addMode = m; $("btnAddW").setAttribute("aria-pressed", m === "window"); $("btnAddD").setAttribute("aria-pressed", m === "door");
+function setAdd(m){ addMode = m; if(!m && trayCur){ trayCur = null; setTimeout(() => { try{ renderTray(); drawPlan(); }catch(e){} }, 0); } $("btnAddW").setAttribute("aria-pressed", m === "window"); $("btnAddD").setAttribute("aria-pressed", m === "door");
   if(m) openPanel(null);
   $("hint").textContent = m ? `Toca el muro donde va la ${m === "window" ? "ventana" : "puerta"}. Toca el icono otra vez para cancelar.` : HINT; }
 let bubbleMoved = false;
@@ -482,7 +517,11 @@ function addAt(i, x, y){ if(plan.walls[i] && plan.walls[i].ext === false && !pla
   const off = Math.min(Math.max(((x-w.x1)*(w.x2-w.x1) + (y-w.y1)*(w.y2-w.y1))/L, 0), L);
   const o = addMode === "door" ? {id:nextId++, type:"door", wall:i, offset:off, width:Math.min(0.9, L-0.3), height:2.1, sill:0, dmodel:"abat1", color:sw?sw.color:"negro"}
     : {id:nextId++, type:"window", wall:i, offset:off, width:Math.min(1.5, L-0.3), height:1.2, sill:0.9, opening:"corr2", line:sw?sw.line:"pvc", color:sw?sw.color:"negro", glass:sw?sw.glass:"claro"};
-  plan.openings.push(o); sel = o.id; setAdd(null); refresh(false); openSheet();
+  const tr = trayCur && (plan.tray || []).find(t => t.key === trayCur); let po = o;
+  if(tr){ nextId--; po = placeOne(tr, i, x, y); if(!po) return; tr.left++; } else plan.openings.push(po); sel = po.id; setAdd(null);
+  if(tr){ tr.left = Math.max(0, tr.left - 1); if(tr.left > 0){ trayCur = tr.key; addMode = tr.tpl.type; $("hint").textContent = `Toca el muro donde va la siguiente ${tr.label} (quedan ${tr.left}).`; } refresh(false); save();
+    status(tr.left > 0 ? `${tr.label} colocada. Quedan ${tr.left}: toca el muro donde va la siguiente.` : ((plan.tray || []).some(t => t.left > 0) ? `${tr.label} completas. Elige otra pieza de la barra de arriba.` : "Todas las piezas están colocadas. Revisa en 3D.") + (po.width > L ? " Ojo: la pieza es más ancha que ese muro." : "")); return; }
+  refresh(false); openSheet();
 }
 
 function save(){ pjQueue(); const cat = {lines:CAT.lines, glass:CAT.glass, doors:CAT.doors, install:CAT.install, iva:CAT.iva};
@@ -710,8 +749,19 @@ function build3D(){
   const wallMat = new THREE.MeshStandardMaterial({color:0xf1eee8, roughness:0.95, envMapIntensity:0.25}); model.userData.wallMat = wallMat;
   { const sun = scene.userData.sun; if(sun){ const cxs = (b.x0+b.x1)/2, czs = (b.y0+b.y1)/2, e = Math.max(b.w, b.h)/2 + 14, sc = sun.shadow.camera; sun.position.set(cxs+14, 24, czs+9); sun.target.position.set(cxs, 0, czs); sun.target.updateMatrixWorld(); sc.left = -e; sc.right = e; sc.top = e; sc.bottom = -e; sc.far = 90; sc.updateProjectionMatrix(); } }
   for(let l = 1; l < (plan.levels || 1); l++){ if(!showSlab || (view3d !== "all" && view3d !== l)) continue; const ws = plan.walls.filter(w => lv(w) === l); if(!ws.length) continue;
-    const ax = Math.min(...ws.map(w => Math.min(w.x1,w.x2))), ay = Math.min(...ws.map(w => Math.min(w.y1,w.y2))), bx = Math.max(...ws.map(w => Math.max(w.x1,w.x2))), by = Math.max(...ws.map(w => Math.max(w.y1,w.y2)));
-    model.add(box(bx-ax-0.06, 0.2, by-ay-0.06, new THREE.MeshStandardMaterial({color:0xd9d6cf, roughness:0.9, envMapIntensity:0.2}), (ax+bx)/2, levelY(l)-0.1, (ay+by)/2)); }
+    const slabM = new THREE.MeshStandardMaterial({color:0xd9d6cf, roughness:0.9, envMapIntensity:0.2}), Vu = loopOf(l), Vd = loopOf(l-1);
+    const ext = (V, top, th) => { const sh = new THREE.Shape(); V.forEach((q, i) => i ? sh.lineTo(q[0], -q[1]) : sh.moveTo(q[0], -q[1])); const m = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:th, bevelEnabled:false}), slabM); m.rotation.x = -Math.PI/2; m.position.y = top - th; m.castShadow = true; m.receiveShadow = true; model.add(m); };
+    if(Vu) ext(Vu, levelY(l), 0.2); else { const ax = Math.min(...ws.map(w => Math.min(w.x1,w.x2))), ay = Math.min(...ws.map(w => Math.min(w.y1,w.y2))), bx = Math.max(...ws.map(w => Math.max(w.x1,w.x2))), by = Math.max(...ws.map(w => Math.max(w.y1,w.y2)));
+      model.add(box(bx-ax-0.06, 0.2, by-ay-0.06, slabM, (ax+bx)/2, levelY(l)-0.1, (ay+by)/2)); }
+    if(Vd){ const H0 = levelY(l) - 0.012; ext(Vd, H0, 0.19); const mode = plan.terrace || "barandal";
+      if(Vu && mode !== "nada"){ const glassM = new THREE.MeshStandardMaterial({color:0xc4dbe3, transparent:true, opacity:0.32, roughness:0.05, metalness:0.1, depthWrite:false}), barM = new THREE.MeshStandardMaterial({color:0x2a2b2d, roughness:0.4, metalness:0.6}), pretM = new THREE.MeshStandardMaterial({color:0xece9e2, roughness:0.95, envMapIntensity:0.25});
+        for(let i = 0; i < Vd.length; i++){ const a = Vd[i], b = Vd[(i+1)%Vd.length], L = Math.hypot(b[0]-a[0], b[1]-a[1]); if(L < 0.1) continue; const n = Math.max(1, Math.ceil(L/0.2)), ang = Math.atan2(b[1]-a[1], b[0]-a[0]), dx = (b[0]-a[0])/L, dz = (b[1]-a[1])/L; let run = null;
+          const flush = (t0, t1) => { const len = (t1-t0)*L; if(len < 0.15) return; const tm = (t0+t1)/2, g = new THREE.Group(); g.position.set(a[0] + (b[0]-a[0])*tm, H0, a[1] + (b[1]-a[1])*tm); g.rotation.y = -ang;
+            if(mode === "pretil") g.add(box(len, 0.4, 0.14, pretM, 0, 0.2, 0)); else { g.add(box(len, 0.92, 0.02, glassM, 0, 0.5, 0)); g.add(box(len, 0.05, 0.06, barM, 0, 1.0, 0)); g.add(box(len, 0.04, 0.05, barM, 0, 0.05, 0)); }
+            g.traverse(m => { if(m.isMesh){ m.castShadow = mode === "pretil"; m.receiveShadow = true; } }); model.add(g); };
+          for(let k = 0; k < n; k++){ const t = (k+0.5)/n, px = a[0] + (b[0]-a[0])*t, pz = a[1] + (b[1]-a[1])*t, e = nearestEdge(Vu, [px, pz]), cov = inPoly(Vu, px, pz) || (e && e.d < 0.2);
+            if(!cov){ if(run === null) run = k/n; } else if(run !== null){ flush(run, k/n); run = null; } }
+          if(run !== null) flush(run, 1); } } } }
   const doorMat = new THREE.MeshStandardMaterial({color:0x8a623d, roughness:0.8});
   const spans = plan.openings.map(o => { const sp = spanOf(o); if(!sp) return null; const w = plan.walls[o.wall], L = wlen(w); if(L < 0.05) return null; const s = span(o);
     return {sp, x:w.x1+(w.x2-w.x1)/L*s.c, y:w.y1+(w.y2-w.y1)/L*s.c, half:(s.r-s.l)/2, wall:o.wall, level:lv(w)}; }).filter(Boolean);
@@ -754,7 +804,7 @@ function openLabel(){ const o = selected(), b = $("btnOpen"), what = o && o.type
 
 /* ---------- Planta (SVG) ---------- */
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-let planLock = null, outlineEdit = false, selVx = null, vxAdd = false, trace = null;
+let nudge = 0.1, trayCur = null, align = null, planLock = null, outlineEdit = false, selVx = null, vxAdd = false, trace = null;
 const isSlide = o => o && o.type === "window" && /^corr\d$/.test(o.opening), isSwing = o => o && (o.type === "door" || ["abat","osci","proy","combo"].includes(o.opening));
 function flowOf(o){ const f = o.flow || (o.stack === "l" ? "lr" : o.stack === "r" ? "rl" : ""); return f === "lr" || f === "rl" ? f : (o.opening === "corr2" ? "lr" : "c"); }
 function seenFlip(o){ const w = plan.walls[o.wall]; if(!w) return false; let V = null; try{ V = loopOf(lv(w)); }catch(e){} if(!V){ const b = bbox(), Lw = wlen(w) || 1; return (-(w.y2-w.y1)/Lw)*(b.x0+b.w/2-(w.x1+w.x2)/2) + ((w.x2-w.x1)/Lw)*(b.y0+b.h/2-(w.y1+w.y2)/2) > 0; } const L = wlen(w) || 1, px = (w.x1+w.x2)/2 - (w.y2-w.y1)/L*0.3, py = (w.y1+w.y2)/2 + (w.x2-w.x1)/L*0.3; let ins = false;
@@ -772,7 +822,8 @@ function drawPlan(){
   const S = 100, b = pbox(), m = 1.4; const fs = Math.max(b.w,b.h)*S/42;
   const X = x => (x-b.x0+m)*S, Y = y => (y-b.y0+m)*S;
   let h = ""; const bg = plan.bg && plan.bg[viewLevel];
-  if(bg) h += `<rect x="${X(bg.x)}" y="${Y(bg.y)}" width="${bg.w*S}" height="${bg.h*S}" fill="#fff"/><image href="${bg.src}" x="${X(bg.x)}" y="${Y(bg.y)}" width="${bg.w*S}" height="${bg.h*S}" preserveAspectRatio="none" opacity="0.8"/>`;
+  if(bg) h += `<rect x="${X(bg.x)}" y="${Y(bg.y)}" width="${bg.w*S}" height="${bg.h*S}" fill="#fff"/><image href="${bg.src || (plan.bg[bg.ref] && plan.bg[bg.ref].src) || ""}" x="${X(bg.x)}" y="${Y(bg.y)}" width="${bg.w*S}" height="${bg.h*S}" preserveAspectRatio="none" opacity="0.8"/>`;
+  if(viewLevel > 0) plan.walls.forEach(w => { if(lv(w) !== viewLevel-1 || w.ext === false) return; h += `<line x1="${X(w.x1)}" y1="${Y(w.y1)}" x2="${X(w.x2)}" y2="${Y(w.y2)}" stroke="#2a6fdb" stroke-opacity="0.75" stroke-width="${Math.max(3, fs*0.09)}" stroke-dasharray="${fs*0.5} ${fs*0.3}" stroke-linecap="round"/>`; });
   plan.walls.forEach(w => { if(lv(w) !== viewLevel) return; h += `<line x1="${X(w.x1)}" y1="${Y(w.y1)}" x2="${X(w.x2)}" y2="${Y(w.y2)}" stroke="${w.ext === false ? "#5f9d00" : bg ? "#e0452b" : "var(--ink)"}" stroke-opacity="${trace && !(trace.inner && w.ext === false) ? (trace.inner ? 0.45 : 0.22) : bg ? (w.ext === false ? 0.85 : 0.6) : 1}" stroke-width="${wthick(w)*S*(bg ? 0.8 : 1)}" stroke-linecap="square"/>`; });
   plan.walls.forEach((w,i) => { if(lv(w) !== viewLevel) return; h += `<line data-wall="${i}" x1="${X(w.x1)}" y1="${Y(w.y1)}" x2="${X(w.x2)}" y2="${Y(w.y2)}" stroke="transparent" stroke-width="${0.6*S}"/>`; });
   plan.openings.forEach(o => {
@@ -801,6 +852,7 @@ function drawPlan(){
     P.forEach((p,i) => { h += `<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="${i ? r0*0.85 : r0*1.2}" fill="${trace.inner ? "#5f9d00" : i ? "#e0452b" : "#a0c503"}" stroke="#fff" stroke-width="${r0*0.18}"/><text x="${X(p[0])}" y="${Y(p[1])}" font-size="${r0*1.05}" font-family="var(--mono)" font-weight="600" fill="#fff" text-anchor="middle" dominant-baseline="central" style="pointer-events:none">${i+1}</text>`; }); }
   if(outlineEdit){ const seen = {}; plan.walls.slice().sort((a, c) => (a.ext === false) - (c.ext === false)).forEach(w => { if(lv(w) !== viewLevel) return; const vc = w.ext === false ? "#5f9d00" : "#e0452b"; [[w.x1,w.y1],[w.x2,w.y2]].forEach(v => { const k = v[0].toFixed(2) + "," + v[1].toFixed(2); if(seen[k]) return; seen[k] = 1; const on = selVx && Math.hypot(selVx[0]-v[0], selVx[1]-v[1]) < 0.03;
       h += `<circle data-vx="${v[0]},${v[1]}" cx="${X(v[0])}" cy="${Y(v[1])}" r="${Math.max(7, fs*0.26)/Math.pow(pz.z, 0.6)}" fill="${on ? "#f5c400" : vc}" stroke="#fff" stroke-width="${Math.max(2, fs*0.05)/Math.pow(pz.z, 0.6)}" style="cursor:move;touch-action:none"/><circle data-vx="${v[0]},${v[1]}" cx="${X(v[0])}" cy="${Y(v[1])}" r="${Math.max(30, fs*0.9)/Math.pow(pz.z, 0.6)}" fill="transparent" style="cursor:move;touch-action:none"/>`; }); }); }
+  if(trayCur && plan.hints) plan.hints.forEach(q => { if(q.key !== trayCur || (q.level || 0) !== viewLevel) return; const r = Math.max(10, fs*0.55)/Math.pow(pz.z, 0.5); h += `<circle cx="${X(q.x)}" cy="${Y(q.y)}" r="${r}" fill="rgba(42,111,219,.18)" stroke="#2a6fdb" stroke-width="${r*0.18}" style="pointer-events:none"><animate attributeName="r" values="${r};${r*1.35};${r}" dur="1.4s" repeatCount="indefinite"/></circle>`; });
   const svg = $("vplan"); pz.W = (b.w+2*m)*S; pz.H = (b.h+2*m)*S; svg.innerHTML = h; applyView();
 }
 
@@ -1240,13 +1292,18 @@ function renderPrices(){
   h += `<label class="f" for="p-install">Instalación por pieza ($)<input type="number" id="p-install" data-g="install" min="0" step="50" value="${CAT.install}"></label><label class="f" for="p-iva">IVA (%)<input type="number" id="p-iva" data-g="iva" min="0" max="30" step="1" value="${CAT.iva}"></label>`;
   $("priceFields").innerHTML = h;
 }
-function renderLevels(){ const n = plan.levels || 1, el = $("levelRow"); el.hidden = n < 2; $("upRow").hidden = n < 2; if(n < 2) return;
+function moveUpper(dx, dy){ const L = Math.max(1, viewLevel); plan.walls.forEach(w => { if(lv(w) >= L){ w.x1 += dx; w.x2 += dx; w.y1 += dy; w.y2 += dy; } }); (plan.bg || []).forEach((g, i) => { if(g && i >= L){ g.x += dx; g.y += dy; } }); (plan.hints || []).forEach(q => { if((q.level || 0) >= L){ q.x += dx; q.y += dy; } });
+  const u = plan.upShift || (plan.upShift = {x:0, y:0}); u.x += dx; u.y += dy; refresh(false); save();
+  const f = v => (Math.abs(v) < 0.005 ? "0" : (v > 0 ? "+" : "−") + Math.abs(v).toFixed(2)); status(`Planta alta movida. Desplazamiento total: ${f(u.x)} m a lo ancho, ${f(u.y)} m a lo largo.`); }
+function renderLevels(){ const n = plan.levels || 1, el = $("levelRow"); el.hidden = n < 2; $("upRow").hidden = n < 2; if(n < 2){ setTimeout(obh, 0); return; }
   const names = plan.levelNames || [];
   el.innerHTML = `<button data-all="1" aria-pressed="${view3d === "all"}" title="Ver todos los niveles en 3D">Todo</button>` + Array.from({length:n}, (_,i) => `<button data-level="${i}" aria-pressed="${view3d === "all" ? false : i === view3d}" title="Ver solo este nivel">${esc(names[i] || (i ? "Planta alta" : "Planta baja"))}</button>`).join("")
-    + `<button data-slab="1" aria-pressed="${showSlab}" title="Mostrar u ocultar la losa entre niveles">Losa</button>`;
-  const u = plan.upShift || {x:0,y:0}; $("upX").value = u.x.toFixed(2); $("upY").value = u.y.toFixed(2); }
+    + `<button data-slab="1" aria-pressed="${showSlab}" title="Mostrar u ocultar la losa entre niveles">Losa</button>`
+    + `<button data-ter="1" title="Borde de la terraza: la parte de la losa que no cubre la planta alta">Terraza: ${({barandal:"barandal", pretil:"pretil", nada:"sin borde"})[plan.terrace || "barandal"]}</button>`
+    + `<span class="lvsep">Mover planta alta:</span><button data-mv="-1,0" title="Hacia la izquierda" aria-label="Mover planta alta a la izquierda">←</button><button data-mv="1,0" title="Hacia la derecha" aria-label="Mover planta alta a la derecha">→</button><button data-mv="0,-1" title="Hacia atrás (arriba en el plano)" aria-label="Mover planta alta hacia atrás">↑</button><button data-mv="0,1" title="Hacia el frente (abajo en el plano)" aria-label="Mover planta alta hacia el frente">↓</button><button data-step="1" title="Cuánto se mueve con cada toque">${nudge >= 1 ? nudge.toFixed(0) + " m" : Math.round(nudge*100) + " cm"}</button>`;
+  const u = plan.upShift || {x:0,y:0}; $("upX").value = u.x.toFixed(2); $("upY").value = u.y.toFixed(2); setTimeout(obh, 0); }
 function refresh(refit){
-  const b = bbox(); renderLevels();
+  const b = bbox(); renderLevels(); try{ outlineUI(); }catch(e){} try{ renderTray(); }catch(e){}
   $("planChip").textContent = plan.name; $("planChip").className = plan.example ? "chip" : "chip ok";
   $("planW").value = b.w.toFixed(2); $("wallH").value = plan.wallH.toFixed(2); $("wallH2").value = plan.wallH.toFixed(2);
   build3D(); if(refit) fitCamera(); drawPlan(); try{ drawElev(); }catch(e){} renderChips(); fillEditor(); renderQuote(); renderInfo(); drawPhoto(); save();
@@ -1264,7 +1321,7 @@ document.querySelectorAll(".szcode").forEach(el => { const go = e => { e.stopPro
     const txt = el.value.trim(); el.value = ""; refresh(false); status(txt + " = " + o.width.toFixed(2) + " × " + o.height.toFixed(2) + " m" + (h < z.h - 0.005 ? ". El alto se recortó al alto de muros (" + hi.toFixed(2) + " m); súbelo en «Alto de muros»." : ".")); };
   el.addEventListener("change", go); el.addEventListener("input", e => e.stopPropagation()); el.addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); el.blur(); } }); });
 const num = (el, lo, hi, fb) => { const v = parseFloat(el.value); return isFinite(v) ? Math.min(Math.max(v, lo), hi) : fb; };
-const PANELS = ["pProj","pPlano","pLista","pHoja","editor","pCot","photoTools","pDesign"];
+const PANELS = ["pRev","pProj","pPlano","pLista","pHoja","editor","pCot","photoTools","pDesign"];
 function openPanel(id){ PANELS.forEach(p => $(p).classList.toggle("on", p === id)); document.querySelectorAll("[data-panel]").forEach(b => b.setAttribute("aria-pressed", b.dataset.panel === id)); }
 const dz = {t:null, path:[], cb:null, back:null};
 const dNode = path => path.reduce((n,i) => n.kids[i].n, dz.t.tree);
@@ -1306,7 +1363,7 @@ document.querySelectorAll(".panel .pclose").forEach(b => { if(b.id !== "btnClose
 document.querySelectorAll('[role="tab"]').forEach(bt => bt.addEventListener("click", () => {
   document.querySelectorAll('[role="tab"]').forEach(x => x.setAttribute("aria-selected", x === bt));
   ["v3d","vplan","velev","vphoto"].forEach(v => $(v).toggleAttribute("hidden", v !== bt.dataset.view));
-  $("outlineBar").hidden = bt.dataset.view !== "vplan"; if(bt.dataset.view !== "vplan"){ $("scaleBox").hidden = true; $("btnScale").setAttribute("aria-pressed", false); } $("hRow").hidden = bt.dataset.view === "vphoto"; if(bt.dataset.view !== "vplan" && (outlineEdit || trace)){ outlineEdit = false; selVx = null; vxAdd = false; trace = null; planLock = null; outlineUI(); }
+  $("outlineBar").hidden = bt.dataset.view !== "vplan"; setTimeout(obh, 0); if(bt.dataset.view !== "vplan"){ $("upBox").hidden = true; if(align){ align = null; outlineUI(); } $("scaleBox").hidden = true; $("btnScale").setAttribute("aria-pressed", false); } $("hRow").hidden = bt.dataset.view === "vphoto"; if(bt.dataset.view !== "vplan" && (outlineEdit || trace)){ outlineEdit = false; selVx = null; vxAdd = false; trace = null; planLock = null; outlineUI(); }
   const ph = bt.dataset.view === "vphoto"; $("railFoto").hidden = !ph; if(ph) openPanel("photoTools"); else if($("photoTools").classList.contains("on")) openPanel(null);
   if(bt.dataset.view === "v3d") size3D(); else if(bt.dataset.view === "vphoto") drawPhoto();
 }));
@@ -1378,9 +1435,30 @@ $("btnInDel").addEventListener("click", () => { const b = $("btnInDel"); if(!b.c
 $("btnTrUndo").addEventListener("click", () => { if(trace){ trace.pts.pop(); outlineUI(); drawPlan(); } });
 $("btnTrDone").addEventListener("click", traceDone);
 $("btnTrCancel").addEventListener("click", () => { traceEnd(false); status("Trazo cancelado; se conserva el contorno anterior."); });
-function outlineUI(){ const tr = !!trace; $("btnTrUndo").hidden = !tr; $("btnTrDone").hidden = !tr; $("btnTrCancel").hidden = !tr; $("btnTrace").hidden = tr; $("btnOutline").hidden = tr; if(tr){ const j = traceJoin(); $("btnTrUndo").disabled = !trace.pts.length; $("btnTrDone").disabled = !j && trace.pts.length < 3; $("btnTrDone").textContent = j ? "Unir al contorno" : trace.loop ? "Reemplazar todo el contorno" : "Cerrar contorno"; if(trace.inner){ $("btnTrDone").disabled = trace.pts.length < 2; $("btnTrDone").textContent = "Terminar interior"; } }
+function obh(){ try{ const b = $("outlineBar"), lr = $("levelRow"), hr = $("hRow"), ob = b.hidden ? 12 : b.getBoundingClientRect().height + 20; lr.style.bottom = ob + "px"; hr.style.bottom = (lr.hidden ? ob : ob + lr.getBoundingClientRect().height + 8) + "px"; }catch(e){} }
+window.addEventListener("resize", obh);
+function outlineUI(){ setTimeout(obh, 0); const tr = !!trace; $("btnTrUndo").hidden = !tr; $("btnTrDone").hidden = !tr; $("btnTrCancel").hidden = !tr; $("btnTrace").hidden = tr; $("btnOutline").hidden = tr; if(tr){ const j = traceJoin(); $("btnTrUndo").disabled = !trace.pts.length; $("btnTrDone").disabled = !j && trace.pts.length < 3; $("btnTrDone").textContent = j ? "Unir al contorno" : trace.loop ? "Reemplazar todo el contorno" : "Cerrar contorno"; if(trace.inner){ $("btnTrDone").disabled = trace.pts.length < 2; $("btnTrDone").textContent = "Terminar interior"; } }
   $("btnTraceIn").hidden = tr; { const hasIn = plan.walls.some(w => lv(w) === viewLevel && w.ext === false); $("btnInDel").hidden = tr || !outlineEdit || !hasIn; }
-  $("btnOutline").setAttribute("aria-pressed", outlineEdit); $("btnOutline").textContent = outlineEdit ? "Terminar contorno" : "Editar contorno"; $("btnVxDel").hidden = tr || !(outlineEdit && selVx); $("btnVxAdd").hidden = tr || !outlineEdit; $("btnVxAdd").setAttribute("aria-pressed", vxAdd); if(!outlineEdit && !tr) traceBack = null; $("btnTrBack").hidden = tr || !outlineEdit || !traceBack; }
+  $("btnOutline").setAttribute("aria-pressed", outlineEdit); $("btnOutline").textContent = outlineEdit ? "Terminar contorno" : "Editar contorno"; $("btnVxDel").hidden = tr || !(outlineEdit && selVx); $("btnVxAdd").hidden = tr || !outlineEdit; $("btnVxAdd").setAttribute("aria-pressed", vxAdd); if(!outlineEdit && !tr) traceBack = null; $("btnTrBack").hidden = tr || !outlineEdit || !traceBack;
+  const nl = plan.levels || 1, busy = tr || !!align; $("btnUpAdd").hidden = busy || nl > 1 || plan.example || isPlaceholder(0); $("btnAlign").hidden = busy || nl < 2 || viewLevel < 1 || isPlaceholder(viewLevel); $("btnUpDel").hidden = busy || nl < 2 || viewLevel < 1; if(busy) $("upBox").hidden = true; }
+$("btnUpAdd").addEventListener("click", () => { const sel = $("upSrc"); let o = '<option value="same">En la misma hoja que la planta baja</option>';
+  if(pdfDoc && pdfDoc.numPages > 1) for(let i = 2; i <= pdfDoc.numPages; i++) o += `<option value="p${i}">En la página ${i} del PDF</option>`;
+  if(src && src.full && !(plan.bg && plan.bg[0] && plan.bg[0].px)) o += '<option value="cur">En el plano que tengo cargado ahora</option>'; sel.innerHTML = o; $("scaleBox").hidden = true; $("upBox").hidden = false; });
+$("upCancel").addEventListener("click", () => { $("upBox").hidden = true; });
+$("upGo").addEventListener("click", async () => { const v = $("upSrc").value, b0 = plan.bg && plan.bg[0]; let g = null; $("upGo").disabled = true;
+  try{ if(b0){ if(v === "same") g = {ref:0, x:b0.x, y:b0.y, w:b0.w, h:b0.h};
+      else { const c = v === "cur" ? src.full : await pageCanvas(+v.slice(1), 3000), url = scaled(c, 3200).toDataURL("image/jpeg", 0.85), k = b0.px ? b0.w/b0.px : b0.w/c.width; g = {src:url, x:b0.x, y:b0.y, w:c.width*k, h:c.height*k, px:c.width}; } } }
+  catch(e){ status("No se pudo abrir esa página del plano.", true); $("upGo").disabled = false; return; }
+  $("upGo").disabled = false; $("upBox").hidden = true; plan.levels = 2; plan.levelNames = ["Planta baja", "Planta alta"]; plan.upShift = {x:0, y:0}; if(!plan.bg) plan.bg = []; if(g) plan.bg[1] = g;
+  viewLevel = 1; view3d = 1; outlineEdit = false; selVx = null; pz.z = 1; pz.cx = null; refresh(false); save(); $("btnTrace").click();
+  status("Planta alta: marca las esquinas de su contorno donde está dibujada y cierra. Después toca «Encimar plantas» para ponerla sobre la planta baja (la línea azul punteada)."); });
+$("btnAlign").addEventListener("click", () => { outlineEdit = false; selVx = null; setAdd(null); closeSheet(); align = {step:1, L:viewLevel}; outlineUI(); drawPlan(); status("Encimar 1 de 2: toca en la planta alta un punto que también exista en la baja, por ejemplo una esquina de la fachada o la escalera."); });
+function alignPoint(p){ if(align.step === 1){ align.p1 = p; align.step = 2; viewLevel = align.L - 1; pz.z = 1; pz.cx = null; renderLevels(); drawPlan(); status("Encimar 2 de 2: ahora toca ese mismo punto en la planta baja."); return; }
+  const d = [p[0]-align.p1[0], p[1]-align.p1[1]], L = align.L; plan.walls.forEach(w => { if(lv(w) >= L){ w.x1 += d[0]; w.x2 += d[0]; w.y1 += d[1]; w.y2 += d[1]; } }); (plan.bg || []).forEach((g, i) => { if(g && i >= L){ g.x += d[0]; g.y += d[1]; } });
+  const u = plan.upShift || (plan.upShift = {x:0, y:0}); u.x += d[0]; u.y += d[1]; align = null; viewLevel = L; view3d = "all"; pz.z = 1; pz.cx = null; outlineUI(); refresh(false); save(); status("Plantas encimadas. La línea azul punteada es la planta baja; si no coincide, vuelve a «Encimar plantas». Revisa en 3D."); }
+$("btnUpDel").addEventListener("click", () => { const b = $("btnUpDel"); if(!b.classList.contains("sure")){ b.classList.add("sure"); b.textContent = "¿Quitar planta alta y sus piezas?"; setTimeout(() => { b.classList.remove("sure"); b.textContent = "Quitar planta alta"; }, 4000); return; }
+  b.classList.remove("sure"); b.textContent = "Quitar planta alta"; const ids = []; plan.walls.forEach((w, i) => { if(lv(w) >= 1) ids.push(i); }); dropWalls(ids); plan.openings.forEach(o => { if(o.span){ delete o.span; o.height = Math.min(o.height, plan.wallH); } });
+  if(plan.bg) plan.bg.length = 1; delete plan.levels; delete plan.levelNames; plan.upShift = {x:0, y:0}; viewLevel = 0; view3d = "all"; outlineEdit = false; selVx = null; outlineUI(); refresh(true); save(); status("Planta alta quitada."); });
 $("btnTrBack").addEventListener("click", () => { if(!traceBack) return; try{ const q = JSON.parse(traceBack); plan.walls = q.walls; plan.openings = q.openings; }catch(e){} traceBack = null; selVx = null; outlineEdit = false; outlineUI(); refresh(false); save(); status("Trazo deshecho. El contorno quedó como estaba antes."); });
 $("btnVxAdd").addEventListener("click", () => { vxAdd = !vxAdd; outlineUI(); status(vxAdd ? "Toca el tramo del contorno donde quieres el punto nuevo." : "Arrastra los puntos rojos para corregir el contorno."); });
 $("btnOutline").addEventListener("click", () => { outlineEdit = !outlineEdit; selVx = null; vxAdd = false; setAdd(null); closeSheet(); outlineUI(); drawPlan();
@@ -1411,6 +1489,7 @@ const planDragEnd = () => { if(wallDrag){ const mv = wallDrag.moved; wallDrag = 
 $("vplan").addEventListener("pointerup", planDragEnd); $("vplan").addEventListener("pointercancel", planDragEnd);
 $("vplan").addEventListener("click", e => {
   if(planDragged){ planDragged = false; return; }
+  if(align){ alignPoint(planPt(e)); return; }
   if(trace){ tracePoint(planPt(e)); return; }
   if(outlineEdit && !addMode){ const tw = e.target.closest("[data-wall]"); if(tw && vxAdd){ splitWall(+tw.dataset.wall, planPt(e)); vxAdd = false; outlineUI(); refresh(false); status("Punto agregado. Arrástralo a su lugar."); } else if(tw) status("Arrastra el muro para moverlo completo. Para una esquina nueva, toca «+ Agregar punto»."); return; }
   if(!addMode) return pickFrom(e);
@@ -1471,7 +1550,10 @@ $("priceFields").addEventListener("change", e => {
   renderQuote(); save();
 });
 $("btnCopy").addEventListener("click", async () => { try{ await navigator.clipboard.writeText(quoteText()); $("copyMsg").textContent = "Copiada al portapapeles."; }catch(e){ $("copyMsg").textContent = "No se pudo copiar aquí."; } });
-$("levelRow").addEventListener("click", e => { const t = e.target.closest("button"); if(!t) return;
+$("levelRow").addEventListener("click", e => { const t = e.target.closest("button"); if(!t) return; if(align){ align = null; outlineUI(); status("Encimar cancelado."); }
+  if(t.dataset.mv){ const [sx, sy] = t.dataset.mv.split(",").map(Number); moveUpper(sx*nudge, sy*nudge); return; }
+  if(t.dataset.step){ const S = [0.05, 0.1, 0.5, 1]; nudge = S[(S.indexOf(nudge) + 1) % S.length]; renderLevels(); return; }
+  if(t.dataset.ter){ const M = ["barandal", "pretil", "nada"]; plan.terrace = M[(M.indexOf(plan.terrace || "barandal") + 1) % M.length]; save(); renderLevels(); build3D(); return; }
   if(t.dataset.all){ view3d = "all"; } else if(t.dataset.slab){ showSlab = !showSlab; } else { viewLevel = +t.dataset.level; view3d = viewLevel; }
   renderLevels(); drawPlan(); build3D(); });
 ["upX","upY"].forEach(id => $(id).addEventListener("change", e => { const u = plan.upShift || (plan.upShift = {x:0,y:0}), k = id === "upX" ? "x" : "y", v = num(e.target, -200, 200, u[k]), d = v - u[k]; u[k] = v;
@@ -1489,7 +1571,7 @@ $("btnBgOnly").addEventListener("click", () => { if(!src || !(src.full || src.cv
   if(!plan.example && plan.bg && plan.bg[0] && plan.name === (planName || "Plano subido") && !isPlaceholder(0)){ openPanel(null); const tb = document.querySelector('[data-view="vplan"]'); if(tb) tb.click(); status("Este plano ya tiene tu contorno guardado: sigues desde tu último trazo. Usa «Editar contorno» o «Trazar contorno» para corregirlo."); return; }
   let url = ""; try{ url = scaled(src.full || src.cv, 3200).toDataURL("image/jpeg", 0.85); }catch(e){} if(!url){ status("No se pudo preparar la imagen del plano."); return; }
   const c = src.full || src.cv, W = 30, H = W*(c.height/c.width), q = (a, b, cc, d) => ({x1:a, y1:b, x2:cc, y2:d, ext:true, ph:true});
-  setPlan({name:planName || "Plano subido", example:false, wallH:2.6, walls:[q(W*0.3,H*0.3,W*0.7,H*0.3), q(W*0.7,H*0.3,W*0.7,H*0.7), q(W*0.7,H*0.7,W*0.3,H*0.7), q(W*0.3,H*0.7,W*0.3,H*0.3)], openings:[], upShift:{x:0,y:0}, bg:[{src:url, x:0, y:0, w:W, h:H}]});
+  setPlan({name:planName || "Plano subido", example:false, wallH:2.6, walls:[q(W*0.3,H*0.3,W*0.7,H*0.3), q(W*0.7,H*0.3,W*0.7,H*0.7), q(W*0.7,H*0.7,W*0.3,H*0.7), q(W*0.3,H*0.7,W*0.3,H*0.3)], openings:[], upShift:{x:0,y:0}, bg:[{src:url, x:0, y:0, w:W, h:H, px:c.width}]});
   refresh(true); save(); openPanel(null); const tab = document.querySelector('[data-view="vplan"]'); if(tab) tab.click();
   status("Plano de fondo listo, sin agente. 1) «Trazar contorno» y marca las esquinas de la casa. 2) «Escala» y escribe el ancho real. 3) Agrega puertas y ventanas tocando el muro."); });
 $("planChip").addEventListener("click", () => { openPanel("pProj"); renderProj(); });
@@ -1651,7 +1733,8 @@ $("btnPlano B").addEventListener("click", () => {
   loadSheet("plans/plano-b.jpg", "Plano B", null, "plans/plano-b.text.json");
 });
 const P_SCHED = zone => `Eres un agente que lee láminas de "puertas y ventanas" (tablas de cancelería) de proyectos arquitectónicos. La imagen es un recorte ampliado (${zone}). Busca los alzados de cada tipo con su clave (P1, V2, V3.1…), sus cotas y su descripción. Responde SOLO con JSON válido, sin markdown:
-{"items":[{"tag":"V2","kind":"window","width":0.80,"height":0.45,"sill":1.65,"opening":"proy","qty":6,"sell":true,"color":"negro","desc":"ventana de proyección de aluminio, cristal insulado"}]}
+{"items":[{"tag":"V2","size_txt":"0.80 x 0.45","kind":"window","width":0.80,"height":0.45,"sill":1.65,"opening":"proy","qty":6,"sell":true,"color":"negro","desc":"ventana de proyección de aluminio, cristal insulado"}]}
+- "size_txt": copia tal cual las cotas de ancho y alto como están escritas en el alzado, sin convertir (por ejemplo "0.80 x 0.45" o "3'-0\" x 5'-0\"").
 - Incluye solo los tipos cuyo alzado, cotas y descripción se vean completos en este recorte. Ignora las plantas arquitectónicas y las claves sueltas sobre ellas.
 - "kind": "window", "sliding" (puerta corrediza de vidrio) o "door" (puerta abatible).
 - "width" y "height" en metros, de las cotas "de claro"; si están en pies y pulgadas, conviértelas. "sill": altura del piso a la parte baja del vano (0 en puertas).
@@ -1665,18 +1748,12 @@ $("btnSched").addEventListener("click", async () => {
   if(!sampler){ status("El agente no está disponible en esta vista.", true); return; }
   const b = $("btnSched"); b.disabled = true; $("steps").hidden = true; status("Seis agentes están leyendo la tabla por zonas. Puede tardar uno o dos minutos…");
   try{
-    const tiles = gridTiles(src.full || src.cv), got = [];
-    for(let k = 0; k < tiles.length; k += 3){ const part = await Promise.all(tiles.slice(k, k+3).map(async t => { try{ return await ask(P_SCHED(t.zone), [await toBlob(t.cv)]); }catch(e){ if(e && e.code === "not_granted") throw e; return null; } })); got.push(...part);
-      status(`Leyendo la tabla: ${Math.min(k+3, tiles.length)} de ${tiles.length} zonas…`); }
-    const fin = v => typeof v === "number" && isFinite(v), by = {};
-    got.forEach(r => (r && Array.isArray(r.items) ? r.items : []).forEach(i => { if(!i || typeof i.tag !== "string" || !fin(i.width) || !fin(i.height)) return; const key = i.tag.trim().toUpperCase().slice(0,8); i.tag = key; i.qty = fin(i.qty) ? Math.max(1, Math.round(i.qty)) : 1;
-      if(!by[key] || (i.qty > by[key].qty)) by[key] = i; }));
-    const all = Object.values(by).sort((a,c) => a.tag.localeCompare(c.tag, "es", {numeric:true})), sell = all.filter(i => i.sell !== false), skip = all.filter(i => i.sell === false).map(i => i.tag);
+    const nS = await readSched(src.full || src.cv, m => status("Leyendo la tabla: " + m + "…")), sell = nS ? sched.items : [], skip = nS ? sched.skip : [], got = [nS], tiles = [0];
     const p = fromSchedule(sell, planName || "Tabla de puertas y ventanas");
-    if(!p) throw new Error(got.every(r => !r) ? "Se perdió la conexión con los agentes. Intenta de nuevo." : "No se encontraron tipos de puerta o ventana en esta lámina.");
+    if(!p) throw new Error("No se encontraron tipos de puerta o ventana en esta lámina.");
     p.info = {kind:"Tabla de puertas y ventanas. Se muestra como muestrario: una pieza de cada tipo.", scale:"medidas tomadas de la tabla", rooms:[], doubts: skip.length ? "no se cotizan por no ser producto exterior de aluminio o vidrio: " + skip.join(", ") : ""};
-    sched = {items:sell, skip}; setPlan(p); refresh(true); const zonesOk = got.filter(Boolean).length;
-    status(`Listo: ${sell.length} tipos y ${sell.reduce((a,i) => a+i.qty, 0)} piezas leídas de la tabla (${zonesOk} de ${tiles.length} zonas respondieron). Revisa medidas y cantidades antes de cotizar.`, zonesOk < tiles.length);
+    setPlan(p); refresh(true);
+    status(`Listo: ${sell.length} tipos y ${sell.reduce((a,i) => a+i.qty, 0)} piezas leídas de la tabla. Ahora sube la planta y toca «Leer plano con el agente»: las claves tomarán su medida de esta tabla.`);
   }catch(err){ const c = err && err.code; status(c === "not_granted" ? "No se dio permiso para usar a Claude en esta página." : c === "rate_limited" ? "Demasiadas lecturas seguidas. Espera un momento e intenta de nuevo." : (err.message || "No se pudo leer la tabla."), true); }
   b.disabled = false;
 });
@@ -1792,12 +1869,12 @@ function applySchedule(p){ if(!p || !sched) return p;
   p.openings.forEach(o => { const i = o.tag && sched.items.find(x => x.tag === o.tag); if(!i) return; const nw = toOpening(i); nw.wall = o.wall; nw.offset = o.offset; nw.qty = 1; Object.keys(o).forEach(k => delete o[k]); Object.assign(o, nw); });
   return p; }
 function mergeFloors(fl){
-  const out = {name: planName || "Plano subido", example:false, wallH:2.6, walls:[], openings:[], levels:fl.length, levelNames:fl.map(f => f.name), upShift:{x:0,y:0}, bg:[]};
+  const out = {name: planName || "Plano subido", example:false, wallH:2.6, walls:[], openings:[], levels:fl.length, levelNames:fl.map(f => f.name), upShift:{x:0,y:0}, bg:[], hints:[]};
   const b0 = fl[0].p.walls, span0 = Math.max(...b0.map(w => Math.max(w.x1,w.x2,w.y1,w.y2)));
   fl.forEach((f,li) => { let dx = 0, dy = 0; const a = fl[0].p.anchor, b = f.p.anchor; if(li > 0 && a && b && Math.abs(a.x-b.x) < span0 && Math.abs(a.y-b.y) < span0){ dx = a.x-b.x; dy = a.y-b.y; }
     if(f.p.bg) out.bg[li] = {src:f.p.bg.src, x:f.p.bg.x+dx, y:f.p.bg.y+dy, w:f.p.bg.w, h:f.p.bg.h};
     const off = out.walls.length; f.p.walls.forEach(w => out.walls.push({x1:w.x1+dx, y1:w.y1+dy, x2:w.x2+dx, y2:w.y2+dy, ext:w.ext, level:li}));
-    f.p.openings.forEach(o => out.openings.push(Object.assign({}, o, {wall:o.wall+off}))); });
+    f.p.openings.forEach(o => out.openings.push(Object.assign({}, o, {wall:o.wall+off}))); (f.p.hints || []).forEach(q => out.hints.push({key:q.key, x:q.x+dx, y:q.y+dy, level:li})); });
   dedupeSpans(out);
   if(out.levels < 2){ out.openings.forEach(o => { if(o.span){ delete o.span; o.height = Math.min(o.height, 2.4); } }); delete out.levels; delete out.levelNames; }
   return out; }
@@ -1835,7 +1912,8 @@ function floorPlan(f){
   const mx = Math.min(...walls.map(w => Math.min(w.x1,w.x2))), my = Math.min(...walls.map(w => Math.min(w.y1,w.y2)));
   const p = applySchedule(toPlan({walls, windows, doors, anchor: pt(f.out.anchor) ? {x:f.out.anchor[0]*cw*s, y:f.out.anchor[1]*ch*s} : null})); if(!p) return null;
   let src0 = ""; try{ src0 = scaled(f.full, 3200).toDataURL("image/jpeg", 0.85); }catch(e){}
-  if(src0) p.bg = {src:src0, x:-mx, y:-my, w:cw*s, h:ch*s}; return p;
+  if(src0) p.bg = {src:src0, x:-mx, y:-my, w:cw*s, h:ch*s};
+  p.hints = (f.labels || []).map(l => ({key:l.key, x:-mx + l.x*cw*s, y:-my + l.y*ch*s})); return p;
 }
 const TAG_RE = /^[VP]-?\d{1,2}(\.\d)?[A-Z]?$/i;
 function textItems(f){ if(!src || !Array.isArray(src.text)) return []; const [x0,y0,x1,y1] = f.rect, out = [];
@@ -1871,7 +1949,7 @@ function drawRaw(j){
   c.fillStyle = "#c00000"; c.font = "bold 16px sans-serif"; ws.forEach((w,i) => { if(w) c.fillText(String(i), X((w.x1+w.x2)/2)+6, Y((w.y1+w.y2)/2)-6); });
   return cv;
 }
-const STEPS = ["Buscar la hoja en el archivo", "Identificar cuántas plantas (niveles) trae la hoja", "Calcar el contorno exterior de cada planta", "Ubicar puertas y ventanas exteriores", "Armar la planta para que la revises"];
+const STEPS = ["Buscar la hoja en el archivo", "Identificar cuántas plantas (niveles) trae la hoja", "Calcar el contorno exterior de cada planta", "Copiar las etiquetas de puertas y ventanas, sin calcular", "Leer la cédula de puertas y ventanas", "Armar la lista para que la revises"];
 function showSteps(S, N){ const mk = {wait:"·", run:"…", ok:"✓", skip:"–", fail:"!"}; $("steps").hidden = false;
   $("steps").innerHTML = STEPS.map((t,i) => { const st = S[i] || "wait"; return `<li class="${st}"><span class="mk">${mk[st]}</span><span>${t}${N[i] ? `<br><span class="hint">${esc(N[i])}</span>` : ""}</span></li>`; }).join(""); }
 const hard = e => e && (e.code === "not_granted" || e.code === "rate_limited");
@@ -1893,6 +1971,104 @@ async function placeFloor(f){
   const pl = await ask(P_PLACE + "MUROS: " + JSON.stringify(f.j.walls) + "\nINVENTARIO: " + JSON.stringify(f.inv), [await toBlob(pair(f.cv, drawRaw(f.j)))]);
   f.j.windows = Array.isArray(pl.windows) ? pl.windows : []; f.j.doors = Array.isArray(pl.doors) ? pl.doors : []; f.placed = true; f.pnotes = pl.notes;
 }
+/* ---------- Lectura literal: el agente copia, el configurador calcula ---------- */
+const P_LIST = zone => `Eres un lector que COPIA etiquetas de puertas y ventanas en un recorte ampliado (${zone}) de un plano de planta. No calcules medidas, no conviertas unidades y no interpretes: copia el texto exactamente como está escrito junto a cada vano. Responde SOLO con JSON válido, sin markdown:
+{"items":[{"label":"3050 S.H.","kind":"window","x":0.42,"y":0.18}]}
+- "label": el texto completo que identifica el vano, tal cual: un código con su abreviatura ("3050 S.H.", "6068 SGD", "4020 PIC"), una clave ("V2", "P6", "V3.1") o una medida escrita ("1.50 x 1.20"). Respeta dígitos, puntos y espacios. Si un dígito no se lee bien, copia lo que ves y agrega "?" al final. Si el vano no tiene ningún texto, usa "".
+- "kind": "window" (ventana), "sliding" (puerta corrediza de vidrio) o "door" (puerta abatible).
+- "x" e "y": la posición de ESA etiqueta en fracciones de 0 a 1 del ancho y del alto del recorte (x a la derecha, y hacia abajo).
+- Solo vanos que dan al EXTERIOR de la casa. Ignora puertas interiores, closets y portones de cochera.
+- Cada vano una sola vez. Ignora cotas de muros, nombres de cuartos, áreas y textos del cuadro de datos.
+- Máximo 45 elementos.`;
+const ABBR = [[/ (SGD|SLGD|PSD|SLIDING ?DOOR|PATIO ?DOOR|PATIO) /,"s:corr2"],[/ (FD|FRENCH) /,"d:abat2"],[/ (ENT|ENTRY|FRONT ?DOOR) /,"d:princ"],[/ (OXXO|XXXX|OXXX|XXXO) /,"w:corr4"],[/ (XOX|OXO) /,"w:corr3"],[/ (XO|OX|HS|SL|SLD|SLIDER|SLIDING|HSL) /,"w:corr2"],[/ (SH|DH|SGL ?HUNG|DBL ?HUNG|SINGLE ?HUNG|DOUBLE ?HUNG) /,"w:guil"],[/ (PIC|PW|FIX|FX|FIXED|PICTURE) /,"w:fija"],[/ (CSMT|CASEMENT|CAS|CM) /,"w:abat"],[/ (AWN|AWNING|AW) /,"w:proy"],[/ (TT|TILT) /,"w:osci"]];
+const TYPE_OPTS = [["w:fija","Ventana fija (PIC)"],["w:corr2","Ventana corrediza 2 hojas (XO)"],["w:corr3","Ventana corrediza 3 hojas (XOX)"],["w:corr4","Ventana corrediza 4 hojas"],["w:guil","Guillotina (SH / DH)"],["w:abat","Abatible (casement)"],["w:proy","Proyectante (awning)"],["w:osci","Oscilobatiente"],["s:corr2","Puerta corrediza 2 paneles"],["s:corr3","Puerta corrediza 3 paneles"],["s:corr4","Puerta corrediza 4 paneles"],["d:abat1","Puerta abatible 1 hoja"],["d:abat2","Puerta abatible 2 hojas"],["d:princ","Puerta principal"]];
+const typeName = k => (TYPE_OPTS.find(t => t[0] === k) || [k, k])[1];
+const abbrOf = N => { const t = " " + N + " "; const a = ABBR.find(r => r[0].test(t)); return a ? a[1] : null; };
+function codeSize(N){ const m = String(N).match(/(?:^|[^\d.])(\d{4,5})(?![\d.])/); if(!m) return null; const d = m[1], part = q => q.length === 2 ? {f:+q[0], i:+q[1]} : {f:+q.slice(0,2), i:+q[2]};
+  const opts = d.length === 4 ? [[d.slice(0,2), d.slice(2)]] : [[d.slice(0,2), d.slice(2)], [d.slice(0,3), d.slice(3)]]; let best = null;
+  opts.forEach(([a, b]) => { const A = part(a), B = part(b), wf = A.f + A.i/12, hf = B.f + B.i/12; if(wf < 1 || wf > 20 || hf < 1 || hf > 12) return; const sc = (wf >= 1.5 && wf <= 16 ? 1 : 0) + (hf >= 1.5 && hf <= 10 ? 1 : 0);
+    if(!best || sc > best.sc) best = {sc, w:wf*0.3048, h:hf*0.3048, code:d, txt:`${A.f}'${A.i}" × ${B.f}'${B.i}"`}; }); return best; }
+function readLabel(label, kind){ const raw = String(label || "").trim(), doubt = /\?/.test(raw), clean = raw.replace(/\?/g, "").trim(), r = {label:clean, key:"", w:null, h:null, type:null, from:"", tag:null, doubt, guess:false};
+  const tg = clean.replace(/\s/g, "").toUpperCase(); if(TAG_RE.test(tg)){ r.tag = tg.replace("-", ""); r.key = r.tag; r.label = r.tag; return r; }
+  const N = clean.toUpperCase().replace(/\./g, "").replace(/\s+/g, " ").trim(); r.key = N; r.type = abbrOf(N);
+  const c = codeSize(N); if(c){ r.w = c.w; r.h = c.h; r.from = `código ${c.code} = ${c.txt}`; }
+  else { const z = parseSize(clean.replace(/[A-Za-z]{2,}\.?$/,"").trim()); if(z && z.w > 0.2 && z.w < 12 && z.h > 0.2 && z.h < 6){ r.w = z.w; r.h = z.h; r.from = "medida escrita"; } }
+  if(!r.type && r.h){ r.guess = true; r.type = r.h >= 1.95 ? (kind === "door" ? (r.w > 1.4 ? "d:abat2" : "d:abat1") : "s:corr2") : (kind === "door" ? "d:abat1" : kind === "sliding" ? "s:corr2" : "w:corr2"); }
+  return r; }
+const labelKey = (lab, kind) => readLabel(lab, kind).key || ("SIN ETIQUETA " + kind);
+function nearOutline(f, L, tol){ const fin = v => typeof v === "number" && isFinite(v), cw = f.full.width, ch = f.full.height, V = (Array.isArray(f.out && f.out.outline) ? f.out.outline : []).filter(q => Array.isArray(q) && fin(q[0]) && fin(q[1])).map(q => [q[0]*cw, q[1]*ch]);
+  if(V.length < 3) return L; return L.filter(l => { const e = nearestEdge(V, [l.x*cw, l.y*ch]); return e && e.d <= tol*Math.max(cw, ch); }); }
+function textLabels(f){ if(!src || !Array.isArray(src.text)) return []; const [x0,y0,x1,y1] = f.rect, T = src.text.filter(t => t && typeof t.s === "string" && t.x > x0 && t.x < x1 && t.y > y0 && t.y < y1), out = [];
+  const isAbbr = q => !/\d/.test(q) && q.replace(/[.\s]/g, "").length <= 8 && !!abbrOf(q.toUpperCase().replace(/\./g, ""));
+  T.forEach(t => { const q = t.s.trim(); let lab = null, kind = "window";
+    if(TAG_RE.test(q.replace(/\s/g, ""))){ lab = q.replace(/\s/g, "").toUpperCase().replace("-", ""); kind = lab[0] === "V" ? "window" : "door"; if(sched && sched.skip.includes(lab)) return; }
+    else if(/^\d{4,5}(\s*[A-Z.\/ ]{1,12})?$/i.test(q) && codeSize(q.toUpperCase())){ lab = q.toUpperCase(); if(!/[A-Z]/.test(lab)){ const ab = T.filter(z => z !== t && isAbbr(z.s.trim())).map(z => ({z, d:Math.hypot(z.x-t.x, z.y-t.y)})).sort((a,b) => a.d-b.d)[0]; if(ab && ab.d < 0.015) lab += " " + ab.z.s.trim().toUpperCase(); } }
+    if(!lab) return; out.push({label:lab, kind, key:labelKey(lab, kind), x:(t.x-x0)/(x1-x0), y:(t.y-y0)/(y1-y0)}); });
+  const tg = out.filter(l => TAG_RE.test(l.label)), cd = out.filter(l => !TAG_RE.test(l.label)); return nearOutline(f, tg, 0.15).concat(nearOutline(f, cd, 0.07)); }
+function fromSched(g){ const i = sched && g.tag && sched.items.find(x => x.tag === g.tag); if(!i) return false; g.w = i.width; g.h = i.height; if(typeof i.sill === "number") g.sill = i.sill;
+  g.type = i.kind === "door" ? "d:" + (CAT.doors[i.model] ? i.model : (i.width > 1.4 ? "abat2" : "abat1")) : i.kind === "sliding" ? "s:" + (["corr2","corr3","corr4"].includes(i.opening) ? i.opening : "corr2") : "w:" + (CAT.openings[i.opening] && i.opening !== "combo" ? i.opening : "corr2");
+  g.from = "de la cédula" + (i.desc ? ": " + short(i.desc, 60) : ""); g.guess = false; g.color = i.color; return true; }
+function buildReview(labels){ const by = {}; labels.forEach(l => { const k = l.key; if(!by[k]){ const r = readLabel(l.label, l.kind); by[k] = {id:k, label:r.label || (l.kind === "door" ? "Puerta sin etiqueta" : l.kind === "sliding" ? "Corrediza sin etiqueta" : "Ventana sin etiqueta"), tag:r.tag, kind:l.kind, qty:0, w:r.w, h:r.h, type:r.type, from:r.from, guess:r.guess, doubt:r.doubt}; } by[k].qty++; });
+  const rows = Object.values(by);
+  if(sched) sched.items.forEach(i => { if(!rows.some(g => g.tag === i.tag)) rows.push({id:i.tag, label:i.tag, tag:i.tag, kind:i.kind === "door" ? "door" : i.kind === "sliding" ? "sliding" : "window", qty:0, onlySched:true}); });
+  rows.forEach(g => { if(g.tag){ const seen = g.qty; if(!fromSched(g)) g.from = "clave sin cédula"; else { const i = sched.items.find(x => x.tag === g.tag), q = i && i.qty || 0; if(q && q !== seen){ g.qty = q; g.from += g.onlySched ? ` · la cédula dice ${q}; no se vio en el plano` : ` · la cédula dice ${q}, en el plano se vieron ${seen}`; g.guess = true; } } } if(!g.type) g.type = g.kind === "door" ? "d:abat1" : g.kind === "sliding" ? "s:corr2" : "w:corr2"; });
+  if(sched) rows.forEach(g => { if(g.tag && sched.skip.includes(g.tag)) g.qty = 0; });
+  return rows.filter(g => g.qty > 0).sort((a,b) => String(a.label).localeCompare(String(b.label), "es", {numeric:true})); }
+function tplOf(g){ const [k, v] = (g.type || "w:corr2").split(":"), w = g.w, h = g.h; if(k === "d") return {type:"door", width:w, height:h, sill:0, dmodel:CAT.doors[v] ? v : "abat1"};
+  const sill = k === "s" ? 0 : (typeof g.sill === "number" ? g.sill : (h >= 1.95 ? 0 : Math.max(0, Math.min(0.9, plan.wallH - 0.3 - h)))); return {type:"window", width:w, height:h, sill, opening:CAT.openings[v] ? v : "corr2"}; }
+const sizeTxt = g => g.w && g.h ? `${g.w.toFixed(2)} × ${g.h.toFixed(2)}` : "";
+function renderReview(){ const R = plan.review || [], el = $("rvList"), opts = k => TYPE_OPTS.map(t => `<option value="${t[0]}"${t[0] === k ? " selected" : ""}>${esc(t[1])}</option>`).join("");
+  el.innerHTML = R.length ? R.map((g, i) => { const miss = !(g.w && g.h), warn = !miss && (g.guess || g.doubt); const note = miss ? (g.tag ? "Clave sin medida: lee la cédula abajo o escribe la medida." : "No se pudo leer la medida: escríbela (3050, 0.91x1.52, 36x60 in).") : (g.from || "") + (g.doubt ? " · un dígito dudoso, revísalo" : "") + (g.guess ? " · tipo supuesto, revísalo" : "");
+    return `<div class="rvrow${miss ? " bad" : warn ? " warn" : ""}" data-i="${i}"><div class="rvtop"><b class="rvlab">${esc(g.label)}</b><span class="rvfrom">${esc(note)}</span><button class="x" data-k="del" aria-label="Quitar ${esc(g.label)}">×</button></div>
+      <div class="rvf"><label>Cant.<input type="number" min="0" max="99" step="1" data-k="qty" value="${g.qty}"></label><label>Tipo<select data-k="type">${opts(g.type)}</select></label><label>Medida (m)<input type="text" data-k="size" value="${sizeTxt(g)}" placeholder="3050 · 0.91x1.52" autocomplete="off" spellcheck="false"></label></div></div>`; }).join("") : `<p class="status" style="margin:0">No hay piezas en la lista. Agrégalas con «+ Agregar pieza».</p>`;
+  const n = R.reduce((a, g) => a + (+g.qty || 0), 0), bad = R.filter(g => !(g.w && g.h) && g.qty > 0).length, warn = R.filter(g => g.w && g.h && (g.guess || g.doubt)).length;
+  $("rvInfo").textContent = `${R.length} tipos, ${n} piezas.` + (bad ? ` ${bad} sin medida (en rojo).` : "") + (warn ? ` ${warn} por revisar (en amarillo).` : "") + " Cambia lo que esté mal; la etiqueta original queda a la izquierda.";
+  $("rvGo").textContent = `Pasar a colocar (${n} piezas)`; $("rvGo").disabled = !n;
+  const needS = R.some(g => g.tag && !(g.w && g.h)); $("rvSchedRow").hidden = !needS || !sampler;
+  if(needS){ let o = '<option value="0">Cédula en esta misma hoja</option>'; if(pdfDoc) for(let k = 1; k <= pdfDoc.numPages; k++) o += `<option value="${k}">Cédula en la página ${k} del PDF</option>`; if($("rvPage").innerHTML !== o) $("rvPage").innerHTML = o; } }
+function openReview(){ if(!plan.review) plan.review = []; renderReview(); openPanel("pRev"); }
+$("btnRevOpen").addEventListener("click", () => { setAdd(null); openReview(); });
+$("rvList").addEventListener("change", e => { const r = e.target.closest(".rvrow"), g = r && plan.review[+r.dataset.i], k = e.target.dataset.k; if(!g) return; e.stopPropagation();
+  if(k === "qty") g.qty = Math.max(0, Math.min(99, Math.round(+e.target.value || 0)));
+  else if(k === "type"){ g.type = e.target.value; g.guess = false; }
+  else if(k === "size"){ const v = e.target.value.trim(), c = codeSize(v.toUpperCase()), z = c || parseSize(v); if(z && z.w > 0.2 && z.h > 0.2){ g.w = z.w; g.h = z.h; g.doubt = false; g.from = c ? `código ${c.code} = ${c.txt}` : "medida escrita a mano"; } else { status("No entendí la medida. Ejemplos: 3050, 0.91x1.52, 36x60 in, 910x1520 mm.", true); } }
+  save(); renderReview(); });
+$("rvList").addEventListener("input", e => e.stopPropagation());
+$("rvList").addEventListener("click", e => { const b = e.target.closest("[data-k=del]"); if(!b) return; const i = +b.closest(".rvrow").dataset.i; plan.review.splice(i, 1); save(); renderReview(); });
+$("rvAdd").addEventListener("click", () => { plan.review = plan.review || []; const n = plan.review.length + 1; plan.review.push({id:"MANUAL " + Date.now().toString(36), label:"Pieza " + n, kind:"window", qty:1, w:null, h:null, type:"w:corr2", from:"agregada a mano"}); save(); renderReview(); const rows = $("rvList").querySelectorAll(".rvrow"); if(rows.length) rows[rows.length-1].scrollIntoView({block:"nearest"}); });
+$("rvSched").addEventListener("click", async () => { const b = $("rvSched"); if(!sampler) return; b.disabled = true; const pg = +$("rvPage").value; status("Leyendo la cédula. Puede tardar uno o dos minutos…");
+  try{ const cv = pg && pdfDoc ? await pageCanvas(pg, 3000) : (src && (src.full || src.cv)); if(!cv) throw new Error("Primero sube el plano en el panel Plano.");
+    const n = await readSched(cv, m => status("Leyendo la cédula: " + m + "…")); let hit = 0; (plan.review || []).forEach(g => { if(g.tag && fromSched(g)) hit++; if(g.tag && sched && sched.skip.includes(g.tag)) g.qty = 0; }); save(); renderReview();
+    status(n ? `Cédula leída: ${n} tipos. ${hit} piezas de la lista tomaron su medida y tipo de la cédula.` : "No se encontró una cédula en esa hoja.", !n); }
+  catch(err){ status(err && err.code === "rate_limited" ? "Demasiadas lecturas seguidas. Espera un momento." : (err && err.message) || "No se pudo leer la cédula.", true); }
+  b.disabled = false; });
+$("rvGo").addEventListener("click", () => { const R = (plan.review || []).filter(g => g.qty > 0), bad = R.filter(g => !(g.w && g.h)); if(bad.length){ status("Falta la medida de: " + bad.map(g => g.label).join(", ") + ". Escríbela o pon la cantidad en 0.", true); return; }
+  plan.tray = R.map(g => { const placed = plan.openings.filter(o => o.rv === g.id).length; return {key:g.id, label:g.label, left:Math.max(0, g.qty - placed), tpl:tplOf(g)}; });
+  plan.openings.forEach(o => { const g = R.find(q => q.id === o.rv); if(!g) return; const t = tplOf(g); ["type","width","height","sill","opening","dmodel"].forEach(k => { if(t[k] !== undefined) o[k] = t[k]; else delete o[k]; }); });
+  const auto = autoPlace(), rest = plan.tray.reduce((a, t) => a + t.left, 0);
+  openPanel(null); save(); refresh(false); $("tab-plan").click(); const first = plan.tray.find(t => t.left > 0); if(first) pickTray(first.key);
+  status((auto ? `${auto} piezas colocadas solas donde el agente vio su etiqueta. Si alguna quedó en el muro equivocado, arrástrala. ` : "") + (rest ? `Faltan ${rest} por colocar: elige la pieza en la barra de arriba y toca el muro.` : "Todas colocadas. Revisa en 3D.")); });
+function placeOne(tr, i, x, y){ const w = plan.walls[i], L = wlen(w); if(!w || L < 0.05) return null; const ref = windows()[0], off = Math.min(Math.max(((x-w.x1)*(w.x2-w.x1) + (y-w.y1)*(w.y2-w.y1))/L, 0), L);
+  const po = Object.assign({id:nextId++, wall:i, offset:off, color:ref ? ref.color : "negro"}, JSON.parse(JSON.stringify(tr.tpl)), {tag:tr.label.slice(0, 14), rv:tr.key}); if(po.type === "window"){ po.line = ref ? ref.line : "pvc"; po.glass = ref ? ref.glass : "claro"; }
+  po.offset = Math.min(Math.max(off, Math.min(po.width/2, L/2)), Math.max(L - po.width/2, L/2)); plan.openings.push(po); tr.left = Math.max(0, tr.left - 1);
+  if(plan.hints){ const px = w.x1 + (w.x2-w.x1)/L*po.offset, py = w.y1 + (w.y2-w.y1)/L*po.offset; let bi = -1, bd = 3.5; plan.hints.forEach((q, k) => { if(q.key !== tr.key || (q.level || 0) !== lv(w)) return; const d = Math.hypot(q.x-px, q.y-py); if(d < bd){ bd = d; bi = k; } }); if(bi >= 0) plan.hints.splice(bi, 1); }
+  return po; }
+function autoPlace(){ let n = 0; (plan.tray || []).forEach(tr => { const H = (plan.hints || []).filter(q => q.key === tr.key).slice(0, tr.left);
+    H.forEach(q => { if(tr.left <= 0) return; let best = null; plan.walls.forEach((w, i) => { if(lv(w) !== (q.level || 0) || w.ext === false) return; const dx = w.x2-w.x1, dy = w.y2-w.y1, L2 = dx*dx + dy*dy; if(L2 < 0.01) return; const t = Math.min(1, Math.max(0, ((q.x-w.x1)*dx + (q.y-w.y1)*dy)/L2)), d = Math.hypot(q.x-w.x1-t*dx, q.y-w.y1-t*dy); if(!best || d < best.d) best = {i, d, x:w.x1+t*dx, y:w.y1+t*dy}; });
+      if(best && best.d < 3 && placeOne(tr, best.i, best.x, best.y)) n++; }); }); return n; }
+function pickTray(k){ const t = (plan.tray || []).find(q => q.key === k && q.left > 0); if(!t || trayCur === k){ setAdd(null); return; } setAdd(t.tpl.type); trayCur = k;
+  $("hint").textContent = `Toca el muro donde va ${t.label} (quedan ${t.left}).`; renderTray(); drawPlan(); }
+function renderTray(){ const el = $("tray"), T = (plan.tray || []).filter(t => t.left > 0); if(trayCur && !T.some(t => t.key === trayCur)) trayCur = null;
+  el.hidden = !T.length; if(!T.length) return; el.innerHTML = `<span class="tl">Por colocar:</span>` + T.map(t => `<button data-k="${esc(t.key)}" aria-pressed="${t.key === trayCur}" title="${esc(typeName((t.tpl.type === "door" ? "d:" + t.tpl.dmodel : (t.tpl.sill === 0 && t.tpl.height >= 1.95 ? "s:" : "w:") + t.tpl.opening)))} · ${t.tpl.width.toFixed(2)} × ${t.tpl.height.toFixed(2)} m">${esc(t.label)} <b>×${t.left}</b></button>`).join("") + `<button data-k="__rev">Revisar lista</button>`; }
+$("tray").addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if(!b) return; if(b.dataset.k === "__rev"){ setAdd(null); openReview(); return; } pickTray(b.dataset.k); });
+async function readSched(canvas, prog){ const tiles = gridTiles(canvas), got = [], fin = v => typeof v === "number" && isFinite(v);
+  for(let k = 0; k < tiles.length; k += 3){ const part = await Promise.all(tiles.slice(k, k+3).map(async t => { try{ return await ask(P_SCHED(t.zone), [await toBlob(t.cv)]); }catch(e){ if(hard(e)) throw e; return null; } })); got.push(...part); if(prog) prog(`${Math.min(k+3, tiles.length)} de ${tiles.length} zonas`); }
+  const by = {}; got.forEach(r => (r && Array.isArray(r.items) ? r.items : []).forEach(i => { if(!i || typeof i.tag !== "string") return; const z = typeof i.size_txt === "string" ? (codeSize(i.size_txt.toUpperCase()) || parseSize(i.size_txt)) : null; if(z && z.w > 0.2 && z.w < 12 && z.h > 0.2 && z.h < 7){ i.width = z.w; i.height = z.h; }
+    if(!fin(i.width) || !fin(i.height)) return; const key = i.tag.trim().toUpperCase().replace(/\s/g, "").replace("-", "").slice(0,8); i.tag = key; i.qty = fin(i.qty) ? Math.max(1, Math.round(i.qty)) : 1;
+    if(!CAT.openings[i.opening] && typeof i.desc === "string"){ const a = abbrOf(i.desc.toUpperCase().replace(/\./g, "")); if(a && a[0] === "w") i.opening = a.slice(2); }
+    if(!by[key] || (i.qty > by[key].qty)) by[key] = i; }));
+  const all = Object.values(by).sort((a,c) => a.tag.localeCompare(c.tag, "es", {numeric:true})); if(!all.length) return 0;
+  sched = {items:all.filter(i => i.sell !== false), skip:all.filter(i => i.sell === false).map(i => i.tag)}; return all.length; }
 $("btnRead").addEventListener("click", async () => {
   if(!src || !sampler) return;
   $("btnRead").disabled = true; const S = [], N = [], up = (i,s,n) => { S[i] = s; if(n !== undefined) N[i] = n; showSteps(S,N); };
@@ -1924,24 +2100,25 @@ $("btnRead").addEventListener("click", async () => {
     const good = floors.filter(f => f.st === "✓");
     if(!good.length){ S[2] = "fail"; note2(); throw new Error("No se pudo calcar el contorno de la casa. Intenta de nuevo o prueba con una hoja que muestre solo la planta."); }
     S[2] = "ok"; note2();
-    up(3,"run"); let fromText = 0, fromAgents = 0;
-    await Promise.all(good.map(async f => { const tx = textItems(f);
-      if(tx.length >= 2){ f.items = tx; fromText += tx.length; return; }
-      const tiles = makeTiles(f.full), res = await Promise.all(tiles.map(async t => { try{ return await ask(P_INV(t.zone), [await toBlob(t.cv)]); }catch(e){ if(e && e.code === "not_granted") throw e; return null; } }));
-      f.items = []; res.forEach((r,k) => (r && Array.isArray(r.items) ? r.items : []).forEach(i => { if(!i || !fin(i.x) || !fin(i.y) || i.exterior === false) return; const rr = tiles[k].r, code = typeof i.code === "string" ? i.code.trim().toUpperCase() : "";
-        f.items.push({kind: i.kind === "door" || i.kind === "sliding" ? i.kind : "window", tag: TAG_RE.test(code) ? code.replace("-", "") : undefined, x: rr[0] + i.x*(rr[2]-rr[0]), y: rr[1] + i.y*(rr[3]-rr[1]), width:i.width, height:i.height, opening:i.opening}); }));
-      fromAgents += f.items.length; }));
-    up(3,"ok", (fromText ? `${fromText} claves leídas del texto del PDF, sin estimar. ` : "") + (fromAgents ? `${fromAgents} vanos ubicados por los lectores.` : "") + (!fromText && !fromAgents ? "No se encontraron vanos; agrégalos sobre la planta." : ""));
-    up(4,"run");
+    up(3,"run"); let nTxt = 0, nAg = 0;
+    await Promise.all(good.map(async f => { const tx = textLabels(f); if(tx.length >= 2){ f.labels = tx; nTxt += tx.length; return; }
+      const tiles = makeTiles(f.full), res = await Promise.all(tiles.map(async t => { try{ return await ask(P_LIST(t.zone), [await toBlob(t.cv)]); }catch(e){ if(hard(e)) throw e; return null; } })), L = [];
+      res.forEach((r,k) => (r && Array.isArray(r.items) ? r.items : []).forEach(i => { if(!i || !fin(i.x) || !fin(i.y)) return; const rr = tiles[k].r, lab = typeof i.label === "string" ? i.label.trim().slice(0, 30) : "", kind = ["window","sliding","door"].includes(i.kind) ? i.kind : "window";
+        const x = rr[0] + i.x*(rr[2]-rr[0]), y = rr[1] + i.y*(rr[3]-rr[1]), key = labelKey(lab, kind); if(L.some(q => q.key === key && Math.hypot(q.x-x, q.y-y) < 0.035)) return; L.push({label:lab, kind, key, x, y}); }));
+      f.labels = nearOutline(f, L, 0.1); nAg += f.labels.length; }));
+    up(3,"ok", (nTxt ? `${nTxt} etiquetas tomadas del texto del PDF, exactas. ` : "") + (nAg ? `${nAg} etiquetas copiadas por los lectores.` : "") + (!nTxt && !nAg ? "No se encontraron etiquetas; agrega las piezas en la revisión." : ""));
+    const tags = good.some(f => f.labels.some(l => TAG_RE.test(l.label.replace(/\s/g, ""))));
+    if(!sched && info && info.has_table){ up(4,"run"); try{ const n = await readSched(full, m => up(4,"run",m)); up(4, n ? "ok" : "fail", n ? `${n} tipos leídos de la cédula.` : "No se encontró la cédula en esta hoja."); }catch(e){ if(hard(e)) throw e; up(4,"fail","No se pudo leer la cédula."); } }
+    else up(4,"skip", sched ? "Se usa la cédula que ya estaba leída." : tags ? "La hoja no trae cédula. Si está en otra página, léela desde la revisión." : "Las etiquetas traen la medida; no hace falta cédula.");
+    up(5,"run"); good.forEach(f => { f.items = []; });
     const built = good.map(f => ({name:f.name, p:floorPlan(f), f})).filter(x => x.p);
     if(!built.length) throw new Error("El contorno calcado no sirvió para armar la planta. Intenta de nuevo.");
-    const p = mergeFloors(built), assumed = built.some(x => x.f.assumed), nW = p.openings.filter(o => o.type === "window").length, nD = p.openings.filter(o => o.type === "door").length;
-    if(info) p.info = {kind:short(info.kind), scale: assumed ? "No se pudo leer una cota: la escala es supuesta. Corrige «Ancho total de la planta»." : short(built[0].f.out.scale && built[0].f.out.scale.source) || short(info.scale), doubts:short(info.doubts), rooms:[]};
-    let miss = ""; if(sched){ const diff = sched.items.map(i => { const n = p.openings.filter(o => o.tag === i.tag).length, q = i.qty || 1; return n === q ? "" : `${i.tag} (${n} de ${q})`; }).filter(Boolean); if(diff.length) miss = "No cuadra con la tabla: " + diff.join(", ") + "."; }
-    if(miss){ p.info = p.info || {kind:"", scale:"", rooms:[]}; p.info.doubts = miss; }
-    setPlan(p); refresh(true); $("tab-plan").click(); openPanel(null);
-    up(4, miss ? "fail" : "ok", `${p.walls.length} tramos de fachada, ${nW} ventanas y ${nD} puertas exteriores. ${miss}`);
-    status(`Planta lista para revisar: ${nW} ventanas y ${nD} puertas exteriores sobre tu plano. Toca una pieza para corregirla o eliminarla, o agrega con los iconos. Cuando esté bien, pasa a 3D.` + (miss ? " " + miss + " Agrega las que falten sobre la planta." : "") + (assumed ? " La escala es supuesta: corrige el ancho total en el panel Plano." : ""), assumed || !!miss);
+    const p = mergeFloors(built), assumed = built.some(x => x.f.assumed);
+    if(info) p.info = {kind:short(info.kind), scale: assumed ? "No se pudo leer una cota: la escala es supuesta. Corrígela con «Escala» en la vista Planta." : short(built[0].f.out.scale && built[0].f.out.scale.source) || short(info.scale), doubts:short(info.doubts), rooms:[]};
+    p.openings = []; p.review = buildReview(good.flatMap(f => f.labels || [])); delete p.tray;
+    setPlan(p); refresh(true); $("tab-plan").click(); openReview();
+    const nP = p.review.reduce((a,g) => a + g.qty, 0); up(5,"ok", `${p.review.length} tipos, ${nP} piezas en la lista.`);
+    status(`Lista lista: ${nP} piezas. Revisa tipo y medida de cada una (las marcadas en rojo o amarillo necesitan tu ayuda) y toca «Pasar a colocar».` + (assumed ? " La escala del contorno es supuesta: corrígela con «Escala»." : ""), assumed);
   }catch(err){
     S.forEach((s,i) => { if(s === "run") S[i] = "fail"; }); showSteps(S,N);
     const c = err && err.code;
