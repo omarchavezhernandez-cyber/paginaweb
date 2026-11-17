@@ -16,7 +16,12 @@ const TYPES = {
 
 http.createServer((req, res) => {
   let rel = decodeURIComponent(req.url.split("?")[0]);
-  if (rel === "/") rel = "/index.html";
+  if (rel === "/configurador") {
+    res.writeHead(301, { Location: "/configurador/" });
+    res.end();
+    return;
+  }
+  if (rel.endsWith("/")) rel += "index.html";
   const file = path.join(__dirname, path.normalize(rel).replace(/^(\.\.[/\\])+/, ""));
   fs.readFile(file, (err, data) => {
     if (err) {
