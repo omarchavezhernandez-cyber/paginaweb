@@ -9,6 +9,7 @@ Sitio estático de una página.
 - `ds/` — estilos
 - `support.js` — runtime de la página
 - `configurador/` — configurador 3D de puertas y ventanas (se abre en `/configurador/`)
+- `modelador/` — modelador 3D DWC de ventanas y puertas con perfiles reales (se abre en `/modelador/`)
 - `server.js` + `package.json` — servidor mínimo para Railway (sin dependencias)
 
 ## Subir a GitHub
