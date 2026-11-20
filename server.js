@@ -16,6 +16,11 @@ const TYPES = {
 
 http.createServer((req, res) => {
   let rel = decodeURIComponent(req.url.split("?")[0]);
+  if (rel === "/modelador") {
+    res.writeHead(301, { Location: "/modelador/" });
+    res.end();
+    return;
+  }
   if (rel === "/configurador") {
     res.writeHead(301, { Location: "/configurador/" });
     res.end();
