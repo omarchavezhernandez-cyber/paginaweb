@@ -1,253 +1,442 @@
 <!DOCTYPE html>
-<html>
+<html lang="es-MX">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<title>Door Windows Center · Sitio con video</title>
+<meta name="description" content="Ventanas y puertas de PVC europeo para exterior, fabricadas e instaladas por nuestro propio equipo.">
+<meta property="og:title" content="Door Windows Center · Ventanas y puertas de PVC europeo">
+<meta property="og:description" content="Medimos en obra, fabricamos en nuestra planta e instalamos con nuestro equipo.">
+<meta property="og:image" content="media/sala-4.5.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a quiet white architectural catalogue. Real footage carries every screen;
+   type stays light and wide, buttons are pills, the 3D modeler closes the page on a dark band. */
+:root{
+  --paper:#ffffff;
+  --mist:#f3f2ef;
+  --ink:#151515;
+  --soft:#5c5a56;
+  --night:#1b1714;       /* Schwarzbraun */
+  --accent:#a5c905;      /* DWC logo green, used sparingly */
+  --font:"Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --gut:clamp(16px,2.4vw,32px);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+::selection{background:var(--ink);color:#fff}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-weight:300;letter-spacing:.01em;line-height:1.12;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.4rem,5.2vw,4.4rem)}
+h2{font-size:clamp(2rem,3.8vw,3.2rem)}
+h3{font-size:clamp(1.5rem,2.4vw,2.1rem)}
+p{margin:0;max-width:60ch}
+.wrap{padding-inline:var(--gut)}
+.skip{position:absolute;left:12px;top:-60px;background:var(--ink);color:#fff;padding:10px 14px;z-index:99}
+.skip:focus{top:12px}
+
+/* Pills */
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:46px;padding:0 1.6em;border-radius:999px;border:1px solid currentColor;background:transparent;font:500 .95rem/1 var(--font);letter-spacing:.02em;text-decoration:none;cursor:pointer;transition:transform 160ms var(--ease-out),background-color 200ms ease,color 200ms ease,border-color 200ms ease}
+.pill:active{transform:scale(.97)}
+.pill--solid{background:var(--ink);border-color:var(--ink);color:#fff}
+.pill--light{color:#fff;border-color:rgba(255,255,255,.85)}
+.pill--white{background:#fff;color:var(--ink);border-color:#fff}
+.pill svg{width:18px;height:18px}
+@media (hover:hover) and (pointer:fine){
+  .pill:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .pill--solid:hover{background:#333;border-color:#333}
+  .pill--light:hover{background:#fff;color:var(--ink);border-color:#fff}
+  .pill--white:hover{background:transparent;color:#fff}
+}
+
+/* Header */
+.top{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid #ecebe8}
+.top .wrap{display:flex;align-items:center;gap:32px;min-height:80px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
+.logo img{height:56px;width:auto}
+.flogo{display:block;height:80px;width:auto;margin-bottom:28px}
+.logo .wm{display:none;align-items:center;gap:10px}
+.logo .mk{width:30px;height:34px;border:4px solid #6b6b6b;border-right-color:var(--accent);border-top-color:var(--accent)}
+.logo .tx{font-weight:500;font-size:.95rem;letter-spacing:.18em}
+.logo .tx small{display:block;font-weight:400;font-size:.62rem;letter-spacing:.22em;color:var(--soft);margin-top:-2px}
+.logo.noimg img{display:none}.logo.noimg .wm{display:flex}
+.links{display:flex;gap:28px;list-style:none;margin:0 0 0 auto;padding:0}
+.links a{text-decoration:none;font-size:.88rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#333;padding:10px 0;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size 240ms var(--ease-out)}
+.links a:hover{background-size:100% 1px}
+.top .pill{min-height:40px;font-size:.88rem}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;place-items:center;transition:transform 160ms var(--ease-out)}
+.burger:active{transform:scale(.94)}
+.burger span{display:block;width:22px;height:1.5px;background:var(--ink);box-shadow:0 -7px 0 var(--ink),0 7px 0 var(--ink)}
+
+/* Hero */
+.hero{position:relative;margin:0 var(--gut);height:min(86vh,860px);min-height:520px;overflow:hidden;background:#222}
+.hero video,.tile video,.split video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,10,8,.74) 0%,rgba(12,10,8,.52) 45%,rgba(12,10,8,.18) 80%),linear-gradient(0deg,rgba(12,10,8,.45),rgba(12,10,8,0) 45%)}
+.hero h1,.hero p{text-shadow:0 1px 18px rgba(0,0,0,.35)}
+.hero .copy{position:absolute;z-index:2;left:clamp(24px,6vw,96px);bottom:clamp(40px,10vh,110px);right:24px;color:#fff;max-width:720px}
+.hero p{margin:22px 0 32px;font-size:1.05rem;color:rgba(255,255,255,.92)}
+.hero .row{display:flex;flex-wrap:wrap;gap:12px}
+
+/* Intro */
+.intro{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);align-items:center;padding:clamp(64px,9vw,120px) clamp(24px,6vw,96px)}
+.intro h2{text-transform:uppercase;font-size:clamp(2rem,4vw,3.4rem);letter-spacing:.04em;line-height:1.15}
+.intro h2 strong{font-weight:600;display:block}
+.intro p + p{margin-top:16px}
+.intro p{color:var(--soft)}
+
+/* Product tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tile{position:relative;display:block;overflow:hidden;min-height:clamp(380px,46vw,640px);text-decoration:none;color:#fff;background:#222}
+.tile video,.tile img.poster{transition:transform 700ms var(--ease-out)}
+.tile::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.30);transition:background-color 300ms ease}
+.tile .label{position:absolute;z-index:2;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px}
+.tile .label span.sub{font-size:.95rem;max-width:34ch;color:rgba(255,255,255,.92)}
+.tile .label .pill{min-height:40px;font-size:.85rem}
+.tile--wide{grid-column:1/-1;min-height:clamp(380px,40vw,620px)}
+@media (hover:hover) and (pointer:fine){
+  .tile:hover video{transform:scale(1.025)}
+  .tile:hover::after{background:rgba(0,0,0,.38)}
+  .tile:hover .pill{background:#fff;color:var(--ink);border-color:#fff}
+}
+
+/* Split */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:clamp(520px,52vw,760px);margin-top:6px}
+.split .text{display:flex;flex-direction:column;justify-content:center;gap:22px;padding:clamp(48px,7vw,110px) clamp(24px,6vw,96px)}
+.split .text p{color:var(--soft)}
+.split .media{position:relative;overflow:hidden;background:#222;min-height:420px}
+.facts{list-style:none;margin:6px 0 10px;padding:0;display:grid;gap:0;border-top:1px solid #e6e4e0}
+.facts li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid #e6e4e0;font-size:.95rem}
+.facts li b{font-weight:500}
+.facts li span{color:var(--soft);text-align:right}
+
+/* Gallery */
+.gallery{padding:clamp(72px,9vw,120px) var(--gut) clamp(40px,5vw,72px)}
+.gallery .head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;padding:0 clamp(8px,4vw,64px) clamp(28px,4vw,48px)}
+.gallery .head p{color:var(--soft)}
+.shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;grid-auto-flow:dense}
+.shot.wide{grid-column:span 2;aspect-ratio:auto}
+.shot.wide img{position:absolute;inset:0}
+.shot{position:relative;overflow:hidden;aspect-ratio:1/1;background:var(--mist);border:0;padding:0;cursor:zoom-in}
+.shot img{width:100%;height:100%;object-fit:cover;transition:transform 600ms var(--ease-out)}
+.shot:active{transform:scale(.99)}
+@media (hover:hover) and (pointer:fine){.shot:hover img{transform:scale(1.03)}}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(10,10,10,.92);display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 220ms ease}
+.lb.on{opacity:1;pointer-events:auto}
+.lb img{max-height:86vh;max-width:min(1200px,100%);transform:scale(.97);transition:transform 260ms var(--ease-out)}
+.lb.on img{transform:scale(1)}
+.lb button{position:absolute;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:none;color:#fff;font-size:1.4rem;cursor:pointer;transition:transform 160ms var(--ease-out)}
+.lb button:active{transform:scale(.94)}
+
+/* Colors */
+.colors{padding:clamp(56px,7vw,96px) clamp(24px,6vw,96px);background:var(--mist);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);align-items:center}
+.colors p{color:var(--soft);margin-top:14px}
+.chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 18px;list-style:none;margin:0;padding:0}
+.chips li{display:flex;align-items:center;gap:14px;font-weight:500}
+.chips i{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 6px 14px -8px rgba(0,0,0,.35)}
+
+/* FAQ */
+.faq{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);padding:clamp(72px,9vw,120px) clamp(24px,6vw,96px)}
+.q{border-bottom:1px solid #e6e4e0}
+.q:first-child{border-top:1px solid #e6e4e0}
+.q button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;font-weight:500;font-size:1.05rem}
+.q button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.q .pm{width:16px;height:16px;position:relative;flex:none}
+.q .pm::before,.q .pm::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;background:var(--ink);transition:transform 220ms var(--ease-out)}
+.q .pm::after{transform:rotate(90deg)}
+.q[data-open] .pm::after{transform:rotate(0)}
+.q .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows 260ms var(--ease-out)}
+.q[data-open] .a{grid-template-rows:1fr}
+.q .a>div{overflow:hidden}
+.q .a p{color:var(--soft);padding-bottom:22px}
+
+/* Contact */
+.contact{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);padding:clamp(56px,7vw,96px) clamp(24px,6vw,96px);border-top:1px solid #ecebe8}
+.contact p{color:var(--soft);margin:16px 0 28px}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:28px 32px;margin:0}
+.info dt{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+.info dd{margin:0;font-weight:500}
+.cpy{all:unset;cursor:pointer;font-size:.85rem;color:var(--soft);text-decoration:underline;text-underline-offset:3px;margin-top:4px;display:inline-block}
+.cpy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 3D band, last */
+.m3d{position:relative;margin:0 var(--gut);overflow:hidden;background:var(--night);color:#fff;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);align-items:center;gap:clamp(24px,5vw,80px);padding:clamp(64px,9vw,120px) clamp(24px,6vw,96px)}
+.m3d p{color:rgba(255,255,255,.78);margin:20px 0 30px}
+.m3d ol{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.16);counter-reset:s}
+.m3d li{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.16);counter-increment:s;color:rgba(255,255,255,.88)}
+.m3d li::before{content:counter(s);width:30px;height:30px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-size:.85rem;font-weight:500}
+.m3d li b{font-weight:500;color:#fff;display:block}
+
+footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 32px;font-size:.92rem}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.cols h4{margin:0 0 12px;font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.cols a{display:block;text-decoration:none;color:#444;padding:5px 0}
+.cols a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.legal{margin-top:36px;padding-top:20px;border-top:1px solid #dddbd6;color:var(--soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.wa{display:none}
+
+/* Hero entrance, once */
+@media (prefers-reduced-motion:no-preference){
+  .hero .copy>*{animation:up 700ms var(--ease-out) both}
+  .hero .copy>*:nth-child(2){animation-delay:80ms}
+  .hero .copy>*:nth-child(3){animation-delay:150ms}
+  @keyframes up{from{opacity:0;transform:translateY(12px)}}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
+
+@media (max-width:980px){
+  .links,.top .pill{display:none}
+  .burger{display:grid}
+  .top.open .links{display:flex;position:fixed;inset:80px 0 0 0;flex-direction:column;gap:0;background:#fff;padding:16px 24px;margin:0}
+  .top.open .links a{display:block;font-size:1.3rem;padding:18px 0;border-bottom:1px solid #ecebe8}
+  .intro,.split,.colors,.faq,.contact,.m3d{grid-template-columns:1fr}
+  .split .media{order:-1}
+}
+@media (max-width:640px){
+  body{padding-bottom:74px}
+  .hero{height:78vh;margin:0}
+  .hero::after{background:linear-gradient(0deg,rgba(12,10,8,.82) 0%,rgba(12,10,8,.55) 55%,rgba(12,10,8,.35) 100%)}
+  .tiles{grid-template-columns:1fr}
+  .tile,.tile--wide{min-height:440px}
+  .shots{grid-template-columns:1fr 1fr}
+  .shot.wide,.shot.mwide{grid-column:1/-1;aspect-ratio:4/3}
+  .chips{grid-template-columns:1fr 1fr}
+  .info,.cols{grid-template-columns:1fr}
+  .m3d{margin:0}
+  .hero .row .pill,.split .pill,.m3d .pill,.contact .pill{width:100%}
+  .wa{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid #ecebe8}
+  .wa .pill{width:100%}
+}
+</style>
 </head>
 <body>
-<x-dc>
-<helmet>
-<title>Door Windows Center — Ventanas y puertas de PVC</title>
-<meta name="description" content="Fabricantes de ventanas y puertas de PVC a medida en Ciudad Juárez. Perfilería europea, vidrio doble, fabricación e instalación propia.">
-<link rel="stylesheet" href="ds/styles.css">
-<script src="ds/_ds_bundle.js"></script>
-<style>
-  body { margin: 0; background: var(--color-bg); }
-  * { box-sizing: border-box; }
-  p { text-wrap: pretty; }
-  a { color: var(--color-accent-700); text-decoration: none; }
-  a:hover { color: var(--color-accent-2-700); }
-</style>
-</helmet>
+<a class="skip" href="#main">Saltar al contenido</a>
 
-<section style="display: flex; flex-direction: column; font-family: var(--font-body); color: var(--color-text);">
-  <div id="2a" style="display: flex; flex-direction: column;">
-    <div style="max-width: 1280px; margin: 0 auto; width: 100%; background: var(--color-bg);">
-      <header style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: var(--space-4) var(--space-8) var(--space-3);">
-        <nav style="display: flex; gap: var(--space-4); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;">
-          <a href="#2a" style="color: var(--color-text);" style-hover="color: var(--color-accent-700);">{{ t.nav1 }}</a>
-          <a href="#2a" style="color: var(--color-text);" style-hover="color: var(--color-accent-700);">{{ t.nav2 }}</a>
-          <a href="/configurador/" style="color: var(--color-accent-700); font-weight: 600;" style-hover="color: var(--color-text);">{{ t.nav5 }}</a>
-          <a href="/modelador/" style="color: var(--color-accent-700); font-weight: 600;" style-hover="color: var(--color-text);">{{ t.nav6 }}</a>
-        </nav>
-        <img src="assets/logo-dwc.png" alt="Door Windows Center" style="width: 230px; height: 132px; object-fit: cover; mix-blend-mode: multiply;">
-        <div style="display: flex; gap: var(--space-4); align-items: center; justify-content: flex-end; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;">
-          <a href="#2a" style="color: var(--color-text);" style-hover="color: var(--color-accent-700);">{{ t.nav3 }}</a>
-          <a href="#2a" style="color: var(--color-text);" style-hover="color: var(--color-accent-700);">{{ t.nav4 }}</a>
-          <span style="display: flex; gap: var(--space-1); align-items: center; font-family: ui-monospace, Menlo, monospace; font-size: 11px; letter-spacing: 0.1em;">
-            <button onClick="{{ setEs }}" style="background: none; border: none; padding: 2px 3px; cursor: pointer; font: inherit; letter-spacing: inherit; color: {{ esColor }};">ES</button>
-            <span style="color: var(--color-neutral-400);">/</span>
-            <button onClick="{{ setEn }}" style="background: none; border: none; padding: 2px 3px; cursor: pointer; font: inherit; letter-spacing: inherit; color: {{ enColor }};">EN</button>
-          </span>
-        </div>
-      </header>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#main" aria-label="Door Windows Center, inicio">
+      <img src="assets/logo-dwc.png" alt="Door Windows Center" width="95" height="56" onerror="this.parentNode.classList.add('noimg')">
+      <span class="wm" aria-hidden="true"><span class="tx">DOOR WINDOWS CENTER</span></span>
+    </a>
+    <ul class="links" id="links">
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#obras">Obras</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#modelador">Modelador 3D</a></li>
+    </ul>
+    <a class="pill" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas%20y%20puertas%20de%20PVC.">Cotizar</a>
+    <button class="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="links"><span></span></button>
+  </div>
+</header>
 
-      <figure style="margin: 0; position: relative;">
-        <video src="assets/taller.mp4" poster="assets/portada-casa.jpg" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display: block; width: 100%; height: 860px; object-fit: cover; background: var(--color-neutral-300);"></video>
-        <figcaption style="position: absolute; left: var(--space-8); bottom: var(--space-8); right: var(--space-8); display: flex; flex-direction: column; gap: var(--space-3); max-width: 660px; background: var(--color-bg); padding: var(--space-6);">
-          <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-accent-700);">{{ t.tagline }}</span>
-          <h1 style="margin: 0; font-size: 62px; font-weight: 400; line-height: 1.0; letter-spacing: -0.02em;">{{ t.siteTagline }}</h1>
-          <a href="#2a" class="btn btn-primary" style="align-self: flex-start; margin-top: var(--space-2);">{{ t.cta }}</a>
-        </figcaption>
-      </figure>
-
-      <div style="display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-8); padding: 88px var(--space-8) 0;">
-        <h2 style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-neutral-700);">{{ t.aboutKicker }}</h2>
-        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-          <p style="margin: 0; font-size: 28px; line-height: 1.4;">{{ t.about1 }}</p>
-          <p style="margin: 0; font-size: 17px; line-height: 1.65; color: var(--color-neutral-800); max-width: 34em;">{{ t.about2 }}</p>
-        </div>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-6); padding: 80px var(--space-8) 0;">
-        <sc-for list="{{ points }}" as="p" hint-placeholder-count="5">
-          <div style="display: flex; flex-direction: column; gap: 7px;">
-            <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-accent-700);">{{ p.n }}</span>
-            <h3 style="margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3;">{{ p.t }}</h3>
-            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--color-neutral-700);">{{ p.d }}</p>
-          </div>
-        </sc-for>
-      </div>
-
-      <div style="padding: 96px 0 0;">
-        <h2 style="margin: 0 var(--space-8) var(--space-6); font-size: 46px; font-weight: 400; letter-spacing: -0.01em;">{{ t.workTitle }}</h2>
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;">
-          <sc-for list="{{ products }}" as="w" hint-placeholder-count="4">
-            <figure style="margin: 0; position: relative; aspect-ratio: 4 / 3; background: repeating-linear-gradient(135deg, var(--color-neutral-300) 0 9px, var(--color-neutral-200) 9px 18px); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-              {{ w.img }}
-              <sc-if value="{{ w.noSrc }}" hint-placeholder-val="{{ true }}">
-                <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-neutral-700);">{{ w.ph }}</span>
-              </sc-if>
-              <figcaption style="position: absolute; left: var(--space-4); bottom: var(--space-4); right: var(--space-4); display: flex; flex-direction: column; gap: 3px; background: var(--color-bg); padding: var(--space-3) var(--space-4);">
-                <span style="font-size: 20px;">{{ w.t }}</span>
-                <span style="font-size: 14px; color: var(--color-neutral-800);">{{ w.d }}</span>
-              </figcaption>
-            </figure>
-          </sc-for>
-        </div>
-      </div>
-
-      <figure style="margin: 96px 0 0; position: relative;">
-        <img src="assets/portada-casa.jpg" alt="Vivienda con ventanales y puerta de entrada acristalada" style="display: block; width: 100%; height: 720px; object-fit: cover; object-position: center 42%;">
-        <figcaption style="position: absolute; left: var(--space-8); bottom: var(--space-8); background: var(--color-bg); padding: var(--space-4) var(--space-6); display: flex; flex-direction: column; gap: 4px; max-width: 420px;">
-          <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent-700);">{{ t.videoKicker }}</span>
-          <span style="font-size: 20px; line-height: 1.35;">{{ t.videoTitle }}</span>
-        </figcaption>
-      </figure>
-
-      <div style="padding: 96px var(--space-8) 0;">
-        <h2 style="margin: 0 0 var(--space-6); font-size: 46px; font-weight: 400;">{{ t.faqTitle }}</h2>
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-8) 56px;">
-          <sc-for list="{{ faq }}" as="f" hint-placeholder-count="4">
-            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
-              <h3 style="margin: 0; font-size: 20px; font-weight: 600; line-height: 1.35;">{{ f.q }}</h3>
-              <p style="margin: 0; font-size: 16px; line-height: 1.65; color: var(--color-neutral-800);">{{ f.a }}</p>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 7fr 5fr; gap: var(--space-8); padding: 110px var(--space-8) var(--space-8); align-items: end;">
-        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-          <h2 style="margin: 0; font-size: 60px; font-weight: 400; line-height: 1.02; letter-spacing: -0.015em;">{{ t.contactTitle }}</h2>
-          <p style="margin: 0; font-size: 18px; line-height: 1.55; color: var(--color-neutral-800); max-width: 26em;">{{ t.contactSub }}</p>
-          <a href="https://wa.me/526562075567" class="btn btn-primary" style="align-self: flex-start;">{{ t.whatsapp }}</a>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: var(--space-3); font-family: ui-monospace, Menlo, monospace; font-size: 12px; line-height: 1.7; letter-spacing: 0.05em; color: var(--color-neutral-800);">
-          <div><span style="color: var(--color-neutral-600);">{{ t.lblPhone }}</span><br>+52 656 207 5567</div>
-          <div><span style="color: var(--color-neutral-600);">{{ t.lblMail }}</span><br>doorwindowscenter@gmail.com</div>
-          <div><span style="color: var(--color-neutral-600);">{{ t.lblAddr }}</span><br>Av. de la raza 6687<br>col del futuro<br>Cd Juárez, Chihuahua, MX</div>
-          <div><span style="color: var(--color-neutral-600);">{{ t.lblHours }}</span><br>{{ t.hours }}</div>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; padding: var(--space-3) var(--space-8) var(--space-6); font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-neutral-700);">
-        <span>© 2026 DoorWindowsCENTER</span>
-        <span style="color: var(--color-accent-2-700);">PVC · {{ t.rail3 }}</span>
+<main id="main">
+  <section class="hero" aria-label="Presentación">
+    <video data-auto autoplay muted loop playsinline preload="auto" poster="media/hero-poster.jpg">
+      <source src="media/hero-sala.mp4" type="video/mp4">
+    </video>
+    <div class="copy">
+      <h1>Ventanas y puertas de PVC europeo para su casa</h1>
+      <p>Las medimos en obra, las fabricamos en nuestra planta y las instala nuestro propio equipo.</p>
+      <div class="row">
+        <a class="pill pill--white" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas%20y%20puertas%20de%20PVC.">Cotizar por WhatsApp</a>
+        <a class="pill pill--light" href="#obras">Ver obras</a>
       </div>
     </div>
-  </div>
-</section>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Contenido&quot;}}">
-const COPY = {
-  es: {
-    tagline: "Fabricantes de ventanas y puertas en PVC",
-    nav1: "Nosotros", nav2: "Obra", nav3: "Preguntas", nav4: "Contacto", nav5: "Diseña en 3D", nav6: "Modelador 3D",
-    rail1: "Fabricación propia", rail2: "PVC · Medida exacta", rail3: "Diseño europeo",
-    siteTagline: "Calidad y estilo en cada ventana.",
-    heroA: "Ventanas hechas",
-    heroB: "para durar décadas.",
-    heroSub: "Fabricamos ventanas y puertas de PVC a medida en nuestro propio taller: perfilería europea, vidrio de doble cámara e instalación por nuestro equipo. Sin intermediarios, sin medidas aproximadas.",
-    cta: "Pedir presupuesto",
-    cta2: "Ver la obra",
-    ph1: "Foto vertical — ventana instalada, luz natural",
-    phHero: "Foto principal a sangre — ventanal instalado, 1280 × 720",
-    phBleed: "Foto a sangre — fachada o interior con ventanal, 1280 × 780",
-    whyTitle: "Por qué DWC",
-    workTitle: "Obra y producto",
-    workMeta: "PVC · Cuatro líneas",
-    aboutKicker: "Sobre nosotros",
-    about1: "Lo que entra al taller como perfil sale como una ventana con nuestro nombre.",
-    about2: "Cada pedido se mide en obra, se fabrica en nuestras instalaciones y se instala por nuestro equipo. Ese control completo es lo que nos permite trabajar con perfilería europea, herrajes de gama alta y tolerancias exactas, y responder por el resultado durante toda la vida de la ventana.",
-    videoKicker: "Obra terminada",
-    videoTitle: "Vivienda completa: ventanales, entrada y balcones.",
-    faqTitle: "Preguntas frecuentes",
-    contactTitle: "Cuéntenos su proyecto.",
-    contactSub: "Envíe las medidas o una foto del vano por WhatsApp y le respondemos con un presupuesto detallado.",
-    whatsapp: "Escribir por WhatsApp",
-    lblPhone: "Teléfono / WhatsApp", lblMail: "Correo", lblAddr: "Taller", lblHours: "Horario",
-    hours: "Lun a Vie 8:00 – 17:00\nSáb 9:00 – 13:00",
-    points: [
-      { n: "01", t: "Fabricación propia", d: "Taller propio, sin intermediarios: el precio y el plazo dependen de nosotros." },
-      { n: "02", t: "Aislamiento térmico y acústico", d: "Perfil multicámara y vidrio doble: menos ruido de calle y menos gasto de climatización." },
-      { n: "03", t: "Medida a medida", d: "Cada hueco se mide en obra. Nada se ajusta con silicona ni con suplementos." },
-      { n: "04", t: "Garantía e instalación", d: "Instala nuestro equipo y la garantía cubre perfil, herraje y montaje." },
-      { n: "05", t: "Diseño europeo", d: "Perfilería y herrajes de fabricantes europeos, en acabados lisos y contemporáneos." }
-    ],
-    products: [
-      { t: "Ventanas correderas", d: "Grandes luces, hoja que no roba espacio interior.", ph: "Corredera — vano ancho", src: "assets/correderas.jpg" },
-      { t: "Ventanas oscilobatientes", d: "Apertura y ventilación en la misma hoja, cierre perimetral.", ph: "Oscilobatiente — detalle herraje", src: "assets/oscilobatiente.jpg" },
-      { t: "Puertas de patio", d: "Paso al jardín con umbral bajo y vidrio de suelo a techo.", ph: "Puerta de patio — jardín", src: "assets/puerta-patio.jpg" },
-      { t: "Cerramientos y terrazas", d: "Terrazas cerradas en PVC y vidrio, usables todo el año.", ph: "Cerramiento — terraza", src: "assets/cerramientos.jpg" }
-    ],
-    faq: [
-      { q: "¿Cuánto tarda un pedido?", a: "Entre cuatro y ocho semanas desde la medición en obra, según el número de huecos y el acabado. La instalación de una vivienda completa suele ocuparnos uno o dos días." },
-      { q: "¿Por qué PVC y no aluminio?", a: "El PVC aísla mejor de forma natural: no conduce el frío ni el calor como el metal. Con perfil multicámara y vidrio doble se nota en la factura y en el ruido." },
-      { q: "¿Trabajan sobre obra nueva y reforma?", a: "Ambas. En reforma podemos instalar sobre el marco existente cuando está en buen estado, o retirarlo por completo si conviene." },
-      { q: "¿Qué incluye el presupuesto?", a: "Medición, fabricación, herrajes, vidrio, instalación y retirada del material antiguo. Sin partidas abiertas ni extras al final de la obra." }
-    ]
-  },
-  en: {
-    tagline: "PVC window and door manufacturers",
-    nav1: "About", nav2: "Work", nav3: "FAQ", nav4: "Contact", nav5: "Design in 3D", nav6: "3D Modeler",
-    rail1: "Made in our own shop", rail2: "PVC · Exact measure", rail3: "European design",
-    siteTagline: "Quality and style in every window.",
-    heroA: "Windows built",
-    heroB: "to last decades.",
-    heroSub: "We manufacture custom PVC windows and doors in our own shop: European profiles, double-glazed units and installation by our own crew. No middlemen, no approximate measurements.",
-    cta: "Request a quote",
-    cta2: "See the work",
-    ph1: "Vertical photo — installed window, natural light",
-    phHero: "Lead full-bleed photo — installed picture window, 1280 × 720",
-    phBleed: "Full-bleed photo — façade or interior with large window, 1280 × 780",
-    whyTitle: "Why DWC",
-    workTitle: "Work and product",
-    workMeta: "PVC · Four lines",
-    aboutKicker: "About us",
-    about1: "What comes into the shop as profile leaves it as a window with our name on it.",
-    about2: "Every order is measured on site, built at our own facility and installed by our crew. That end-to-end control is what lets us work with European profiles, high-grade hardware and exact tolerances — and stand behind the result for the life of the window.",
-    videoKicker: "Finished project",
-    videoTitle: "A whole home: picture windows, entrance and balconies.",
-    faqTitle: "Frequently asked",
-    contactTitle: "Tell us about your project.",
-    contactSub: "Send the measurements or a photo of the opening on WhatsApp and we will come back with a detailed quote.",
-    whatsapp: "Message us on WhatsApp",
-    lblPhone: "Phone / WhatsApp", lblMail: "Email", lblAddr: "Workshop", lblHours: "Hours",
-    hours: "Mon–Fri 8:00 – 17:00\nSat 9:00 – 13:00",
-    points: [
-      { n: "01", t: "Made in our own shop", d: "Our own workshop, no middlemen: price and lead time are ours to control." },
-      { n: "02", t: "Thermal and acoustic insulation", d: "Multi-chamber profile and double glazing: less street noise, lower energy bills." },
-      { n: "03", t: "Built to measure", d: "Every opening is measured on site. Nothing is corrected with sealant or shims." },
-      { n: "04", t: "Warranty and installation", d: "Our own crew installs, and the warranty covers profile, hardware and fitting." },
-      { n: "05", t: "European design", d: "European profiles and hardware in flat, contemporary finishes." }
-    ],
-    products: [
-      { t: "Sliding windows", d: "Wide openings; the sash takes no interior space.", ph: "Slider — wide opening", src: "assets/correderas.jpg" },
-      { t: "Tilt-and-turn windows", d: "Ventilation and full opening in one sash, perimeter locking.", ph: "Tilt-and-turn — hardware detail", src: "assets/oscilobatiente.jpg" },
-      { t: "Patio doors", d: "Garden access with a low threshold and floor-to-ceiling glass.", ph: "Patio door — garden", src: "assets/puerta-patio.jpg" },
-      { t: "Enclosures and terraces", d: "PVC-and-glass terrace enclosures, usable year round.", ph: "Enclosure — terrace", src: "assets/cerramientos.jpg" }
-    ],
-    faq: [
-      { q: "How long does an order take?", a: "Four to eight weeks from the on-site measurement, depending on the number of openings and the finish. A whole home usually takes one or two days to install." },
-      { q: "Why PVC rather than aluminium?", a: "PVC insulates better by nature: it does not conduct cold or heat the way metal does. With a multi-chamber profile and double glazing you notice it in the bill and in the noise." },
-      { q: "Do you work on new build and renovation?", a: "Both. On renovations we can fit over the existing frame when it is sound, or strip it out completely when that is the better call." },
-      { q: "What does the quote include?", a: "Measuring, manufacturing, hardware, glazing, installation and removal of the old units. No open line items and no extras at the end of the job." }
-    ]
-  }
-};
+  </section>
 
-class Component extends DCLogic {
-  state = { lang: null };
-  renderVals() {
-    const lang = this.state.lang || (this.props.lang ?? "es");
-    const t = COPY[lang] || COPY.es;
-    const on = "var(--color-text)", off = "var(--color-neutral-500)";
-    return {
-      t, points: t.points, faq: t.faq,
-      products: t.products.map(p => ({
-        ...p,
-        noSrc: !p.src,
-        img: p.src ? React.createElement("img", { src: p.src, alt: p.t, style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" } }) : null
-      })),
-      esColor: lang === "es" ? on : off,
-      enColor: lang === "en" ? on : off,
-      setEs: () => this.setState({ lang: "es" }),
-      setEn: () => this.setState({ lang: "en" })
-    };
-  }
-}
+  <section class="intro" aria-labelledby="intro-h">
+    <h2 id="intro-h">Perfil europeo <strong>para cualquier clima</strong></h2>
+    <div>
+      <p>Door Windows Center fabrica ventanas y puertas de PVC europeo para exterior. Perfil multicámara y vidrio doble que aíslan del calor, del frío y del ruido, en el desierto, la costa o la ciudad.</p>
+      <p>Trabajamos con familias que construyen o remodelan su casa y con constructoras, arquitectos y desarrolladores que necesitan cumplir en tiempo con varias viviendas. Un solo equipo mide, fabrica, instala y responde por el resultado.</p>
+    </div>
+  </section>
+
+  <div class="tiles" id="productos">
+    <a class="tile" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20puertas%20corredizas.">
+      <video data-auto muted loop playsinline preload="metadata" poster="media/sala-4.5.jpg"><source src="media/sala-corredizas.mp4" type="video/mp4"></video>
+      <span class="label"><h3>Puertas corredizas</h3><span class="sub">Líneas Nova y Signature, de 2 a 8 paneles, para abrir la sala al patio.</span><span class="pill pill--light">Cotizar corrediza</span></span>
+    </a>
+    <a class="tile" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanales.">
+      <video data-auto muted loop playsinline preload="metadata" poster="media/fach-3.jpg"><source src="media/fachada-nogal.mp4" type="video/mp4"></video>
+      <span class="label"><h3>Ventanales de piso a techo</h3><span class="sub">Muros de cristal con perfil en color nogal, negro o el que elija.</span><span class="pill pill--light">Cotizar ventanal</span></span>
+    </a>
+    <a class="tile tile--wide" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas.">
+      <video data-auto muted loop playsinline preload="metadata" poster="media/bano-4.5.jpg"><source src="media/bano-ventanas.mp4" type="video/mp4"></video>
+      <span class="label"><h3>Ventanas fijas, oscilobatientes y abatibles</h3><span class="sub">Luz natural en cada cuarto, con apertura hacia el interior o el exterior.</span><span class="pill pill--light">Cotizar ventanas</span></span>
+    </a>
+  </div>
+
+  <section class="split" aria-labelledby="inst-h">
+    <div class="text">
+      <h2 id="inst-h">Hechas a la medida de su vano</h2>
+      <p>Cada pieza se mide en obra y se fabrica para ese hueco exacto. Cuando la instalamos, la ajustamos hasta que la hoja corre ligera y cierra parejo.</p>
+      <ul class="facts">
+        <li><b>Incluye</b><span>Medición, fabricación, vidrio, herraje e instalación</span></li>
+        <li><b>Garantía</b><span>Perfil, herraje e instalación</span></li>
+      </ul>
+      <div><a class="pill pill--solid" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas%20y%20puertas%20de%20PVC.">Cotizar por WhatsApp</a></div>
+    </div>
+    <div class="media">
+      <img src="media/inst-10.jpg" alt="Instalador ajustando una puerta corrediza de esquina en obra" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+    </div>
+  </section>
+
+  <section class="gallery" id="obras" aria-labelledby="obras-h">
+    <div class="head">
+      <h2 id="obras-h">Obras reales</h2>
+      <p>Casas terminadas con ventanas y puertas DWC. Toque una foto para verla completa.</p>
+    </div>
+    <div class="shots">
+      <button class="shot wide" data-src="media/obras/o18.jpg"><img src="media/obras/o18-t.jpg" alt="Fachada de dos plantas con ventanal de doble altura y ventanas de perfil oscuro" loading="lazy"></button>
+      <button class="shot mwide" data-src="media/obras/o01.jpg"><img src="media/obras/o01-t.jpg" alt="Cocina y comedor abiertos con ventanas de perfil oscuro, fijos altos y puerta corrediza al patio" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o02.jpg"><img src="media/obras/o02-t.jpg" alt="Cocina con ventanas de perfil oscuro y fijos superiores" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o03.jpg"><img src="media/obras/o03-t.jpg" alt="Comedor con ventana de perfil oscuro y fijo superior" loading="lazy"></button>
+      <button class="shot wide" data-src="media/obras/o04.jpg"><img src="media/obras/o04-t.jpg" alt="Puerta corrediza de seis paneles de perfil oscuro hacia la alberca" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o05.jpg"><img src="media/obras/o05-t.jpg" alt="Patio interior con ventanales de perfil nogal" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o06.jpg"><img src="media/obras/o06-t.jpg" alt="Puerta corrediza de esquina en nogal" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o07.jpg"><img src="media/obras/o07-t.jpg" alt="Patio con pérgola y ventanales de perfil nogal" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o08.jpg"><img src="media/obras/o08-t.jpg" alt="Puerta abatible de dos hojas de perfil oscuro" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o09.jpg"><img src="media/obras/o09-t.jpg" alt="Baño con ventana proyectante de perfil nogal sobre un fijo" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o10.jpg"><img src="media/obras/o10-t.jpg" alt="Cocina con ventana de tres hojas de perfil nogal" loading="lazy"></button>
+      <button class="shot wide" data-src="media/obras/o11.jpg"><img src="media/obras/o11-t.jpg" alt="Vista desde adentro de la corrediza de seis paneles hacia la alberca" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o12.jpg"><img src="media/obras/o12-t.jpg" alt="Puerta corrediza de perfil oscuro en fachada" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o13.jpg"><img src="media/obras/o13-t.jpg" alt="Ventana de perfil nogal en muro de piedra" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o16.jpg"><img src="media/obras/o16-t.jpg" alt="Sala con puerta corrediza de seis paneles hacia la alberca" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o17.jpg"><img src="media/obras/o17-t.jpg" alt="Cocina con ventana de tres hojas de perfil nogal" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o15.jpg"><img src="media/obras/o15-t.jpg" alt="Recámara con ventana de dos hojas de perfil oscuro hacia el jardín" loading="lazy"></button>
+      <button class="shot" data-src="media/obras/o14.jpg"><img src="media/obras/o14-t.jpg" alt="Lavandería con ventana y puerta abatible de perfil nogal" loading="lazy"></button>
+      <button class="shot" data-src="media/sala-4.5.jpg"><img src="media/sala-4.5.jpg" alt="Sala con puertas corredizas negras y ventanas altas" loading="lazy"></button>
+      <button class="shot" data-src="media/fach-5.5.jpg"><img src="media/fach-5.5.jpg" alt="Fachada con ventanales de perfil nogal al jardín" loading="lazy"></button>
+      <button class="shot" data-src="media/inst-10.jpg"><img src="media/inst-10.jpg" alt="Puerta corrediza de esquina en obra" loading="lazy"></button>
+      <button class="shot" data-src="media/sala-7.5.jpg"><img src="media/sala-7.5.jpg" alt="Estancia con ventanal hacia el exterior" loading="lazy"></button>
+      <button class="shot" data-src="media/bano-4.5.jpg"><img src="media/bano-4.5.jpg" alt="Baño con ventanas de perfil negro" loading="lazy"></button>
+      <button class="shot" data-src="media/fach-3.jpg"><img src="media/fach-3.jpg" alt="Muro de cristal con perfil nogal" loading="lazy"></button>
+    </div>
+  </section>
+
+  <section class="colors" aria-labelledby="col-h">
+    <div>
+      <h2 id="col-h">Seis colores de perfil</h2>
+      <p>El herraje siempre es plata. Las manijas y las bisagras pueden ir en otro color.</p>
+    </div>
+    <ul class="chips">
+      <li><i style="background:#2a211b"></i>Schwarzbraun</li>
+      <li><i style="background:#161616"></i>Negro</li>
+      <li><i style="background:#5b3a26"></i>Nogal</li>
+      <li><i style="background:#a58f78"></i>Clay</li>
+      <li><i style="background:#d9cdb5"></i>Almendra</li>
+      <li><i style="background:#f4f3ef"></i>Blanco</li>
+    </ul>
+  </section>
+
+  <section class="faq" id="preguntas" aria-labelledby="faq-h">
+    <h2 id="faq-h">Preguntas frecuentes</h2>
+    <div>
+      <div class="q"><button aria-expanded="false" aria-controls="a1" id="q1">¿Por qué PVC y no aluminio?<span class="pm" aria-hidden="true"></span></button><div class="a" id="a1" role="region" aria-labelledby="q1"><div><p>El PVC no conduce el frío ni el calor como el metal. Con perfil multicámara y vidrio doble se nota en el recibo de luz, en el aire acondicionado y en el ruido.</p></div></div></div>
+      <div class="q"><button aria-expanded="false" aria-controls="a2" id="q2">¿Trabajan en obra nueva y en remodelación?<span class="pm" aria-hidden="true"></span></button><div class="a" id="a2" role="region" aria-labelledby="q2"><div><p>En las dos. En remodelación podemos instalar sobre el marco existente si está en buen estado, o retirarlo por completo si conviene.</p></div></div></div>
+      <div class="q"><button aria-expanded="false" aria-controls="a3" id="q3">¿Atienden a constructoras?<span class="pm" aria-hidden="true"></span></button><div class="a" id="a3" role="region" aria-labelledby="q3"><div><p>Sí. Mándenos el plano o la cédula de ventanas por WhatsApp y cotizamos la obra completa.</p></div></div></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto" aria-labelledby="con-h">
+    <div>
+      <h2 id="con-h">Cuéntenos su proyecto</h2>
+      <p>Envíe medidas, plano o una foto del vano por WhatsApp y le respondemos con una cotización detallada.</p>
+      <a class="pill pill--solid" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas%20y%20puertas%20de%20PVC.">Cotizar por WhatsApp</a>
+    </div>
+    <dl class="info">
+      <div><dt>Teléfono y WhatsApp</dt><dd>+52 656 207 5567</dd><button class="cpy" data-copy="+52 656 207 5567">Copiar número</button></div>
+      <div><dt>Correo</dt><dd>doorwindowscenter@gmail.com</dd><button class="cpy" data-copy="doorwindowscenter@gmail.com">Copiar correo</button></div>
+      <div><dt>Planta</dt><dd>Av. de la Raza 6687, col. Del Futuro</dd></div>
+      <div><dt>Horario</dt><dd>Lun a vie 8:00 a 17:00<br>Sáb 9:00 a 13:00</dd></div>
+    </dl>
+  </section>
+
+  <section class="m3d" id="modelador" aria-labelledby="m3d-h">
+    <div>
+      <h2 id="m3d-h">Diseñe su ventana en el Modelador 3D</h2>
+      <p>Arme su ventana o puerta, véala en tres dimensiones con el color de perfil que elija y mándenos el diseño para cotizar.</p>
+      <a class="pill pill--white" href="/modelador/">Abrir el Modelador 3D</a>
+    </div>
+    <ol>
+      <li><span><b>Elija el modelo</b>Corrediza, oscilobatiente, abatible, fija o combinada.</span></li>
+      <li><span><b>Escriba las medidas</b>Como vienen en su plano, por ejemplo 6080, en pies o en milímetros.</span></li>
+      <li><span><b>Escoja el color</b>Schwarzbraun, negro, nogal, clay, almendra o blanco.</span></li>
+      <li><span><b>Envíe a cotizar</b>Su diseño nos llega con todos los datos.</span></li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <img class="flogo" src="assets/logo-dwc.png" alt="Door Windows Center" width="136" height="80" loading="lazy">
+  <div class="cols">
+    <div><h4>Productos</h4><a href="#productos">Puertas corredizas</a><a href="#productos">Ventanales</a><a href="#productos">Ventanas</a><a href="/modelador/">Modelador 3D</a></div>
+    <div><h4>Empresa</h4><a href="#obras">Obras</a><a href="#preguntas">Preguntas frecuentes</a><a href="https://materiales.doorwindowscenter.com">DWC Connect</a></div>
+    <div><h4>Contacto</h4><a href="https://wa.me/526562075567">WhatsApp +52 656 207 5567</a><a href="#contacto">doorwindowscenter@gmail.com</a></div>
+  </div>
+  <div class="legal"><span>© 2026 Door Windows Center</span><span>Ventanas y puertas de PVC para exterior</span></div>
+</footer>
+
+<div class="wa"><a class="pill pill--solid" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas%20y%20puertas%20de%20PVC.">Cotizar por WhatsApp</a></div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto de obra"><img alt=""><button aria-label="Cerrar">×</button></div>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Videos play only while on screen; under reduced motion they rest on their poster */
+  const vids = [...document.querySelectorAll('video[data-auto]')];
+  if (reduce) vids.forEach(v => { v.removeAttribute('autoplay'); v.pause(); });
+  else if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); } else v.pause();
+    }), { threshold: 0.25 });
+    vids.forEach(v => io.observe(v));
+  } else vids.forEach(v => v.play().catch(() => {}));
+
+  /* Menu */
+  const top = document.getElementById('top'), bg = top.querySelector('.burger');
+  const close = () => { top.classList.remove('open'); bg.setAttribute('aria-expanded','false'); bg.setAttribute('aria-label','Abrir menú'); };
+  bg.addEventListener('click', () => { const o = top.classList.toggle('open'); bg.setAttribute('aria-expanded', o); bg.setAttribute('aria-label', o ? 'Cerrar menú' : 'Abrir menú'); });
+  top.querySelectorAll('.links a').forEach(a => a.addEventListener('click', close));
+
+  /* Lightbox */
+  const lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), lbBtn = lb.querySelector('button');
+  let last = null;
+  document.querySelectorAll('.shot').forEach(s => s.addEventListener('click', () => {
+    last = s; lbImg.src = s.dataset.src; lbImg.alt = s.querySelector('img').alt; lb.classList.add('on'); lbBtn.focus();
+  }));
+  const shut = () => { lb.classList.remove('on'); if (last) last.focus(); };
+  lbBtn.addEventListener('click', shut);
+  lb.addEventListener('click', e => { if (e.target === lb) shut(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') { if (lb.classList.contains('on')) shut(); else close(); } });
+
+  /* FAQ */
+  document.querySelectorAll('.q button').forEach(b => b.addEventListener('click', () => {
+    const q = b.parentNode, o = !q.hasAttribute('data-open'); q.toggleAttribute('data-open', o); b.setAttribute('aria-expanded', o);
+  }));
+
+  /* Copy */
+  document.querySelectorAll('.cpy').forEach(b => b.addEventListener('click', async () => {
+    const t = b.textContent;
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Copiado'; } catch { b.textContent = 'Selecciónelo para copiar'; }
+    setTimeout(() => b.textContent = t, 1600);
+  }));
+})();
 </script>
 </body>
 </html>
