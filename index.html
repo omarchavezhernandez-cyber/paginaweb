@@ -237,6 +237,15 @@ footer .legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(
   footer .cols{grid-template-columns:repeat(2,minmax(0,1fr))}
   footer .mast{flex-direction:column;align-items:flex-start}
 }
+@media (orientation:landscape) and (max-height:34rem){
+  .hero{min-height:0;height:calc(100svh - 68px)}
+  .hero h1{font-size:clamp(2rem,6vh + 1rem,3rem)}
+  .hero .copy{bottom:var(--space-md)}
+  .hero .copy .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end}
+  .hero .lead{font-size:var(--text-sm);margin-bottom:var(--space-sm)}
+  .hero .acts .btn{min-height:40px;font-size:var(--text-sm);flex:0 0 auto}
+  .pause{top:var(--space-sm)}
+}
 @media (max-width:40rem){
   :root{--gutter:16px;--section-gap:80px;--gap-columns:16px}
   body{padding-bottom:76px}
@@ -278,7 +287,7 @@ footer .legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(
 
 <main id="main">
   <section class="hero" aria-labelledby="hero-h">
-    <video id="film" data-hero autoplay muted loop playsinline preload="auto" poster="media/dwc-hero-poster.jpg" aria-label="Del plano a la casa terminada: obras de Door Windows Center" data-en-label="From plan to finished house: Door Windows Center projects"><source src="media/dwc-hero.mp4" type="video/mp4"></video>
+    <video id="film" data-hero autoplay muted loop playsinline preload="auto" poster="media/dwc-hero-poster.jpg" aria-label="Del plano a la casa terminada: obras de Door Windows Center" data-en-label="From plan to finished house: Door Windows Center projects"><source src="media/dwc-hero-v.mp4" type="video/mp4" media="(orientation: portrait) and (max-width: 64rem)"><source src="media/dwc-hero.mp4" type="video/mp4"></video>
     <button class="pause" id="pause" aria-label="Pausar video" data-en-label="Pause video" aria-pressed="false"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" fill="currentColor"/><rect x="8.5" y="1" width="3.5" height="12" fill="currentColor"/></svg></button>
     <div class="copy"><div class="wrap">
       <h1 id="hero-h" data-en="Factory direct">Directo de fábrica</h1>
@@ -502,6 +511,19 @@ footer .legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(
   const film = document.getElementById('film'), pause = document.getElementById('pause');
   const syncPause = () => { const p = film.paused; pause.setAttribute('aria-pressed', p); pause.setAttribute('aria-label', p ? T[lang].play : T[lang].pause); pause.dataset.esLabel = p ? T.es.play : T.es.pause; pause.dataset.enLabel = p ? T.en.play : T.en.pause; };
   if (reduce) { film.removeAttribute('autoplay'); film.pause(); }
+  /* Vertical film on a phone held upright, horizontal everywhere else; switches when the phone turns */
+  const mqV = matchMedia('(orientation: portrait) and (max-width: 64rem)');
+  const pick = () => {
+    const v = mqV.matches, want = v ? 'media/dwc-hero-v.mp4' : 'media/dwc-hero.mp4';
+    if (film.dataset.cur === want) return;
+    const first = !film.dataset.cur; film.dataset.cur = want;
+    if (first && film.currentSrc && film.currentSrc.endsWith(want)) return;
+    film.poster = v ? 'media/dwc-hero-v-poster.jpg' : 'media/dwc-hero-poster.jpg';
+    film.src = want; film.load();
+    if (!reduce) { const pr = film.play(); if (pr) pr.catch(() => {}); }
+  };
+  pick();
+  if (mqV.addEventListener) mqV.addEventListener('change', pick); else if (mqV.addListener) mqV.addListener(pick);
   pause.addEventListener('click', () => { if (film.paused) { const pr = film.play(); if (pr) pr.catch(() => {}); } else film.pause(); });
   film.addEventListener('play', syncPause); film.addEventListener('pause', syncPause);
 
