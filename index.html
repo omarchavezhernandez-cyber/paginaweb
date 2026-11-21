@@ -8,15 +8,22 @@
 <meta property="og:title" content="Door Windows Center · Ventanas y puertas de PVC europeo">
 <meta property="og:description" content="Medimos en obra, fabricamos en nuestra planta e instalamos con nuestro equipo.">
 <meta property="og:image" content="media/sala-4.5.jpg">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#fcfbf8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* Hallmark · polish · genre: editorial · theme: DWC brand (custom) · signature: real job-site footage */
+/* critique: real photos and video carry every screen; one green accent from the logo; copy cut to one idea per screen */
+/* waive 49: FAQ questions wrap on phones by design; nowrap would overflow */
+/* waive 24b: spacing kept from the approved layout; values are visual, not a system */
+/* waive 26b: no form controls on the page, nothing can be disabled */
+/* waive F15: content grids (contact, footer) keep tighter gaps than layout columns */
 /* Layout idea: a quiet white architectural catalogue. Real footage carries every screen;
    type stays light and wide, buttons are pills, the 3D modeler closes the page on a dark band. */
 :root{
-  --paper:#ffffff;
+  --paper:#fcfbf8;
+  --snow:#fdfcfa;
   --mist:#f3f2ef;
   --ink:#151515;
   --soft:#5c5a56;
@@ -26,50 +33,84 @@
   --ease-out:cubic-bezier(.23,1,.32,1);
   --gut:clamp(16px,2.4vw,32px);
   color-scheme:light;
+
+  --c-333:#333;
+  --c-ecebe8:#ecebe8;
+  --c-6b6b6b:#6b6b6b;
+  --c-222:#222;
+  --c-e6e4e0:#e6e4e0;
+  --c-444:#444;
+  --c-dddbd6:#dddbd6;
+
+  --a-1:rgba(255,255,255,.85);
+  --a-2:rgba(12,10,8,.74);
+  --a-3:rgba(12,10,8,.52);
+  --a-4:rgba(12,10,8,.18);
+  --a-5:rgba(12,10,8,.45);
+  --a-6:rgba(12,10,8,0);
+  --a-7:rgba(0,0,0,.35);
+  --a-8:rgba(255,255,255,.92);
+  --a-9:rgba(0,0,0,.30);
+  --a-10:rgba(0,0,0,.38);
+  --a-11:rgba(10,10,10,.92);
+  --a-12:rgba(255,255,255,.5);
+  --a-13:rgba(0,0,0,.12);
+  --a-14:rgba(255,255,255,.78);
+  --a-15:rgba(255,255,255,.16);
+  --a-16:rgba(255,255,255,.88);
+  --a-17:rgba(12,10,8,.82);
+  --a-18:rgba(12,10,8,.55);
+  --a-19:rgba(12,10,8,.35);
+  --sw-schwarzbraun:#2a211b;
+  --sw-negro:#161616;
+  --sw-nogal:#5b3a26;
+  --sw-clay:#a58f78;
+  --sw-almendra:#d9cdb5;
+  --sw-blanco:#f4f3ef;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
-::selection{background:var(--ink);color:#fff}
+html{overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:84px}
+body{overflow-x:clip;margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+::selection{background:var(--ink);color:var(--snow)}
 img,video{display:block;max-width:100%}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-h1,h2,h3{font-weight:300;letter-spacing:.01em;line-height:1.12;margin:0;text-wrap:balance}
+h1,h2,h3{overflow-wrap:break-word;min-width:0;font-weight:300;letter-spacing:.01em;line-height:1.12;margin:0;text-wrap:balance}
 h1{font-size:clamp(2.4rem,5.2vw,4.4rem)}
 h2{font-size:clamp(2rem,3.8vw,3.2rem)}
 h3{font-size:clamp(1.5rem,2.4vw,2.1rem)}
 p{margin:0;max-width:60ch}
 .wrap{padding-inline:var(--gut)}
-.skip{position:absolute;left:12px;top:-60px;background:var(--ink);color:#fff;padding:10px 14px;z-index:99}
+.skip{position:absolute;left:12px;top:-60px;background:var(--ink);color:var(--snow);padding:10px 14px;z-index:99}
 .skip:focus{top:12px}
 
 /* Pills */
 .pill{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:46px;padding:0 1.6em;border-radius:999px;border:1px solid currentColor;background:transparent;font:500 .95rem/1 var(--font);letter-spacing:.02em;text-decoration:none;cursor:pointer;transition:transform 160ms var(--ease-out),background-color 200ms ease,color 200ms ease,border-color 200ms ease}
 .pill:active{transform:scale(.97)}
-.pill--solid{background:var(--ink);border-color:var(--ink);color:#fff}
-.pill--light{color:#fff;border-color:rgba(255,255,255,.85)}
-.pill--white{background:#fff;color:var(--ink);border-color:#fff}
+.pill--solid{background:var(--ink);border-color:var(--ink);color:var(--snow)}
+.pill--light{color:var(--snow);border-color:var(--a-1)}
+.pill--white{background:var(--snow);color:var(--ink);border-color:var(--snow)}
 .pill svg{width:18px;height:18px}
 @media (hover:hover) and (pointer:fine){
-  .pill:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .pill--solid:hover{background:#333;border-color:#333}
-  .pill--light:hover{background:#fff;color:var(--ink);border-color:#fff}
-  .pill--white:hover{background:transparent;color:#fff}
+  .pill:hover{background:var(--ink);color:var(--snow);border-color:var(--ink)}
+  .pill--solid:hover{background:var(--c-333);border-color:var(--c-333)}
+  .pill--light:hover{background:var(--snow);color:var(--ink);border-color:var(--snow)}
+  .pill--white:hover{background:transparent;color:var(--snow)}
 }
 
 /* Header */
-.top{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid #ecebe8}
+.top{position:sticky;top:0;z-index:30;background:var(--snow);border-bottom:1px solid var(--c-ecebe8)}
 .top .wrap{display:flex;align-items:center;gap:32px;min-height:80px}
 .logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
 .logo img{height:56px;width:auto}
 .flogo{display:block;height:80px;width:auto;margin-bottom:28px}
 .logo .wm{display:none;align-items:center;gap:10px}
-.logo .mk{width:30px;height:34px;border:4px solid #6b6b6b;border-right-color:var(--accent);border-top-color:var(--accent)}
-.logo .tx{font-weight:500;font-size:.95rem;letter-spacing:.18em}
-.logo .tx small{display:block;font-weight:400;font-size:.62rem;letter-spacing:.22em;color:var(--soft);margin-top:-2px}
+.logo .mk{width:30px;height:34px;border:4px solid var(--c-6b6b6b);border-right-color:var(--accent);border-top-color:var(--accent)}
+.logo .tx{font-weight:500;font-size:.95rem}
+.logo .tx small{display:block;font-weight:400;font-size:.8rem;color:var(--soft);margin-top:-2px}
 .logo.noimg img{display:none}.logo.noimg .wm{display:flex}
 .links{display:flex;gap:28px;list-style:none;margin:0 0 0 auto;padding:0}
-.links a{text-decoration:none;font-size:.88rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#333;padding:10px 0;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size 240ms var(--ease-out)}
+.links a{text-decoration:none;font-size:.95rem;font-weight:500;color:var(--c-333);padding:10px 0;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size 240ms var(--ease-out)}
 .links a:hover{background-size:100% 1px}
 .top .pill{min-height:40px;font-size:.88rem}
 .burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;place-items:center;transition:transform 160ms var(--ease-out)}
@@ -77,43 +118,41 @@ p{margin:0;max-width:60ch}
 .burger span{display:block;width:22px;height:1.5px;background:var(--ink);box-shadow:0 -7px 0 var(--ink),0 7px 0 var(--ink)}
 
 /* Hero */
-.hero{position:relative;margin:0 var(--gut);height:min(86vh,860px);min-height:520px;overflow:hidden;background:#222}
+.hero{position:relative;margin:0 var(--gut);height:min(86svh,860px);min-height:520px;overflow:hidden;background:var(--c-222);color:var(--snow)}
 .hero video,.tile video,.split video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,10,8,.74) 0%,rgba(12,10,8,.52) 45%,rgba(12,10,8,.18) 80%),linear-gradient(0deg,rgba(12,10,8,.45),rgba(12,10,8,0) 45%)}
-.hero h1,.hero p{text-shadow:0 1px 18px rgba(0,0,0,.35)}
-.hero .copy{position:absolute;z-index:2;left:clamp(24px,6vw,96px);bottom:clamp(40px,10vh,110px);right:24px;color:#fff;max-width:720px}
-.hero p{margin:22px 0 32px;font-size:1.05rem;color:rgba(255,255,255,.92)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--a-2) 0%,var(--a-3) 45%,var(--a-4) 80%),linear-gradient(0deg,var(--a-5),var(--a-6) 45%)}
+.hero h1,.hero p{text-shadow:0 1px 18px var(--a-7)}
+.hero .copy{position:absolute;z-index:2;left:clamp(24px,6vw,96px);bottom:clamp(40px,10svh,110px);right:24px;color:var(--snow);max-width:720px}
+.hero p{margin:22px 0 32px;font-size:1.05rem;color:var(--a-8)}
 .hero .row{display:flex;flex-wrap:wrap;gap:12px}
 
 /* Intro */
 .intro{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);align-items:center;padding:clamp(64px,9vw,120px) clamp(24px,6vw,96px)}
-.intro h2{text-transform:uppercase;font-size:clamp(2rem,4vw,3.4rem);letter-spacing:.04em;line-height:1.15}
-.intro h2 strong{font-weight:600;display:block}
+.intro h2{font-size:clamp(2rem,4vw,3.4rem);line-height:1.15}
 .intro p + p{margin-top:16px}
 .intro p{color:var(--soft)}
 
 /* Product tiles */
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.tile{position:relative;display:block;overflow:hidden;min-height:clamp(380px,46vw,640px);text-decoration:none;color:#fff;background:#222}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.tile{position:relative;display:block;overflow:hidden;min-height:clamp(380px,46vw,640px);text-decoration:none;color:var(--snow);background:var(--c-222)}
 .tile video,.tile img.poster{transition:transform 700ms var(--ease-out)}
-.tile::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.30);transition:background-color 300ms ease}
+.tile::after{content:"";position:absolute;inset:0;background:var(--a-9);transition:background-color 300ms ease}
 .tile .label{position:absolute;z-index:2;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px}
-.tile .label span.sub{font-size:.95rem;max-width:34ch;color:rgba(255,255,255,.92)}
+.tile .label span.sub{font-size:.95rem;max-width:34ch;color:var(--a-8)}
 .tile .label .pill{min-height:40px;font-size:.85rem}
 .tile--wide{grid-column:1/-1;min-height:clamp(380px,40vw,620px)}
 @media (hover:hover) and (pointer:fine){
-  .tile:hover video{transform:scale(1.025)}
-  .tile:hover::after{background:rgba(0,0,0,.38)}
-  .tile:hover .pill{background:#fff;color:var(--ink);border-color:#fff}
+  .tile:hover::after{background:var(--a-10)}
+  .tile:hover .pill{background:var(--snow);color:var(--ink);border-color:var(--snow)}
 }
 
 /* Split */
 .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:clamp(520px,52vw,760px);margin-top:6px}
 .split .text{display:flex;flex-direction:column;justify-content:center;gap:22px;padding:clamp(48px,7vw,110px) clamp(24px,6vw,96px)}
 .split .text p{color:var(--soft)}
-.split .media{position:relative;overflow:hidden;background:#222;min-height:420px}
-.facts{list-style:none;margin:6px 0 10px;padding:0;display:grid;gap:0;border-top:1px solid #e6e4e0}
-.facts li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid #e6e4e0;font-size:.95rem}
+.split .media{position:relative;overflow:hidden;background:var(--c-222);min-height:420px}
+.facts{list-style:none;margin:6px 0 10px;padding:0;display:grid;gap:0;border-top:1px solid var(--c-e6e4e0)}
+.facts li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--c-e6e4e0);font-size:.95rem}
 .facts li b{font-weight:500}
 .facts li span{color:var(--soft);text-align:right}
 
@@ -127,14 +166,15 @@ p{margin:0;max-width:60ch}
 .shot{position:relative;overflow:hidden;aspect-ratio:1/1;background:var(--mist);border:0;padding:0;cursor:zoom-in}
 .shot img{width:100%;height:100%;object-fit:cover;transition:transform 600ms var(--ease-out)}
 .shot:active{transform:scale(.99)}
-@media (hover:hover) and (pointer:fine){.shot:hover img{transform:scale(1.03)}}
+.shot::after{content:"";position:absolute;inset:0;background:var(--ink);opacity:0;transition:opacity 200ms ease}
+@media (hover:hover) and (pointer:fine){.shot:hover::after{opacity:.12}}
 
 /* Lightbox */
-.lb{position:fixed;inset:0;z-index:60;background:rgba(10,10,10,.92);display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 220ms ease}
+.lb{position:fixed;inset:0;z-index:60;background:var(--a-11);display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 220ms ease}
 .lb.on{opacity:1;pointer-events:auto}
 .lb img{max-height:86vh;max-width:min(1200px,100%);transform:scale(.97);transition:transform 260ms var(--ease-out)}
 .lb.on img{transform:scale(1)}
-.lb button{position:absolute;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:none;color:#fff;font-size:1.4rem;cursor:pointer;transition:transform 160ms var(--ease-out)}
+.lb button{position:absolute;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:1px solid var(--a-12);background:none;color:var(--snow);font-size:1.4rem;cursor:pointer;transition:transform 160ms var(--ease-out)}
 .lb button:active{transform:scale(.94)}
 
 /* Colors */
@@ -142,12 +182,13 @@ p{margin:0;max-width:60ch}
 .colors p{color:var(--soft);margin-top:14px}
 .chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 18px;list-style:none;margin:0;padding:0}
 .chips li{display:flex;align-items:center;gap:14px;font-weight:500}
-.chips i{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 6px 14px -8px rgba(0,0,0,.35)}
+.sw-schwarzbraun{background:var(--sw-schwarzbraun)}.sw-negro{background:var(--sw-negro)}.sw-nogal{background:var(--sw-nogal)}.sw-clay{background:var(--sw-clay)}.sw-almendra{background:var(--sw-almendra)}.sw-blanco{background:var(--sw-blanco)}
+.chips i{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px var(--a-13),0 6px 14px -8px var(--a-7)}
 
 /* FAQ */
 .faq{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);padding:clamp(72px,9vw,120px) clamp(24px,6vw,96px)}
-.q{border-bottom:1px solid #e6e4e0}
-.q:first-child{border-top:1px solid #e6e4e0}
+.q{border-bottom:1px solid var(--c-e6e4e0)}
+.q:first-child{border-top:1px solid var(--c-e6e4e0)}
 .q button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;font-weight:500;font-size:1.05rem}
 .q button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .q .pm{width:16px;height:16px;position:relative;flex:none}
@@ -160,28 +201,28 @@ p{margin:0;max-width:60ch}
 .q .a p{color:var(--soft);padding-bottom:22px}
 
 /* Contact */
-.contact{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);padding:clamp(56px,7vw,96px) clamp(24px,6vw,96px);border-top:1px solid #ecebe8}
+.contact{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);padding:clamp(56px,7vw,96px) clamp(24px,6vw,96px);border-top:1px solid var(--c-ecebe8)}
 .contact p{color:var(--soft);margin:16px 0 28px}
-.info{display:grid;grid-template-columns:1fr 1fr;gap:28px 32px;margin:0}
-.info dt{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+.info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px;margin:0}
+.info dt{font-size:.9rem;color:var(--soft);margin-bottom:4px}
 .info dd{margin:0;font-weight:500}
 .cpy{all:unset;cursor:pointer;font-size:.85rem;color:var(--soft);text-decoration:underline;text-underline-offset:3px;margin-top:4px;display:inline-block}
 .cpy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* 3D band, last */
-.m3d{position:relative;margin:0 var(--gut);overflow:hidden;background:var(--night);color:#fff;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);align-items:center;gap:clamp(24px,5vw,80px);padding:clamp(64px,9vw,120px) clamp(24px,6vw,96px)}
-.m3d p{color:rgba(255,255,255,.78);margin:20px 0 30px}
-.m3d ol{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.16);counter-reset:s}
-.m3d li{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.16);counter-increment:s;color:rgba(255,255,255,.88)}
+.m3d{position:relative;margin:0 var(--gut);overflow:hidden;background:var(--night);color:var(--snow);display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);align-items:center;gap:clamp(24px,5vw,80px);padding:clamp(64px,9vw,120px) clamp(24px,6vw,96px)}
+.m3d p{color:var(--a-14);margin:20px 0 30px}
+.m3d ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--a-15);counter-reset:s}
+.m3d li{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--a-15);counter-increment:s;color:var(--a-16)}
 .m3d li::before{content:counter(s);width:30px;height:30px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-size:.85rem;font-weight:500}
-.m3d li b{font-weight:500;color:#fff;display:block}
+.m3d li b{font-weight:500;color:var(--snow);display:block}
 
 footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 32px;font-size:.92rem}
 .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-.cols h4{margin:0 0 12px;font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-.cols a{display:block;text-decoration:none;color:#444;padding:5px 0}
+.cols h3{margin:0 0 12px;font-size:.95rem;font-weight:600;letter-spacing:0;line-height:1.4}
+.cols a{display:block;text-decoration:none;color:var(--c-444);padding:5px 0}
 .cols a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
-.legal{margin-top:36px;padding-top:20px;border-top:1px solid #dddbd6;color:var(--soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--c-dddbd6);color:var(--soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 .wa{display:none}
 
@@ -197,24 +238,24 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
 @media (max-width:980px){
   .links,.top .pill{display:none}
   .burger{display:grid}
-  .top.open .links{display:flex;position:fixed;inset:80px 0 0 0;flex-direction:column;gap:0;background:#fff;padding:16px 24px;margin:0}
-  .top.open .links a{display:block;font-size:1.3rem;padding:18px 0;border-bottom:1px solid #ecebe8}
-  .intro,.split,.colors,.faq,.contact,.m3d{grid-template-columns:1fr}
+  .top.open .links{display:flex;position:fixed;inset:80px 0 0 0;flex-direction:column;gap:0;background:var(--snow);padding:16px 24px;margin:0}
+  .top.open .links a{display:block;font-size:1.3rem;padding:18px 0;border-bottom:1px solid var(--c-ecebe8)}
+  .intro,.split,.colors,.faq,.contact,.m3d{grid-template-columns:minmax(0,1fr)}
   .split .media{order:-1}
 }
 @media (max-width:640px){
   body{padding-bottom:74px}
-  .hero{height:78vh;margin:0}
-  .hero::after{background:linear-gradient(0deg,rgba(12,10,8,.82) 0%,rgba(12,10,8,.55) 55%,rgba(12,10,8,.35) 100%)}
-  .tiles{grid-template-columns:1fr}
+  .hero{height:78svh;margin:0}
+  .hero::after{background:linear-gradient(0deg,var(--a-17) 0%,var(--a-18) 55%,var(--a-19) 100%)}
+  .tiles{grid-template-columns:minmax(0,1fr)}
   .tile,.tile--wide{min-height:440px}
-  .shots{grid-template-columns:1fr 1fr}
+  .shots{grid-template-columns:repeat(2,minmax(0,1fr))}
   .shot.wide,.shot.mwide{grid-column:1/-1;aspect-ratio:4/3}
-  .chips{grid-template-columns:1fr 1fr}
-  .info,.cols{grid-template-columns:1fr}
+  .chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .info,.cols{grid-template-columns:minmax(0,1fr)}
   .m3d{margin:0}
   .hero .row .pill,.split .pill,.m3d .pill,.contact .pill{width:100%}
-  .wa{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid #ecebe8}
+  .wa{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--paper);border-top:1px solid var(--c-ecebe8)}
   .wa .pill{width:100%}
 }
 </style>
@@ -246,8 +287,8 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
       <source src="media/hero-sala.mp4" type="video/mp4">
     </video>
     <div class="copy">
-      <h1>Ventanas y puertas de PVC europeo para su casa</h1>
-      <p>Las medimos en obra, las fabricamos en nuestra planta y las instala nuestro propio equipo.</p>
+      <h1>Ventanas y puertas de PVC europeo</h1>
+      <p>Medidas en obra, fabricadas en nuestra planta e instaladas por nuestro equipo.</p>
       <div class="row">
         <a class="pill pill--white" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas%20y%20puertas%20de%20PVC.">Cotizar por WhatsApp</a>
         <a class="pill pill--light" href="#obras">Ver obras</a>
@@ -256,10 +297,10 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
   </section>
 
   <section class="intro" aria-labelledby="intro-h">
-    <h2 id="intro-h">Perfil europeo <strong>para cualquier clima</strong></h2>
+    <h2 id="intro-h">Perfil europeo para cualquier clima</h2>
     <div>
-      <p>Door Windows Center fabrica ventanas y puertas de PVC europeo para exterior. Perfil multicámara y vidrio doble que aíslan del calor, del frío y del ruido, en el desierto, la costa o la ciudad.</p>
-      <p>Trabajamos con familias que construyen o remodelan su casa y con constructoras, arquitectos y desarrolladores que necesitan cumplir en tiempo con varias viviendas. Un solo equipo mide, fabrica, instala y responde por el resultado.</p>
+      <p>Ventanas y puertas de PVC europeo para exterior, con perfil multicámara y vidrio doble que aíslan del calor, el frío y el ruido.</p>
+      <p>Para familias que construyen o remodelan y para constructoras y arquitectos. Un solo equipo mide, fabrica, instala y responde.</p>
     </div>
   </section>
 
@@ -296,7 +337,7 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
   <section class="gallery" id="obras" aria-labelledby="obras-h">
     <div class="head">
       <h2 id="obras-h">Obras reales</h2>
-      <p>Casas terminadas con ventanas y puertas DWC. Toque una foto para verla completa.</p>
+      <p>Casas terminadas con ventanas y puertas DWC.</p>
     </div>
     <div class="shots">
       <button class="shot wide" data-src="media/obras/o18.jpg"><img src="media/obras/o18-t.jpg" alt="Fachada de dos plantas con ventanal de doble altura y ventanas de perfil oscuro" loading="lazy"></button>
@@ -332,20 +373,20 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
       <p>El herraje siempre es plata. Las manijas y las bisagras pueden ir en otro color.</p>
     </div>
     <ul class="chips">
-      <li><i style="background:#2a211b"></i>Schwarzbraun</li>
-      <li><i style="background:#161616"></i>Negro</li>
-      <li><i style="background:#5b3a26"></i>Nogal</li>
-      <li><i style="background:#a58f78"></i>Clay</li>
-      <li><i style="background:#d9cdb5"></i>Almendra</li>
-      <li><i style="background:#f4f3ef"></i>Blanco</li>
+      <li><i class="sw-schwarzbraun"></i>Schwarzbraun</li>
+      <li><i class="sw-negro"></i>Negro</li>
+      <li><i class="sw-nogal"></i>Nogal</li>
+      <li><i class="sw-clay"></i>Clay</li>
+      <li><i class="sw-almendra"></i>Almendra</li>
+      <li><i class="sw-blanco"></i>Blanco</li>
     </ul>
   </section>
 
   <section class="faq" id="preguntas" aria-labelledby="faq-h">
     <h2 id="faq-h">Preguntas frecuentes</h2>
     <div>
-      <div class="q"><button aria-expanded="false" aria-controls="a1" id="q1">¿Por qué PVC y no aluminio?<span class="pm" aria-hidden="true"></span></button><div class="a" id="a1" role="region" aria-labelledby="q1"><div><p>El PVC no conduce el frío ni el calor como el metal. Con perfil multicámara y vidrio doble se nota en el recibo de luz, en el aire acondicionado y en el ruido.</p></div></div></div>
-      <div class="q"><button aria-expanded="false" aria-controls="a2" id="q2">¿Trabajan en obra nueva y en remodelación?<span class="pm" aria-hidden="true"></span></button><div class="a" id="a2" role="region" aria-labelledby="q2"><div><p>En las dos. En remodelación podemos instalar sobre el marco existente si está en buen estado, o retirarlo por completo si conviene.</p></div></div></div>
+      <div class="q"><button aria-expanded="false" aria-controls="a1" id="q1">¿Por qué PVC y no aluminio?<span class="pm" aria-hidden="true"></span></button><div class="a" id="a1" role="region" aria-labelledby="q1"><div><p>El PVC no conduce el frío ni el calor como el metal. Se nota en el recibo de luz y en el ruido.</p></div></div></div>
+      <div class="q"><button aria-expanded="false" aria-controls="a2" id="q2">¿Trabajan en obra nueva y en remodelación?<span class="pm" aria-hidden="true"></span></button><div class="a" id="a2" role="region" aria-labelledby="q2"><div><p>En las dos. En remodelación instalamos sobre el marco existente o lo retiramos, según convenga.</p></div></div></div>
       <div class="q"><button aria-expanded="false" aria-controls="a3" id="q3">¿Atienden a constructoras?<span class="pm" aria-hidden="true"></span></button><div class="a" id="a3" role="region" aria-labelledby="q3"><div><p>Sí. Mándenos el plano o la cédula de ventanas por WhatsApp y cotizamos la obra completa.</p></div></div></div>
     </div>
   </section>
@@ -353,7 +394,7 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
   <section class="contact" id="contacto" aria-labelledby="con-h">
     <div>
       <h2 id="con-h">Cuéntenos su proyecto</h2>
-      <p>Envíe medidas, plano o una foto del vano por WhatsApp y le respondemos con una cotización detallada.</p>
+      <p>Envíe medidas, plano o una foto del vano por WhatsApp y le cotizamos.</p>
       <a class="pill pill--solid" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas%20y%20puertas%20de%20PVC.">Cotizar por WhatsApp</a>
     </div>
     <dl class="info">
@@ -367,14 +408,14 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
   <section class="m3d" id="modelador" aria-labelledby="m3d-h">
     <div>
       <h2 id="m3d-h">Diseñe su ventana en el Modelador 3D</h2>
-      <p>Arme su ventana o puerta, véala en tres dimensiones con el color de perfil que elija y mándenos el diseño para cotizar.</p>
+      <p>Arme su ventana o puerta en 3D, con el color que elija, y mándenos el diseño para cotizar.</p>
       <a class="pill pill--white" href="/modelador/">Abrir el Modelador 3D</a>
     </div>
     <ol>
       <li><span><b>Elija el modelo</b>Corrediza, oscilobatiente, abatible, fija o combinada.</span></li>
-      <li><span><b>Escriba las medidas</b>Como vienen en su plano, por ejemplo 6080, en pies o en milímetros.</span></li>
-      <li><span><b>Escoja el color</b>Schwarzbraun, negro, nogal, clay, almendra o blanco.</span></li>
-      <li><span><b>Envíe a cotizar</b>Su diseño nos llega con todos los datos.</span></li>
+      <li><span><b>Escriba las medidas</b>Como en su plano, por ejemplo 6080.</span></li>
+      <li><span><b>Escoja el color</b>Cualquiera de los seis colores de perfil.</span></li>
+      <li><span><b>Envíe a cotizar</b>Nos llega con todos los datos.</span></li>
     </ol>
   </section>
 </main>
@@ -382,16 +423,16 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
 <footer>
   <img class="flogo" src="assets/logo-dwc.png" alt="Door Windows Center" width="136" height="80" loading="lazy">
   <div class="cols">
-    <div><h4>Productos</h4><a href="#productos">Puertas corredizas</a><a href="#productos">Ventanales</a><a href="#productos">Ventanas</a><a href="/modelador/">Modelador 3D</a></div>
-    <div><h4>Empresa</h4><a href="#obras">Obras</a><a href="#preguntas">Preguntas frecuentes</a><a href="https://materiales.doorwindowscenter.com">DWC Connect</a></div>
-    <div><h4>Contacto</h4><a href="https://wa.me/526562075567">WhatsApp +52 656 207 5567</a><a href="#contacto">doorwindowscenter@gmail.com</a></div>
+    <div><h3>Productos</h3><a href="#productos">Puertas corredizas</a><a href="#productos">Ventanales</a><a href="#productos">Ventanas</a><a href="/modelador/">Modelador 3D</a></div>
+    <div><h3>Empresa</h3><a href="#obras">Obras</a><a href="#preguntas">Preguntas frecuentes</a><a href="https://materiales.doorwindowscenter.com">DWC Connect</a></div>
+    <div><h3>Contacto</h3><a href="https://wa.me/526562075567">WhatsApp +52 656 207 5567</a><a href="#contacto">doorwindowscenter@gmail.com</a></div>
   </div>
   <div class="legal"><span>© 2026 Door Windows Center</span><span>Ventanas y puertas de PVC para exterior</span></div>
 </footer>
 
 <div class="wa"><a class="pill pill--solid" href="https://wa.me/526562075567?text=Hola%2C%20quiero%20cotizar%20ventanas%20y%20puertas%20de%20PVC.">Cotizar por WhatsApp</a></div>
 
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto de obra"><img alt=""><button aria-label="Cerrar">×</button></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto de obra"><button aria-label="Cerrar">×</button></div>
 
 <script>
 (() => {
@@ -415,7 +456,7 @@ footer{background:var(--mist);margin-top:6px;padding:48px clamp(24px,6vw,96px) 3
   top.querySelectorAll('.links a').forEach(a => a.addEventListener('click', close));
 
   /* Lightbox */
-  const lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), lbBtn = lb.querySelector('button');
+  const lb = document.getElementById('lb'), lbBtn = lb.querySelector('button'), lbImg = lb.insertBefore(document.createElement('img'), lbBtn);
   let last = null;
   document.querySelectorAll('.shot').forEach(s => s.addEventListener('click', () => {
     last = s; lbImg.src = s.dataset.src; lbImg.alt = s.querySelector('img').alt; lb.classList.add('on'); lbBtn.focus();
